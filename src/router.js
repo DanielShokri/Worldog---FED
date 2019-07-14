@@ -5,7 +5,7 @@ import Signup from './views/Signup.vue'
 import UsersFeed from './views/UsersFeed.vue'
 import UserProfile from './views/UserProfile.vue'
 import ParkDetails from './views/ParkDetails.vue'
-import usersMap from './components/UsersListMap.cmp.vue'
+import parksList from './components/ParksList.cmp.vue'
 
 Vue.use(Router)
 
@@ -16,6 +16,6 @@ export default new Router({
         { path: '/user', component: UsersFeed },
         { path: '/user/:id', component: UserProfile },
         { path: '/park/:id', component: ParkDetails },
-        { path: '/map', component: usersMap },
+        { path: '/park', component: parksList },
     ]
 })
