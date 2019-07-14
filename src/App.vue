@@ -1,8 +1,10 @@
 <template>
-  <section>
-    <app-header></app-header>
-    <router-view />
-  </section>
+  <v-app>
+    <v-content>
+      <app-header></app-header>
+      <router-view />
+    </v-content>
+  </v-app>
 </template>
 
 <script>

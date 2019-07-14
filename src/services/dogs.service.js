@@ -10,7 +10,8 @@ export default {
     logIn,
     logOut,
     signUp,
-    getLoggedinUser
+    getLoggedinUser,
+    getPosition
 }
 
 var loggedInUser = JSON.parse(sessionStorage.getItem('loggedInUser'))
@@ -18,7 +19,15 @@ var loggedInUser = JSON.parse(sessionStorage.getItem('loggedInUser'))
 
 function _getUrl(id = '') {
     return `dog/${id}`
+
 }
+
+function getPosition() {
+    return new Promise((resolve, reject) => {
+        navigator.geolocation.getCurrentPosition(resolve, reject)
+    })
+}
+
 
 
 function query() {

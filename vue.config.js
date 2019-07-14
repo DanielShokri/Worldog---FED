@@ -1,3 +1,17 @@
 module.exports = {
-  lintOnSave: false
+  lintOnSave: false,
+
+  devServer: {
+    host: 'localhost'
+  },
+
+  runtimeCompiler: true,
+
+  pluginOptions: {
+    quasar: {}
+  },
+
+  transpileDependencies: [
+    /[\\\/]node_modules[\\\/]quasar[\\\/]/
+  ]
 }
