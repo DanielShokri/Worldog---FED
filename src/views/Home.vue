@@ -27,9 +27,11 @@
 
 <script>
 import UserListMap from "../components/UsersListMap.cmp";
+
 export default {
   name: "home",
-  components: { UserListMap }
+  components: { UserListMap },
+
 };
 </script>
 <style scoped>

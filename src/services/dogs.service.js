@@ -62,7 +62,8 @@ function getLoggedinUser() {
 }
 
 function logIn(user) {
-    return httpService.post(_getUrl('login'), user)
+    console.log('This is service user', user)
+    return httpService.post(_getUrl(), user)
         .then(res => {
             loggedInUser = res.data
             sessionStorage.setItem('loggedInUser', JSON.stringify(loggedInUser));
