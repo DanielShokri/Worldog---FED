@@ -36,6 +36,12 @@
       v-model="copyDog.isAdmin"
       label=" Is Admin"
     ></v-checkbox> -->
+
+    <v-checkbox
+      v-model="copyDog.isAdmin"
+      label="is Admin?"
+      required
+    ></v-checkbox>
     </v-form>
 
     <!-- <form @submit.prevent="updateDog">
