@@ -1,16 +1,14 @@
 
 <template>
   <section v-if="dogs">
-    <v-btn  color="indigo" class="btn-add-dog">
-      <router-link :to="'/add-dog'">Add Dog</router-link>
-    </v-btn>
+    <!-- <v-btn  color="indigo" class="btn-add-dog"> -->
+      <!-- <router-link :to="'user/edit'">Add Dog</router-link> -->
+    <!-- </v-btn> -->
 
     <!-- <toy-filter @set-filter="setFilter"></toy-filter> -->
 
     <dog-list :dogs="dogs" @delete="deleteDog"></dog-list>
 
-    
-    
   </section>
 </template>
 
