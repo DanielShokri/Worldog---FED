@@ -7,7 +7,6 @@ module.exports = {
     remove,
     add,
     update,
-    // queryAll
 }
 
 var dogs = _createDogs();
