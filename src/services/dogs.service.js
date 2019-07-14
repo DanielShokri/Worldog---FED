@@ -1,5 +1,3 @@
-'use strict'
-
 const fs = require('fs')
 
 
@@ -9,69 +7,41 @@ module.exports = {
     remove,
     add,
     update,
-    queryAll
+    // queryAll
 }
 
-var bugs = _createBugs();
-const limit = 3;
+var dogs = _createDogs();
 
-function queryAll() {
-    return Promise.resolve(bugs);
+
+function query() {
+    return Promise.resolve(dogs);
 }
 
 
-
-function query(currUser, filter) {
-    var bugsToShow;
-    if (currUser.isAdmin === true) {
-        bugsToShow = bugs.map(bug => {
-            return bug
-        })
-    } else {
-        bugsToShow = bugs.filter(bug => {
-            // console.log(bug)
-            return bug.creator._id === currUser._id
-        })
-    }
-
-
-    var filterBugs;
-    if (filter.txt) filterBugs = bugsToShow.filter(bug => {
-        return bug.title.includes(filter.txt)
-    })
-    else filterBugs = bugsToShow;
-
-    var offeset = (filter.page - 1) * limit;
-
-    filterBugs = filterBugs.slice(offeset, offeset + limit);
-
-    return Promise.resolve(filterBugs);
+function add(dog) {
+    dog._id = _makeId()
+    dogs.push(dog)
+    _saveDogsToFile();
+    return Promise.resolve(dog)
 }
 
-function add(bug) {
-    bug._id = _makeId()
-    bugs.push(bug)
-    _saveBugsToFile();
-    return Promise.resolve(bug)
-}
-
-function update(bug) {
-    var bugIdx = bugs.findIndex(currBug => currBug.id === bug.id);
-    bugs.splice(bugIdx, 1, bug);
-    _saveBugsToFile();
-    return Promise.resolve(bug)
+function update(dog) {
+    var dogIdx = dogs.findIndex(currDog=> currDog.id === dog.id);
+    dogs.splice(dogIdx, 1, dog);
+    _saveDogsToFile();
+    return Promise.resolve(dog)
 }
 
 function getById(id) {
-    var bug = bugs.find(currBug => currBug._id === id);
-    if (bug) return Promise.resolve(bug);
-    else return Promise.reject('Unknown Bug');
+    var dog = dogs.find(currDog => currDog._id === id);
+    if (dog) return Promise.resolve(dog);
+    else return Promise.reject('Unknown Dog');
 }
 
 function remove(id) {
-    var bugIdx = bugs.findIndex(bug => bug._id === id);
-    bugs.splice(bugIdx, 1)
-    _saveBugsToFile();
+    var dogIdx = dogs.findIndex(dog => dog._id === id);
+    dogs.splice(dogIdx, 1)
+    _saveDogsToFile();
     return Promise.resolve();
 }
 
@@ -84,19 +54,19 @@ function _makeId(length = 3) {
     return txt;
 }
 
-function _createBugs() {
-    bugs = require('../data/bug.json')
-    if (bugs && bugs.length) return bugs;
-    return ['Fiag', 'Subali'].map(_createBug)
+function _createDogs() {
+    dogs = require('../../../dogs.json')
+    if (dogs && dogs.length) return dogs;
+    return ['Loli', 'Subi'].map(_createDog)
 }
 
-function _createBug(vendor) {
+function _createDog(name) {
     return {
         id: _makeId(),
-        vendor,
+        name,
     }
 }
 
-function _saveBugsToFile() {
-    fs.writeFileSync('data/bug.json', JSON.stringify(bugs, null, 2));
+function _saveDogsToFile() {
+    fs.writeFileSync('../../../dogs.json', JSON.stringify(dogs, null, 2));
 }
