@@ -2,6 +2,7 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import store from './store'
+
 import './registerServiceWorker'
 import * as VueGoogleMaps from 'vue2-google-maps';
 
@@ -13,6 +14,10 @@ Vue.use(Buefy)
 import Vuetify from 'vuetify'
 Vue.use(Vuetify)
 import 'vuetify/dist/vuetify.min.css'
+
+// import Argon from '@/plugins/argon-kit'
+// Vue.use(Argon);
+
 
 Vue.config.productionTip = false
 

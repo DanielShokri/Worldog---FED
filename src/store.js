@@ -85,7 +85,7 @@ export default new Vuex.Store({
       return dogsService.getById(dogId)
         .then(dog => {
           context.commit({
-            type: 'getDogById',
+            type: 'setDog',
             dog
           })
           return dog
@@ -115,9 +115,7 @@ export default new Vuex.Store({
         })
     },
 
-    updateDog(context, {
-      dog
-    }) {
+    updateDog(context, { dog }) {
       return dogsService.update(dog)
         .then(updatedDog => {
           context.commit({
@@ -128,8 +126,16 @@ export default new Vuex.Store({
         })
     },
 
+    userLogin(context, {currUser}) {
+      console.log('This is the user store', currUser)
+      return dogsService.logIn(currUser)
+      .then(loggedinUser =>{
+        context.commit({type: 'setLoginUser', loggedinUser})
+      })
+    }
+
   },
   modules: {
-   
+
   }
 })

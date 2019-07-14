@@ -43,7 +43,7 @@ function getById(dogId) {
 
 function add(dog) {
     console.log('un service', dog)
-    return httpService.post(_getUrl(dog._id), dog)
+    return httpService.post(_getUrl('add'), dog)
 
 }
 
@@ -53,7 +53,8 @@ function remove(dogId) {
 }
 
 function update(updateDog) {
-    return httpService.put(_getUrl(updateDog._id), updateDog)
+    console.log('edit!!' , updateDog)
+    return httpService.put(_getUrl(`edit/${updateDog._id}`), updateDog)
 }
 
 
@@ -62,7 +63,8 @@ function getLoggedinUser() {
 }
 
 function logIn(user) {
-    return httpService.post(_getUrl('login'), user)
+    console.log('This is service user', user)
+    return httpService.post(_getUrl(), user)
         .then(res => {
             loggedInUser = res.data
             sessionStorage.setItem('loggedInUser', JSON.stringify(loggedInUser));
