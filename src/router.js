@@ -1,11 +1,11 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Home from './views/Home.vue'
-import SignUp from './views/SignUp.vue'
+import SignUp from './views/Signup.vue'
 import UsersFeed from './views/UsersFeed.vue'
 import UserProfile from './views/UserProfile.vue'
 import ParkDetails from './views/ParkDetails.vue'
-import usersMap from './components/UsersListMap.vue'
+import usersMap from './components/UsersListMap.cmp.vue'
 
 Vue.use(Router)
 
