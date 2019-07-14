@@ -2,9 +2,7 @@
 <template>
   <nav class="navbar" role="navigation" aria-label="main navigation">
     <div class="navbar-brand">
-      
-        <img src="https://i.ibb.co/n8DtFs5/logo.png" width="160" height="28" />
-      
+      <img src="https://i.ibb.co/n8DtFs5/logo.png" width="160" height="28" />
 
       <a
         role="button"
@@ -21,7 +19,7 @@
 
     <div id="navbarBasicExample" class="navbar-menu">
       <div class="navbar-start">
-        <a class="navbar-item">Home</a>
+        <router-link class="navbar-item" to="/">Home</router-link>
 
         <router-link class="navbar-item" to="/user">Users</router-link>
 
@@ -44,7 +42,7 @@
             <router-link class="button is-primary" to="/signup">
               <strong>Sign up</strong>
             </router-link>
-            <a class="button is-light">Log in</a>
+            <button class="button is-light" @click="cardModal()">Login</button>
           </div>
         </div>
       </div>
@@ -57,5 +55,29 @@
 </template>
 
 <script>
-export default {};
+import Login from './Login'
+export default {
+  data() {
+    return {
+      user: {
+        name: '',
+        pass: ''
+      }
+    }
+  },
+  methods: {
+    cardModal() {
+      this.$modal.open({
+        parent: this,
+        component: Login,
+        hasModalCard: true,
+        customClass: "custom-class custom-class-2"
+      });
+    },
+    loginUser(){
+      console.log(this.user)
+      this.$store.dispatch({ type: "userLogin", user });
+    }
+  }
+};
 </script>
