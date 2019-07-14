@@ -11,7 +11,7 @@ module.exports = {
 }
 
 var dogs = _createDogs();
-const limit = 3;
+
 
 function queryAll() {
     return Promise.resolve(dogs);
@@ -21,28 +21,9 @@ function queryAll() {
 
 function query(currUser, filter) {
     var dogsToShow;
-    if (currUser.isAdmin === true) {
-        dogsToShow = dogs.map(dog => {
-            return dog
-        })
-    } else {
-        dogsToShow = dogs.filter(dog => {
-            return dog.creator._id === currUser._id
-        })
-    }
+  
 
-
-    var filterDogs;
-    if (filter.txt) filterDogs = dogsToShow.filter(dog => {
-        return dog.title.includes(filter.txt)
-    })
-    else filterDogs = dogsToShow;
-
-    var offeset = (filter.page - 1) * limit;
-
-    filterDogs = filterDogs.slice(offeset, offeset + limit);
-
-    return Promise.resolve(filterDogs);
+    return Promise.resolve(dogsToShow);
 }
 
 function add(dog) {
