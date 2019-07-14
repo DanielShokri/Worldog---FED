@@ -43,7 +43,7 @@ function getById(dogId) {
 
 function add(dog) {
     console.log('un service', dog)
-    return httpService.post(_getUrl(dog._id), dog)
+    return httpService.post(_getUrl('add'), dog)
 
 }
 
@@ -53,7 +53,8 @@ function remove(dogId) {
 }
 
 function update(updateDog) {
-    return httpService.put(_getUrl(updateDog._id), updateDog)
+    console.log('edit!!' , updateDog)
+    return httpService.put(_getUrl(`edit/${updateDog._id}`), updateDog)
 }
 
 

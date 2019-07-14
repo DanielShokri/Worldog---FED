@@ -85,7 +85,7 @@ export default new Vuex.Store({
       return dogsService.getById(dogId)
         .then(dog => {
           context.commit({
-            type: 'getDogById',
+            type: 'setDog',
             dog
           })
           return dog
