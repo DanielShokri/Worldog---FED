@@ -113,8 +113,8 @@ export default {
   },
   components: {},
   created() {
-    dogsService.query().then(dogs => {
-      this.dogs = dogs;
+    this.$store.dispatch({ type: "loadDogs" }).then(() => {
+      this.dogs = this.$store.getters.dogsToShow;
     });
     dogsService.getPosition().then(pos => {
       this.userLoc = {

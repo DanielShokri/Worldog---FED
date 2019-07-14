@@ -1,19 +1,25 @@
-const fs = require('fs')
+import httpService from './http.service.js';
 
 
 export default {
     query,
-    getById,
-    remove,
     add,
+    remove,
+    getById,
     update,
+    logIn,
+    logOut,
+    signUp,
+    getLoggedinUser,
     getPosition
 }
 
-var dogs = _createDogs();
+var loggedInUser = JSON.parse(sessionStorage.getItem('loggedInUser'))
 
-function query() {
-    return Promise.resolve(dogs);
+
+function _getUrl(id = '') {
+    return `dog/${id}`
+
 }
 
 function getPosition() {
@@ -24,49 +30,69 @@ function getPosition() {
 
 
 
+function query() {
+    return httpService.get(_getUrl())
+
+}
+
+
+function getById(dogId) {
+    return httpService.get(_getUrl(dogId))
+
+}
+
 function add(dog) {
-    dog._id = _makeId()
-    dogs.push(dog)
-    _saveDogsToFile();
-    return Promise.resolve(dog)
+    console.log('un service', dog)
+    return httpService.post(_getUrl(dog._id), dog)
+
 }
 
-function update(dog) {
-    var dogIdx = dogs.findIndex(currDog => currDog.id === dog.id);
-    dogs.splice(dogIdx, 1, dog);
-    _saveDogsToFile();
-    return Promise.resolve(dog)
+function remove(dogId) {
+    return httpService.delete(_getUrl(dogId))
+
 }
 
-function getById(id) {
-    var dog = dogs.find(currDog => currDog._id === id);
-    if (dog) return Promise.resolve(dog);
-    else return Promise.reject('Unknown Dog');
-}
-
-function remove(id) {
-    var dogIdx = dogs.findIndex(dog => dog._id === id);
-    dogs.splice(dogIdx, 1)
-    _saveDogsToFile();
-    return Promise.resolve();
-}
-
-function _makeId(length = 3) {
-    var txt = '';
-    var possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-    for (var i = 0; i < length; i++) {
-        txt += possible.charAt(Math.floor(Math.random() * possible.length));
-    }
-    return txt;
-}
-
-function _createDogs() {
-    dogs = require('../../../dogs.json')
-    return dogs
+function update(updateDog) {
+    return httpService.put(_getUrl(updateDog._id), updateDog)
 }
 
 
+function getLoggedinUser() {
+    return loggedInUser;
+}
 
-function _saveDogsToFile() {
-    fs.writeFileSync('../../../dogs.json', JSON.stringify(dogs, null, 2));
+function logIn(user) {
+    return httpService.post(_getUrl('login'), user)
+        .then(res => {
+            loggedInUser = res.data
+            sessionStorage.setItem('loggedInUser', JSON.stringify(loggedInUser));
+            return loggedInUser;
+        })
+        .catch(err => {
+            console.log(err)
+            throw err
+        });
+
+}
+
+function signUp(user) {
+    user.isAdmin = false
+    return httpService.post(_getUrl('signup'), user)
+        .then(res => res.data)
+        .catch(err => {
+            console.log(err)
+            throw err
+        });
+
+}
+function logOut() {
+    return httpService.post(_getUrl('logout'))
+        .then(res => {
+            sessionStorage.clear()
+            loggedInUser = null
+        })
+        .catch(err => {
+            console.log('Could not logUot', err);
+            throw err;
+        })
 }
