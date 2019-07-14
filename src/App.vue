@@ -1,29 +1,24 @@
 <template>
- <section>
-<app-header></app-header>
-<router-view/>
-
- </section>
+  <section>
+    <app-header></app-header>
+    <router-view />
+  </section>
 </template>
 
 <script>
-import AppHeader from './components/AppHeader.vue'
-
+import AppHeader from "./components/AppHeader.vue";
 
 export default {
-
-components:{
-AppHeader
-}
-}
-
-
+  components: {
+    AppHeader
+  }
+};
 </script>
 
 
 <style lang="scss">
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
