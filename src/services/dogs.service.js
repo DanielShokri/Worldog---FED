@@ -1,20 +1,27 @@
 const fs = require('fs')
 
 
-module.exports = {
+export default {
     query,
     getById,
     remove,
     add,
     update,
+    getPosition
 }
 
 var dogs = _createDogs();
 
-
 function query() {
     return Promise.resolve(dogs);
 }
+
+function getPosition() {
+    return new Promise((resolve, reject) => {
+        navigator.geolocation.getCurrentPosition(resolve, reject)
+    })
+}
+
 
 
 function add(dog) {
@@ -25,7 +32,7 @@ function add(dog) {
 }
 
 function update(dog) {
-    var dogIdx = dogs.findIndex(currDog=> currDog.id === dog.id);
+    var dogIdx = dogs.findIndex(currDog => currDog.id === dog.id);
     dogs.splice(dogIdx, 1, dog);
     _saveDogsToFile();
     return Promise.resolve(dog)
@@ -55,16 +62,10 @@ function _makeId(length = 3) {
 
 function _createDogs() {
     dogs = require('../../../dogs.json')
-    if (dogs && dogs.length) return dogs;
-    return ['Loli', 'Subi'].map(_createDog)
+    return dogs
 }
 
-function _createDog(name) {
-    return {
-        id: _makeId(),
-        name,
-    }
-}
+
 
 function _saveDogsToFile() {
     fs.writeFileSync('../../../dogs.json', JSON.stringify(dogs, null, 2));
