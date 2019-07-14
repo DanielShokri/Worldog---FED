@@ -1,7 +1,6 @@
 <template>
   <section class="usersMapList" v-if="dogs && userLoc">
     <br />
-    {{userLoc}}
     <GmapMap
       class="map"
       ref="mapRef"
