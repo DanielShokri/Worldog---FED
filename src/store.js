@@ -12,15 +12,21 @@ export default new Vuex.Store({
     filterBy: null,
     dogs: [],
     dog: null,
-
+    currUser: ''
   },
   mutations: {
     setFilter(state, filter) {
       state.filterBy = JSON.parse(JSON.stringify(filter));
     },
-    setLoginUser(state, {currUserLoggedIn}) {
-      console.log('this is the mution state',currUserLoggedIn )
-      state.loggedinUser = currUserLoggedIn
+    setLoginUser(state, { currUserLoggedIn }) {
+      state.currUser = currUserLoggedIn;
+    },
+    setLoggedUser(state, { userLoggedNow }) {
+      console.log('this is the loggeduser store mutation', userLoggedNow);
+      state.currUser = userLoggedNow;
+    },
+    setLoggedOutUser(state){
+      state.currUser = '';
     },
     setDogs(state, {
       dogs
@@ -30,12 +36,12 @@ export default new Vuex.Store({
     setDog(state, {
       dog
     }) {
-      state.dog = dog
+      state.dog = dog;
     },
     deleteDog(state, {
       dogId
     }) {
-      const idx = state.dogs.findIndex(dog => dog._id === dogId)
+      const idx = state.dogs.findIndex(dog => dog._id === dogId);
       state.dogs.splice(idx, 1);
 
     },
@@ -60,13 +66,13 @@ export default new Vuex.Store({
       return state.loggedinUser
     },
 
+    getcurrLoggedinUser(state) {
+      return state.currUser
+    },
+
     getDog(state) {
       return state.dog
     },
-
-    // getNearbyDogs(state){
-
-    // }
   },
 
   actions: {
@@ -127,14 +133,37 @@ export default new Vuex.Store({
         })
     },
 
-    userLogin(context, {currUser}) {
-      console.log('This is the user store', currUser)
+    userLogin(context, { currUser }) {
       return dogsService.logIn(currUser)
-      .then(currUserLoggedIn =>{
-        context.commit({type: 'setLoginUser', currUserLoggedIn})
+        .then(currUserLoggedIn => {
+          context.commit({ type: 'setLoginUser', currUserLoggedIn })
+        }).catch((err) => {
+          console.log(err, 'This err store')
+          return Promise.reject('cant find user')
+        })
+    },
+
+    userSignup(context, { user }) {
+      return dogsService.signUp(user)
+        .then(userSignedUp => {
+          console.log('This is Great signup!', userSignedUp)
+        })
+    },
+
+    loggedInUser(context) {
+      return dogsService.getLoggedinUser()
+        .then((userLoggedNow) => {
+          // console.log(userLoggedNow,'This is store')
+          context.commit({ type: 'setLoggedUser', userLoggedNow })
+        })
+    },
+
+    userLogout(context) {
+      dogsService.logOut()
+      .then(()=>{
+        context.commit({ type: 'setLoggedOutUser' })
       })
     }
-
   },
   modules: {
 

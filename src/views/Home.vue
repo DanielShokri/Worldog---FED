@@ -28,12 +28,14 @@
 
 <script>
 import UserListMap from "../components/UsersListMap.cmp";
-import ParkList from "../components/ParksList.cmp.vue"
+import ParkList from "../components/ParksList.cmp.vue";
 
 export default {
   name: "home",
-  components: { UserListMap,ParkList  },
-
+  components: { UserListMap, ParkList },
+  created() {
+    this.$store.dispatch({ type: "loggedInUser" })
+  }
 };
 </script>
 <style scoped>
