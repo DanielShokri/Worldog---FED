@@ -164,8 +164,6 @@ export default new Vuex.Store({
         context.commit({ type: 'setLoggedOutUser' })
       })
     }
-  },
-  modules: {
-
   }
+  
 })
