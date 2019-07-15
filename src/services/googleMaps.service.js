@@ -4,7 +4,8 @@ import axios from 'axios';
 // });
 
 export default {
-    getInfo
+    getInfo,
+    // getPhoto
 }
 
 function getInfo(pos) {
@@ -13,6 +14,14 @@ function getInfo(pos) {
             return res.data
         })
 }
+
+// function getPhoto(refNum) {
+//     console.log(refNum)
+//     return axios.get(`${_getUrl()}/getPhoto?ref=${refNum}`, )
+//         .then(res => {
+//             return res.data
+//         })
+// }
 
 
 function _getUrl() {

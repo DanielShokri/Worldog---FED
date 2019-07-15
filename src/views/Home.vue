@@ -13,14 +13,14 @@
     <section class="hero is-primary">
       <div class="hero-body">
         <h1 class="parks-title">Nearby Parks</h1>
-        <park-list></park-list>
+         <park-list></park-list>
         <div class="container"></div>
       </div>
     </section>
 
     <section class="section">
       <div class="container">
-        <!-- <UserListMap></UserListMap> -->
+        <UserListMap></UserListMap>
       </div>
     </section>
   </div>
@@ -39,13 +39,11 @@ export default {
 };
 </script>
 <style scoped>
-.hero-body {
-  display: flex;
-  padding: 1rem 4.5rem;
+/* .hero-body {
   height: 300px;
 }
 .parks-title {
   width: 148px;
   height: 50px;
-}
+} */
 </style>
