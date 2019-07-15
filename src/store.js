@@ -18,8 +18,9 @@ export default new Vuex.Store({
     setFilter(state, filter) {
       state.filterBy = JSON.parse(JSON.stringify(filter));
     },
-    setLoginUser(state, loggedinUser) {
-      state.loggedinUser = loggedinUser
+    setLoginUser(state, {currUserLoggedIn}) {
+      console.log('this is the mution state',currUserLoggedIn )
+      state.loggedinUser = currUserLoggedIn
     },
     setDogs(state, {
       dogs
@@ -129,8 +130,8 @@ export default new Vuex.Store({
     userLogin(context, {currUser}) {
       console.log('This is the user store', currUser)
       return dogsService.logIn(currUser)
-      .then(loggedinUser =>{
-        context.commit({type: 'setLoginUser', loggedinUser})
+      .then(currUserLoggedIn =>{
+        context.commit({type: 'setLoginUser', currUserLoggedIn})
       })
     }
 

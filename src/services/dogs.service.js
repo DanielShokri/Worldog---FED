@@ -14,7 +14,7 @@ export default {
     getPosition
 }
 
-var loggedInUser = JSON.parse(sessionStorage.getItem('loggedInUser'))
+
 
 
 function _getUrl(id = '') {
@@ -53,22 +53,21 @@ function remove(dogId) {
 }
 
 function update(updateDog) {
-    console.log('edit!!' , updateDog)
+    console.log('edit!!', updateDog)
     return httpService.put(_getUrl(`edit/${updateDog._id}`), updateDog)
 }
 
 
 function getLoggedinUser() {
-    return loggedInUser;
+    const user = JSON.parse(sessionStorage.getItem('LoggedUser'));
+    return user;
 }
 
 function logIn(user) {
-    console.log('This is service user', user)
     return httpService.post(_getUrl(), user)
         .then(res => {
-            loggedInUser = res.data
-            sessionStorage.setItem('loggedInUser', JSON.stringify(loggedInUser));
-            return loggedInUser;
+            sessionStorage.setItem('LoggedUser', JSON.stringify(res));
+            return res;
         })
         .catch(err => {
             console.log(err)

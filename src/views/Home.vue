@@ -19,7 +19,7 @@
 
     <section class="section">
       <div class="container">
-        <UserListMap></UserListMap>
+        <!-- <UserListMap></UserListMap> -->
       </div>
     </section>
   </div>
@@ -31,7 +31,6 @@ import UserListMap from "../components/UsersListMap.cmp";
 export default {
   name: "home",
   components: { UserListMap },
-
 };
 </script>
 <style scoped>
