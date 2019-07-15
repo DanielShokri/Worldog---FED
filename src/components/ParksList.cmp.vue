@@ -1,7 +1,7 @@
 <template>
   <section class="parksList" v-if="userLoc">
     <div v-for="nearestGarden in gardens" :key="nearestGarden.id">
-      <parkPrev :imgs="getImg" :park="nearestGarden"></parkPrev>
+      <parkPrev  :park="nearestGarden"></parkPrev>
     </div>
   </section>
 </template>
@@ -44,27 +44,12 @@ export default {
     });
   },
   computed: {
-    // getImg() {
-    //   if (this.photos.length > 0)
-    //     return [
-    //       `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=${
-    //         this.photos[0]
-    //       }&key=AIzaSyCrVxVPta_TOsFatlYL7vOx_stAJNlV8ws`,
-    //       `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=${
-    //         this.photos[1]
-    //       }&key=AIzaSyCrVxVPta_TOsFatlYL7vOx_stAJNlV8ws`,
-    //       `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=${
-    //         this.photos[2]
-    //       }&key=AIzaSyCrVxVPta_TOsFatlYL7vOx_stAJNlV8ws`
-    //     ];
-    // }
+
   }
 };
 </script>
 
 
 <style>
-.park-list {
-  width: 100%;
-}
+
 </style>
