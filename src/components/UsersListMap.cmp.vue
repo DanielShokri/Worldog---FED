@@ -1,7 +1,6 @@
 <template>
   <section class="usersMapList" v-if="dogs && userLoc">
-    <br />
-    
+   
     <GmapMap
       class="map"
       ref="mapRef"
@@ -35,11 +34,13 @@
         @click="setCenter(userLoc.position,15,$event) & toggleInfoWindow(userLoc, 0)"
       />
     </GmapMap>
+      <userLiList></userLiList>
   </section>
 </template>
 
 <script>
 import dogsService from "../services/dogs.service";
+import userLiList from '../components/UserLiList.cmp'
 export default {
   name: "usersMap",
   data() {
@@ -111,7 +112,9 @@ export default {
       }
     }
   },
-  components: {},
+  components: {
+    userLiList,
+  },
   created() {
     this.$store.dispatch({ type: "loadDogs" }).then(() => {
       this.dogs = this.$store.getters.dogsToShow;
