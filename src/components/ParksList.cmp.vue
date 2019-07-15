@@ -36,27 +36,28 @@ export default {
         for (var i = 0; i < 3; i++) {
           this.gardens.push(pos[i]);
           this.photos.push(this.gardens[i].photos[0].photo_reference);
+          this.gardens[i].img = (`https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=${
+            this.gardens[i].photos[0].photo_reference
+          }&key=AIzaSyCrVxVPta_TOsFatlYL7vOx_stAJNlV8ws`)
         }
       });
     });
   },
   computed: {
-    getImg() {
-      if (this.photos.length > 0)
-        return [
-          {
-            img1: `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=${
-              this.photos[0]
-            }&key=AIzaSyCrVxVPta_TOsFatlYL7vOx_stAJNlV8ws`,
-            img2: `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=${
-              this.photos[1]
-            }&key=AIzaSyCrVxVPta_TOsFatlYL7vOx_stAJNlV8ws`,
-            img3: `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=${
-              this.photos[2]
-            }&key=AIzaSyCrVxVPta_TOsFatlYL7vOx_stAJNlV8ws`
-          }
-        ];
-    }
+    // getImg() {
+    //   if (this.photos.length > 0)
+    //     return [
+    //       `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=${
+    //         this.photos[0]
+    //       }&key=AIzaSyCrVxVPta_TOsFatlYL7vOx_stAJNlV8ws`,
+    //       `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=${
+    //         this.photos[1]
+    //       }&key=AIzaSyCrVxVPta_TOsFatlYL7vOx_stAJNlV8ws`,
+    //       `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=${
+    //         this.photos[2]
+    //       }&key=AIzaSyCrVxVPta_TOsFatlYL7vOx_stAJNlV8ws`
+    //     ];
+    // }
   }
 };
 </script>
