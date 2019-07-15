@@ -46,7 +46,8 @@
           </div>
         </div>
       </div>
-      <div class="navbar-menu" v-if="getUser">
+
+      <div v-if="getUser" class="navbar-menu">
         <div class="navbar-end">
           <b-dropdown position="is-bottom-left" aria-role="menu">
             <a class="navbar-item" slot="trigger" role="button">
@@ -56,7 +57,7 @@
 
             <b-dropdown-item custom aria-role="menuitem">
               Logged as
-              <b>{{getUser.owner.fullName}}</b>
+              <b>{{getUser[0].owner.fullName}}</b>
             </b-dropdown-item>
             <b-dropdown-item value="home" aria-role="menuitem">
               <b-icon icon="bell"></b-icon>Notification's
@@ -65,7 +66,7 @@
               <b-icon icon="settings"></b-icon>Profile
             </b-dropdown-item>
             <hr class="dropdown-divider" aria-role="menuitem" />
-            <b-dropdown-item value="logout" aria-role="menuitem">
+            <b-dropdown-item value="logout" @click="userLogout" aria-role="menuitem">
               <b-icon icon="logout"></b-icon>Logout
             </b-dropdown-item>
           </b-dropdown>
@@ -73,10 +74,6 @@
       </div>
     </div>
   </nav>
-  <!-- <router-link to="/">Home</router-link>
-        <router-link to="/signup">Signup</router-link>
-        <router-link to="/user">Users Feed</router-link>
-  -->
 </template>
 
 <script>
@@ -87,7 +84,7 @@ export default {
       user: {
         name: "",
         pass: ""
-      },
+      }
     };
   },
   methods: {
@@ -99,16 +96,13 @@ export default {
         customClass: "custom-class custom-class-2"
       });
     },
-    loginUser() {
-      console.log(this.user);
-      this.$store.dispatch({ type: "userLogin", user }).then(() => {
-        console.log("Login Happend!!");
-      });
+    userLogout() {
+      this.$store.dispatch({ type: "userLogout" });
     }
   },
   computed: {
     getUser() {
-      return this.$store.getters.getLoggedinUser
+      return this.$store.getters.getcurrLoggedinUser;
     }
   }
 };

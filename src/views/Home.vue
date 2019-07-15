@@ -36,6 +36,9 @@ export default {
   name: "home",
   components: { UserListMap,ParkList, UserLiList  },
 
+  created() {
+    this.$store.dispatch({ type: "loggedInUser" })
+  }
 };
 </script>
 <style scoped>

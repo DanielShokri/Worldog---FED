@@ -15,8 +15,6 @@ import Vuetify from 'vuetify'
 Vue.use(Vuetify)
 import 'vuetify/dist/vuetify.min.css' 
 import '@mdi/font/css/materialdesignicons.css'
-// import Argon from '@/plugins/argon-kit'
-// Vue.use(Argon);
 
 
 Vue.config.productionTip = false
