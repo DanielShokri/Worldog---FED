@@ -5,7 +5,7 @@ import axios from 'axios';
 
 export default {
     getInfo,
-    // getPhoto
+    getDist
 }
 
 function getInfo(pos) {
@@ -15,13 +15,13 @@ function getInfo(pos) {
         })
 }
 
-// function getPhoto(refNum) {
-//     console.log(refNum)
-//     return axios.get(`${_getUrl()}/getPhoto?ref=${refNum}`, )
-//         .then(res => {
-//             return res.data
-//         })
-// }
+function getDist(dist) {
+    console.log(dist)
+    return axios.get(`${_getUrl()}/getDistance?dist=${dist.userLoc}&userdist=${dist.usersLoc}`, )
+        .then(res => {
+            return res.data
+        })
+}
 
 
 function _getUrl() {
