@@ -1,7 +1,7 @@
 <template>
   <v-card class="text-xs-center ma-3" v-if="park">
     <v-responsive class="pt-4">
-      <v-img aspect-ratio="1.75" :src="imgToLoad"></v-img>
+      <v-img aspect-ratio="2.75" :src="imgToLoad"></v-img>
     </v-responsive>
     <v-card-text>
       <div class="headline mb-0">{{park}}</div>
