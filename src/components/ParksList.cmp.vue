@@ -1,18 +1,10 @@
 <template>
   <!-- <section class="parksList" v-if="userLoc"> -->
-<<<<<<< HEAD
   <v-layout row wrap>
     <v-flex xs12 sm6 mb4 lg3 v-for="nearestGarden in gardens" :key="nearestGarden.id">
       <parkPrev :imgs="getImg" :park="nearestGarden"></parkPrev>
     </v-flex>
   </v-layout>
-=======
-    <v-layout row class="park-list">
-<v-flex xs12 sm6 mb4 lg3 v-for="nearestGarden in gardens" :key="nearestGarden.id" >
-    <parkPrev :park="nearestGarden" ></parkPrev>
-  </v-flex>
-</v-layout>
->>>>>>> a5fe11d180ea2bba5d6763d185f2cb423bdd181a
   <!-- </section> -->
 </template>
 
