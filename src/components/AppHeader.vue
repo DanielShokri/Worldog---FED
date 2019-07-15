@@ -36,7 +36,7 @@
         </div>
       </div>
 
-      <div class="navbar-end">
+      <div v-if="!getUser" class="navbar-end">
         <div class="navbar-item">
           <div class="buttons">
             <router-link class="button is-primary" to="/signup">
@@ -44,6 +44,31 @@
             </router-link>
             <button class="button is-light" @click="cardModal()">Login</button>
           </div>
+        </div>
+      </div>
+      <div class="navbar-menu" v-if="getUser">
+        <div class="navbar-end">
+          <b-dropdown position="is-bottom-left" aria-role="menu">
+            <a class="navbar-item" slot="trigger" role="button">
+              <span>Menu</span>
+              <b-icon icon="menu-down"></b-icon>
+            </a>
+
+            <b-dropdown-item custom aria-role="menuitem">
+              Logged as
+              <b>{{getUser.owner.fullName}}</b>
+            </b-dropdown-item>
+            <b-dropdown-item value="home" aria-role="menuitem">
+              <b-icon icon="bell"></b-icon>Notification's
+            </b-dropdown-item>
+            <b-dropdown-item value="settings">
+              <b-icon icon="settings"></b-icon>Profile
+            </b-dropdown-item>
+            <hr class="dropdown-divider" aria-role="menuitem" />
+            <b-dropdown-item value="logout" aria-role="menuitem">
+              <b-icon icon="logout"></b-icon>Logout
+            </b-dropdown-item>
+          </b-dropdown>
         </div>
       </div>
     </div>
@@ -55,15 +80,15 @@
 </template>
 
 <script>
-import Login from './Login'
+import Login from "./Login";
 export default {
   data() {
     return {
       user: {
-        name: '',
-        pass: ''
-      }
-    }
+        name: "",
+        pass: ""
+      },
+    };
   },
   methods: {
     cardModal() {
@@ -74,9 +99,16 @@ export default {
         customClass: "custom-class custom-class-2"
       });
     },
-    loginUser(){
-      console.log(this.user)
-      this.$store.dispatch({ type: "userLogin", user });
+    loginUser() {
+      console.log(this.user);
+      this.$store.dispatch({ type: "userLogin", user }).then(() => {
+        console.log("Login Happend!!");
+      });
+    }
+  },
+  computed: {
+    getUser() {
+      return this.$store.getters.getLoggedinUser
     }
   }
 };

@@ -20,7 +20,7 @@
 
     <section class="section">
       <div class="container">
-        <UserListMap></UserListMap>
+        <!-- <UserListMap></UserListMap> -->
       </div>
     </section>
   </div>
