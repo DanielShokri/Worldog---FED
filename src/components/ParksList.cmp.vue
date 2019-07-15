@@ -1,11 +1,9 @@
 <template>
-  <!-- <section class="parksList" v-if="userLoc"> -->
-  <v-layout row wrap style="justify-content: space-evenly;">
-    <v-flex style="max-width: 30rem;" xs12 sm6 mb4 lg3  v-for="nearestGarden in gardens" :key="nearestGarden.id">
-      <parkPrev :park="nearestGarden"></parkPrev>
-    </v-flex>
-  </v-layout>
-  <!-- </section> -->
+  <section class="parksList" v-if="userLoc">
+    <div v-for="nearestGarden in gardens" :key="nearestGarden.id">
+      <parkPrev :imgs="getImg" :park="nearestGarden"></parkPrev>
+    </div>
+  </section>
 </template>
 
 <script>
