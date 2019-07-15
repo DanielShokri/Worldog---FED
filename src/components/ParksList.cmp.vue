@@ -1,11 +1,9 @@
 <template>
-  <!-- <section class="parksList" v-if="userLoc"> -->
-  <v-layout row wrap>
-    <v-flex xs12 sm6 mb4 lg3 v-for="nearestGarden in gardens" :key="nearestGarden.id">
+  <section class="parksList" v-if="userLoc">
+    <div v-for="nearestGarden in gardens" :key="nearestGarden.id">
       <parkPrev :imgs="getImg" :park="nearestGarden"></parkPrev>
-    </v-flex>
-  </v-layout>
-  <!-- </section> -->
+    </div>
+  </section>
 </template>
 
 <script>
@@ -65,7 +63,7 @@ export default {
 
 
 <style>
-.park-list{
+.park-list {
   width: 100%;
 }
 </style>
