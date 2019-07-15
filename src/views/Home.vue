@@ -13,6 +13,7 @@
     <section class="hero is-primary">
       <div class="hero-body">
         <h1 class="parks-title">Nearby Parks</h1>
+        <park-list></park-list>
         <div class="container"></div>
       </div>
     </section>
@@ -27,10 +28,12 @@
 
 <script>
 import UserListMap from "../components/UsersListMap.cmp";
+import ParkList from "../components/ParksList.cmp.vue"
 
 export default {
   name: "home",
-  components: { UserListMap },
+  components: { UserListMap,ParkList  },
+
 };
 </script>
 <style scoped>

@@ -10,6 +10,7 @@ import Buefy from 'buefy'
 import 'buefy/dist/buefy.css'
 Vue.use(Buefy)
 
+
 import Vuetify from 'vuetify'
 Vue.use(Vuetify)
 import 'vuetify/dist/vuetify.min.css' 
