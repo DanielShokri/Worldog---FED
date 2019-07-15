@@ -1,21 +1,17 @@
 <template>
   <div class="blog-grid">
     <a href="#">
-      <v-img aspect-ratio="1.75" :src="imgToLoad"></v-img>
+      <v-img aspect-ratio="1.75" :src="park.img"></v-img>
     </a>
-    <i class="fa fa-video-camera"></i>
+    
     <div class="blog-grid1">
       <ul class="post">
         <li>
-          <a href="#">
-            <i class="par"></i> Tiago
-          </a>
         </li>
-        <label>|</label>
         <li>
           <span>
-            Posted
-            <b>April 25</b>
+            
+            <b>{{new Date() | timeAgo}}</b>
           </span>
         </li>
         <label>|</label>
@@ -26,31 +22,10 @@
         </li>
       </ul>
       <h5>
-        <a href="#">This is Photoshop's version of Lorem Ipsum. Proin gravida.</a>
+        <a href="#">{{park.name}}</a>
       </h5>
-      <p>
-        This is Photoshop's version of Lorem Ipsum. Proin gravida nibh vel velit
-        auctor aliquet. Aenean sollicitudin, lorem quis bibendum
-      </p>
+
       <div class="blog-ic">
-        <ul class="social">
-          <li>
-            <a href="#">
-              <i class="fa fa-facebook"></i>
-            </a>
-          </li>
-          <li>
-            <a href="#">
-              <i class="fa fa-twitter"></i>
-            </a>
-          </li>
-          <li>
-            <a href="#">
-              <i class="fa fa-google-plus"></i>
-            </a>
-          </li>
-          <div class="clearfix"></div>
-        </ul>
         <a class="blog-read" href="#">Read More</a>
         <div class="clearfix"></div>
       </div>
@@ -76,7 +51,7 @@
 <script>
 export default {
   props: {
-    park: Object,
+    park: Object
   },
   data() {
     return {
