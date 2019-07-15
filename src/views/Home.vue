@@ -19,12 +19,12 @@
       </div>
     </section>
 
-    <section class="section">
+    <!-- <section class="section"> -->
       <div class="container">
-        <UserListMap></UserListMap>
         <userLiList></userLiList>
+      
       </div>
-    </section>
+    <!-- </section> -->
   </div>
 </template>
 
