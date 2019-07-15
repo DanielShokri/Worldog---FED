@@ -21,6 +21,7 @@
     <section class="section">
       <div class="container">
         <UserListMap></UserListMap>
+        <userLiList></userLiList>
       </div>
     </section>
   </div>
@@ -28,12 +29,16 @@
 
 <script>
 import UserListMap from "../components/UsersListMap.cmp";
+import UserLiList from "../components/UserLiList.cmp"
 import ParkList from "../components/ParksList.cmp.vue"
 
 export default {
   name: "home",
-  components: { UserListMap,ParkList  },
+  components: { UserListMap,ParkList, UserLiList  },
 
+  created() {
+    this.$store.dispatch({ type: "loggedInUser" })
+  }
 };
 </script>
 <style scoped>

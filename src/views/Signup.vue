@@ -5,63 +5,55 @@
         <div class="card-heading"></div>
         <div class="card-body">
           <h2 class="title">Registration</h2>
-          <form>
-            <v-form ref="form" v-model="valid" lazy-validation>
-              <v-flex xs12 sm6>
-                <v-text-field
-                  v-model="name"
-                  :counter="10"
-                  :rules="nameRules"
-                  label="Username"
-                  required
-                ></v-text-field>
-              </v-flex>
-              <v-flex xs12 sm6>
-                <v-text-field
-                  :type="show3 ? 'text' : 'password'"
-                  name="input-10-2"
-                  label="Password"
-                  class="input-group--focused"
-                ></v-text-field>
-              </v-flex>
 
-              <v-text-field v-model="email" :rules="emailRules" label="E-mail" required></v-text-field>
-
-              <v-btn color="warning" @click="resetValidation">Register</v-btn>
-            </v-form>
-          </form>
+          <v-form @submit.prevent="saveUser" id="signup-form">
+            <v-text-field v-model="user.username" :rules="nameRules" label="Username" required></v-text-field>
+            <v-text-field
+              v-model="user.password"
+              name="input-10-2"
+              label="Password"
+              type="password"
+              class="input-group--focused"
+            ></v-text-field>
+            <v-btn color="dark" type="submit" form="signup-form">Register</v-btn>
+          </v-form>
         </div>
       </div>
     </div>
   </div>
-  <!-- <form action class="container">
-    <div class="modal-card" style="width: auto">
-      <header class="modal-card-head">
-        <p class="modal-card-title">Sign Up</p>
-      </header>
-      <section class="modal-card-body">
-        <b-field label="Username">
-          <b-input type="text" placeholder="Your user name" required></b-input>
-        </b-field>
-
-        <b-field label="Password">
-          <b-input
-            type="password"
-            
-            password-reveal
-            placeholder="Your password"
-            required
-          ></b-input>
-        </b-field>
-
-        
-      </section>
-      <footer class="modal-card-foot">
-        <button class="button is-primary">Register</button>
-      </footer>
-    </div>
-  </form>-->
 </template>
+
+<script>
+export default {
+  data() {
+    return {
+      user: {
+        username: "",
+        password: ""
+      },
+      valid: false,
+      nameRules: [
+        v => !!v || "Name is required",
+        v => v.length <= 10 || "Name must be less than 10 characters"
+      ],
+      email: ""
+    };
+  },
+  methods: {
+    async saveUser() {
+      let user = this.user;
+      try {
+        const signupUser = await this.$store.dispatch({type: "userSignup", user});
+        this.$toast.open({message: "Register Successfully!",type: "is-success"});
+        this.$router.push('/')
+        return signupUser;
+      } catch (err) {
+        console.log(err);
+      }
+    }
+  }
+};
+</script>
 
 <style scoped>
 @import "../../public/css/main.css";

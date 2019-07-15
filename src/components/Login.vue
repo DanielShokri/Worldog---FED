@@ -1,6 +1,6 @@
 <template>
   <form @submit.prevent="loginUser">
-    <div class="modal-card" style="width: auto">
+    <div class="modal-card" style="min-width: auto">
       <header class="modal-card-head">
         <p class="modal-card-title">Login</p>
       </header>
@@ -38,7 +38,15 @@ export default {
   },
   methods: {
     loginUser() {
-      this.$store.dispatch({ type: "userLogin", currUser: this.user });
+      this.$store.dispatch({ type: "userLogin", currUser: this.user })
+      .then(()=>{
+        this.$toast.open({message: "Login Successfully!",type: "is-success"});
+        this.$emit('close')
+      })
+      .catch((err)=>{
+        this.$toast.open({message: "Login Failed!",type: "is-danger"});     
+        this.$emit('close');   
+      })
     }
   }
 };

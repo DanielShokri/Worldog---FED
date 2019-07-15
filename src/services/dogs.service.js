@@ -60,17 +60,20 @@ function update(updateDog) {
 
 function getLoggedinUser() {
     const user = JSON.parse(sessionStorage.getItem('LoggedUser'));
-    return user;
+    return Promise.resolve(user);
 }
 
 function logIn(user) {
+    console.log('doing login');
+    
     return httpService.post(_getUrl(), user)
         .then(res => {
+            if(!res) throw new Error('Cant Login')
             sessionStorage.setItem('LoggedUser', JSON.stringify(res));
             return res;
         })
         .catch(err => {
-            console.log(err)
+            console.log(err,'at front service')
             throw err
         });
 
@@ -79,7 +82,7 @@ function logIn(user) {
 function signUp(user) {
     user.isAdmin = false
     return httpService.post(_getUrl('signup'), user)
-        .then(res => res.data)
+        .then(res => res)
         .catch(err => {
             console.log(err)
             throw err
@@ -90,10 +93,9 @@ function logOut() {
     return httpService.post(_getUrl('logout'))
         .then(res => {
             sessionStorage.clear()
-            loggedInUser = null
         })
         .catch(err => {
-            console.log('Could not logUot', err);
+            console.log('Could not logout', err);
             throw err;
         })
 }

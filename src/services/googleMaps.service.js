@@ -4,11 +4,20 @@ import axios from 'axios';
 // });
 
 export default {
-    getInfo
+    getInfo,
+    getDist
 }
 
 function getInfo(pos) {
     return axios.get(`${_getUrl()}/getPos?lat=${pos.lat}&lng=${pos.lng}`, )
+        .then(res => {
+            return res.data
+        })
+}
+
+function getDist(dist) {
+    console.log(dist)
+    return axios.get(`${_getUrl()}/getDistance?dist=${dist.userLoc}&userdist=${dist.usersLoc}`, )
         .then(res => {
             return res.data
         })
