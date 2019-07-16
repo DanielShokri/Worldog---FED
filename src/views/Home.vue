@@ -4,7 +4,7 @@
     <!-- <div class="container"> -->
     <div>
       <img slot="img" src="../../public/img/home.svg" alt />
-      <UsersFilter></UsersFilter>
+      <UsersFilter @setFilter="setFilter"></UsersFilter>
     </div>
 
     <section class="hero is-danger is-bold">
@@ -34,7 +34,13 @@ export default {
 
   created() {
     this.$store.dispatch({ type: "loggedInUser" });
-  }
+  },
+  methods: {
+    setFilter(filterBy){
+      // console.log('This is home filter', filterBy)
+      this.$store.dispatch({ type: 'loadDogs', filterBy })
+    }
+  },
 };
 </script>
 <style scoped>

@@ -53,7 +53,7 @@ export default new Vuex.Store({
                 state.dogs[i].distanceTextFromMap = res.elements[i].distance.text;
                 state.dogs[i].distanceValueFromMap = res.elements[i].distance.value;
             }
-            state.dogs.sort(function(a, b) {
+            state.dogs.sort(function (a, b) {
                 return a.distanceValueFromUser - b.distanceValueFromUser;
             });
         },
@@ -112,6 +112,7 @@ export default new Vuex.Store({
 
     actions: {
         loadSortDogs(context) {
+             
             var x = [];
             for (var i = 0; i < context.state.dogs.length; i++) {
                 x.push(context.state.dogs[i].location.lat + "," + context.state.dogs[i].location.lng);
@@ -149,8 +150,8 @@ export default new Vuex.Store({
             }
         },
 
-        loadDogs(context) {
-            return dogsService.query()
+        loadDogs(context, {filterBy}) {
+            return dogsService.query(filterBy)
                 .then(dogs => {
                     context.commit({
                         type: 'setDogs',
