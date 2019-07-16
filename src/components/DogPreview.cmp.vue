@@ -1,10 +1,20 @@
 <template>
-  <div class="slide-container">
-    <div class="wrapper">
-      <div class="clash-card barbarian">
-        <div class="clash-card__image clash-card__image--barbarian">
-          <img :src="imgToLoad" alt="barbarian" />
-        </div>
+<div class="slide-container" v-if="dog">
+  <div class="wrapper">
+    <div class="clash-card barbarian">
+      <div class="clash-card__image clash-card__image--barbarian">
+        <img :src="imgToLoad" alt="barbarian" />
+      </div>
+      
+      <div class="clash-card__unit-name">{{dog.owner.fullName}} and {{dog.preference.name}}</div>
+      <div class="clash-card__unit-description">
+      <h3 v-if="dog.distanceTextFromUser"> {{dog.distanceTextFromUser}} from you </h3>
+      <h3 v-else>2.3 mi from you</h3>
+      </div>
+
+      <div class="clash-card__unit-stats clash-card__unit-stats--barbarian clearfix">
+        <div class="one-third">
+                    <div class="stat">24</div>
 
         <div class="clash-card__unit-name">{{dog.owner.fullName}} and {{dog.preference.name}}</div>
         <div class="clash-card__unit-description">
