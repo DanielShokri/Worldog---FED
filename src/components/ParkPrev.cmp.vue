@@ -1,16 +1,11 @@
 <template>
   <div class="blog-grid">
-    <a href="#">
-      <v-img aspect-ratio="1.75" :src="park.img"></v-img>
-    </a>
-    
+    <v-img @click="goParkDetails" aspect-ratio="1.75" :src="park.img"></v-img>
     <div class="blog-grid1">
       <ul class="post">
-        <li>
-        </li>
+        <li></li>
         <li>
           <span>
-            
             <b>{{new Date() | timeAgo}}</b>
           </span>
         </li>
@@ -26,7 +21,7 @@
       </h5>
 
       <div class="blog-ic">
-        <a class="blog-read" href="#">Read More</a>
+        <button @click="goParkDetails">Read More</button>
         <div class="clearfix"></div>
       </div>
     </div>
@@ -66,6 +61,11 @@ export default {
   methods: {
     addReview() {
       console.log("adding review");
+    },
+    goParkDetails() {
+      this.$store.dispatch({ type: "goToPark", park: this.park }).then(() => {
+        this.$router.push("/park-details");
+      });
     }
   },
   computed: {
@@ -83,5 +83,8 @@ export default {
 
 <style scoped>
 @import "../../public/css/style.css";
+button {
+  color: black;
+}
 </style>
 

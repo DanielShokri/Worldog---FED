@@ -1,13 +1,10 @@
 <template>
-  <section class="usersMapList" v-if="dogs && userLoc">
-   
-    <GmapMap
-      class="map"
+ <div id="mapTo">
+    <GmapMap  v-if="dogs && userLoc" 
       ref="mapRef"
-      :center="{lat:userLoc.position.lat, lng:userLoc.position.lng}"
+      :center="{lat:currPark.geometry.location.lat, lng:currPark.geometry.location.lng}"
       :zoom="zoomIn"
       map-type-id="terrain"
-      style="max-width: 500px; height: 300px"
     >
       <gmap-info-window
         :options="infoOptions"
@@ -25,7 +22,7 @@
         @click="setCenter(m.position,15,$event) & toggleInfoWindow(m, index)"
       />
 
-      <GmapMarker
+       <GmapMarker
         userLocation
         :position="userLoc.position"
         :clickable="true"
@@ -33,9 +30,17 @@
         :icon="myIcon"
         @click="setCenter(userLoc.position,15,$event) & toggleInfoWindow(userLoc, 0)"
       />
+
+      <GmapMarker
+        userLocation
+        :position="currPark.geometry.location"
+        :clickable="true"
+        :draggable="true"
+        @click="setCenter(currPark.geometry.location,15,$event) & toggleInfoWindow(currPark.geometry, 0)"
+      />
     </GmapMap>
-      <userLiList></userLiList>
-  </section>
+     </div>
+
 </template>
 
 <script>
@@ -65,6 +70,7 @@ export default {
       }
     };
   },
+  props: ["currPark"],
   computed: {
     dogsToShow() {
       var marker = [];
@@ -98,7 +104,9 @@ export default {
       });
     },
     toggleInfoWindow(marker, idx) {
+if(!marker.position) marker.position = marker.location
       this.infoWindowPos = marker.position;
+      if(!marker.infoText) marker.infoText = this.currPark.name
       this.infoOptions.content = marker.infoText;
 
       //check if its the same marker that was selected if yes toggle
@@ -113,7 +121,7 @@ export default {
     }
   },
   components: {
-    userLiList,
+   
   },
   created() {
     this.$store.dispatch({ type: "loadDogs" }).then(() => {
@@ -131,3 +139,12 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+.mapTo{
+  max-width:500px !important; 
+}
+.vue-map-container{
+    height: 90vh;
+}
+</style>

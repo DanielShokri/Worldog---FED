@@ -30,26 +30,22 @@ function getPosition() {
 
 
 
-function query() {
-    return httpService.get(_getUrl())
-
+function query(filterBy) {
+    return httpService.get(_getUrl(), filterBy)
 }
 
 
 function getById(dogId) {
     return httpService.get(_getUrl(dogId))
-
 }
 
 function add(dog) {
     console.log('un service', dog)
     return httpService.post(_getUrl('add'), dog)
-
 }
 
 function remove(dogId) {
     return httpService.delete(_getUrl(dogId))
-
 }
 
 function update(updateDog) {
@@ -76,7 +72,6 @@ function logIn(user) {
             console.log(err,'at front service')
             throw err
         });
-
 }
 
 function signUp(user) {

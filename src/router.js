@@ -19,7 +19,7 @@ export default new Router({
         { path: '/user/:id', component: UserProfile },
         { path: '/user/edit/:id', component: EditUser },
         { path: '/user/edit', component: EditUser },
-        { path: '/park/:id', component: ParkDetails },
+        { path: '/park-details', component: ParkDetails },
         { path: '/park', component: parksList },
     ]
 })
