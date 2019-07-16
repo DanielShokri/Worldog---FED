@@ -17,6 +17,7 @@ export default new Vuex.Store({
         currUser: '',
         sortByDistanceDogs: null,
         userLoc: null,
+        currPark: null,
     },
     mutations: {
         setFilter(state, filter) {
@@ -43,11 +44,17 @@ export default new Vuex.Store({
         },
         setSortDogs(state, { res }) {
             for (var i = 0; i < state.dogs.length; i++) {
-                state.dogs[i].distanceText = res.elements[i].distance.text;
-                state.dogs[i].distanceValue = res.elements[i].distance.value;
+                state.dogs[i].distanceTextFromUser = res.elements[i].distance.text;
+                state.dogs[i].distanceValueFromUser = res.elements[i].distance.value;
+            }
+        },
+        setSortDogsByMap(state, { res }) {
+            for (var i = 0; i < state.dogs.length; i++) {
+                state.dogs[i].distanceTextFromMap = res.elements[i].distance.text;
+                state.dogs[i].distanceValueFromMap = res.elements[i].distance.value;
             }
             state.dogs.sort(function(a, b) {
-                return a.distanceValue - b.distanceValue;
+                return a.distanceValueFromUser - b.distanceValueFromUser;
             });
         },
         setDogs(state, {
@@ -79,6 +86,9 @@ export default new Vuex.Store({
             state.dogs.splice(idx, 1, dog);
 
         },
+        setCurrPark(state, { park }) {
+            state.currPark = park;
+        }
     },
     getters: {
         dogsToShow(state) {
@@ -95,11 +105,13 @@ export default new Vuex.Store({
         getDog(state) {
             return state.dog
         },
+        getCurrPark(state) {
+            return state.currPark;
+        }
     },
 
     actions: {
         loadSortDogs(context) {
-
             var x = [];
             for (var i = 0; i < context.state.dogs.length; i++) {
                 x.push(context.state.dogs[i].location.lat + "," + context.state.dogs[i].location.lng);
@@ -108,6 +120,7 @@ export default new Vuex.Store({
 
             googleMapsService
                 .getDist({
+
                     userLoc: context.state.userLoc.position.lat + "," + context.state.userLoc.position.lng,
                     usersLoc: x
                 })
@@ -117,10 +130,23 @@ export default new Vuex.Store({
                         res
                     })
                     return res
-
-
                 });
 
+            if (context.state.currPark) {
+                googleMapsService
+                    .getDist({
+
+                        userLoc: context.state.currPark.geometry.location.lat + "," + context.state.currPark.geometry.location.lng,
+                        usersLoc: x
+                    })
+                    .then(res => {
+                        context.commit({
+                            type: 'setSortDogsByMap',
+                            res
+                        })
+                        return res
+                    });
+            }
         },
 
         loadDogs(context) {
@@ -222,6 +248,9 @@ export default new Vuex.Store({
                 .then(() => {
                     context.commit({ type: 'setLoggedOutUser' })
                 })
+        },
+        goToPark(context, { park }) {
+            context.commit({ type: 'setCurrPark', park })
         }
     },
     modules: {
