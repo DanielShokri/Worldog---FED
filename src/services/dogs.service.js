@@ -12,6 +12,9 @@ export default {
     signUp,
     getLoggedinUser,
     getPosition,
+    sendFriendReq,
+    getFriendReq,
+    makeFriendship,
 }
 
 
@@ -34,6 +37,29 @@ function query(filterBy) {
     console.log('this is service', filterBy)
     return httpService.get(_getUrl(), filterBy)
 }
+
+function sendFriendReq(dogId) {
+    return httpService.put(_getUrl('sendFriendReq'), { dogId })
+}
+
+function getFriendReq(dogId, dogImg, dogName) {
+    var sendDog = {
+        dogId,
+        dogImg,
+        dogName
+    }
+    return httpService.post(_getUrl('getFriendReq'), sendDog)
+}
+
+function makeFriendship(dogId, dogImg, dogName) {
+    var sendDog = {
+        dogId,
+        dogImg,
+        dogName
+    }
+    return httpService.post(_getUrl('makeFriendship'), sendDog)
+}
+
 
 
 
@@ -63,15 +89,16 @@ function getLoggedinUser() {
 
 function logIn(user) {
     console.log('doing login');
-    
+
     return httpService.post(_getUrl(), user)
         .then(res => {
-            if(!res) throw new Error('Cant Login')
+            if (!res) throw new Error('Cant Login')
             sessionStorage.setItem('LoggedUser', JSON.stringify(res));
+            console.log(res)
             return res;
         })
         .catch(err => {
-            console.log(err,'at front service')
+            console.log(err, 'at front service')
             throw err
         });
 }
@@ -86,9 +113,10 @@ function signUp(user) {
         });
 
 }
+
 function logOut() {
     return httpService.post(_getUrl('logout'))
-        .then(res => {
+        .then(() => {
             sessionStorage.clear()
         })
         .catch(err => {

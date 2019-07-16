@@ -24,7 +24,6 @@ export default new Vuex.Store({
             state.filterBy = JSON.parse(JSON.stringify(filter));
         },
         setLoc(state, { pos }) {
-            // console.log(pos)
             state.userLoc = {
                 position: {
                     lat: pos.coords.latitude,
@@ -53,7 +52,7 @@ export default new Vuex.Store({
                 state.dogs[i].distanceTextFromMap = res.elements[i].distance.text;
                 state.dogs[i].distanceValueFromMap = res.elements[i].distance.value;
             }
-            state.dogs.sort(function (a, b) {
+            state.dogs.sort(function(a, b) {
                 return a.distanceValueFromUser - b.distanceValueFromUser;
             });
         },
@@ -85,6 +84,23 @@ export default new Vuex.Store({
             const idx = state.dogs.findIndex(currDog => currDog._id === dog._id)
             state.dogs.splice(idx, 1, dog);
 
+        },
+        updateDogFriendReq(state, { updatedDogId }) {
+            console.log(updatedDogId)
+
+            const dogIdx = state.dogs.findIndex(dog => dog._id === updatedDogId)
+            var dog;
+            state.dogs.forEach(currDog => {
+                if (currDog._id === updatedDogId) dog = currDog
+            })
+            console.log(dog)
+            console.log(state.currUser[0])
+            dog.gotFriendsReq.push({ userId: state.currUser[0]._id, userImg: state.currUser[0].profileImg, userName: state.currUser[0].owner.fullName })
+            const userIdx = state.dogs.findIndex(dog => dog._id === state.currUser[0]._id)
+            state.currUser[0].sentFriendsReq.push(updatedDogId)
+
+            state.dogs.splice(userIdx, 1, state.currUser[0]);
+            state.dogs.splice(dogIdx, 1, dog)
         },
         setCurrPark(state, { park }) {
             state.currPark = park;
@@ -148,6 +164,17 @@ export default new Vuex.Store({
                     });
             }
 
+        },
+        updateFriendReq(context, { dogId }) {
+            return dogsService.sendFriendReq(dogId)
+                .then(updatedDogId => {
+                    console.log(updatedDogId)
+                    context.commit({
+                        type: 'updateDogFriendReq',
+                        updatedDogId
+                    })
+                    return updatedDogId
+                })
         },
 
         loadDogs(context, { filterBy }) {
