@@ -38,7 +38,7 @@ function query(filterBy) {
 }
 
 function sendFriendReq(dogId) {
-    return httpService.post(_getUrl('sendFriendReq'), dogId)
+    return httpService.put(_getUrl('sendFriendReq'), { dogId })
 }
 
 function getFriendReq(dogId, dogImg, dogName) {
@@ -92,6 +92,7 @@ function logIn(user) {
         .then(res => {
             if (!res) throw new Error('Cant Login')
             sessionStorage.setItem('LoggedUser', JSON.stringify(res));
+            console.log(res)
             return res;
         })
         .catch(err => {

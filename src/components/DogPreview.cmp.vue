@@ -64,6 +64,9 @@ export default {
   methods: {
     addFrind(dogId) {
       console.log("adding friend");
+       this.$store.dispatch({ type: "updateFriendReq",dogId }).then(() => {
+         console.log("added friend");
+       })
     },
     emitDeleteDog(dogId) {
       this.$emit("delete", dogId);
