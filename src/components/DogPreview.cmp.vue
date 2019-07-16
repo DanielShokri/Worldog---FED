@@ -5,60 +5,44 @@
       <div class="clash-card__image clash-card__image--barbarian">
         <img :src="imgToLoad" alt="barbarian" />
       </div>
-      
       <div class="clash-card__unit-name">{{dog.owner.fullName}} and {{dog.preference.name}}</div>
       <div class="clash-card__unit-description">
       <h3 v-if="dog.distanceTextFromUser"> {{dog.distanceTextFromUser}} from you </h3>
       <h3 v-else>2.3 mi from you</h3>
       </div>
-
-      <div class="clash-card__unit-stats clash-card__unit-stats--barbarian clearfix">
-        <div class="one-third">
-                    <div class="stat">24</div>
-
-        <div class="clash-card__unit-name">{{dog.owner.fullName}} and {{dog.preference.name}}</div>
-        <div class="clash-card__unit-description">
-          <h3>TODO distance from you</h3>
-        </div>
-
         <div class="clash-card__unit-stats clash-card__unit-stats--barbarian clearfix">
           <div class="one-third">
             <div class="stat">24</div>
-
             <div class="stat-value">Friend</div>
           </div>
-
           <div class="one-third">
             <div class="stat">+</div>
-
             <div class="stat-value">
               <button v-on:click="addFrind(dog._id)">FrienDog</button>
             </div>
           </div>
-
           <div class="one-third no-border">
             <div class="stat">v</div>
-
             <div class="stat-value">
               <router-link :to="'/user/'+dog._id">Profile</router-link>
             </div>
           </div>
         </div>
-      </div>
-      <!-- end clash-card barbarian-->
-    </div>
-    <!-- end wrapper -->
+      </div>  <!-- end clash-card barbarian-->
+    </div><!-- end wrapper -->
+   <div> 
     <div v-if="loggedinUser">
       <div v-if="loggedinUser.isAdmin">
         <v-btn class="btn" small color="green accent-3">
           <router-link :to="'/user/edit/'+dog._id">Edit</router-link>
         </v-btn>
-
         <v-btn small color="red lighten-1" v-on:click="emitDeleteDog(dog._id)">Delete</v-btn>--> -->
       </div>
     </div>
   </div>
-  <!-- end container -->
+ </div>
+
+   <!-- end container -->
 </template>
 
 <script>

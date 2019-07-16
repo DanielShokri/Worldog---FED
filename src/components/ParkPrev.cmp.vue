@@ -142,7 +142,7 @@ body {
   position: relative;
   text-align: center;
   box-shadow: -1px 15px 30px -12px black;
-  z-index: 9999;
+  z-index: 0;
   padding-bottom: 12px;
 }
 
@@ -242,12 +242,12 @@ body {
 
 .slick-prev {
   left: 100px;
-  z-index: 999;
+  z-index: 0;
 }
 
 .slick-next {
   right: 100px;
-  z-index: 999;
+  z-index: 0;
 }
 
 </style>
