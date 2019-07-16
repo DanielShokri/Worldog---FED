@@ -16,7 +16,6 @@ function getInfo(pos) {
 }
 
 function getDist(dist) {
-    console.log(dist)
     return axios.get(`${_getUrl()}/getDistance?dist=${dist.userLoc}&userdist=${dist.usersLoc}`, )
         .then(res => {
             return res.data

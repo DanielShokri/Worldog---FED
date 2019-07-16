@@ -24,7 +24,6 @@ export default new Vuex.Store({
             state.filterBy = JSON.parse(JSON.stringify(filter));
         },
         setLoc(state, { pos }) {
-            console.log(pos)
             state.userLoc = {
                 position: {
                     lat: pos.coords.latitude,
