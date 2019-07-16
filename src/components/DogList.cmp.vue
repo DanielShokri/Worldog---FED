@@ -7,7 +7,6 @@
 </template>
 
 <script>
-<<<<<<< HEAD
 import DogPreview from './DogPreview.cmp.vue'
 
 export default { 
@@ -26,22 +25,6 @@ props: ["dogs", "loggedinUser"],
     
   components: {
     DogPreview,
-=======
-import DogPreview from "./DogPreview.cmp.vue";
-
-export default {
-  props: ["dogs", "loggedinUser"],
-  data() {
-    return {};
-  },
-  methods: {
-    emitDeleteDog(dogId) {
-      this.$emit("delete", dogId);
-    }
-  },
-  components: {
-    DogPreview
->>>>>>> 40c0dd1de6937bc1ea338e8d2e24ab23e9fb3d49
   }
 }
 </script>
