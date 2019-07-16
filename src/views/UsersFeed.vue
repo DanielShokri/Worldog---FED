@@ -6,14 +6,19 @@
     <!-- </v-btn> -->
 
     <!-- <toy-filter @set-filter="setFilter"></toy-filter> -->
+<<<<<<< HEAD
 
     <dog-list :loggedinUser="loggedinUser" :dogs="dogs" @delete="deleteDog"></dog-list>
+=======
+    
+    <dog-list :dogs="dogs" @delete="deleteDog"></dog-list>
+
+>>>>>>> 0bdbb19cf539365ba44ade02250be171cccfa57f
   </section>
 </template>
 
 <script>
 import dogList from "../components/DogList.cmp.vue";
-// import toyFilter from "../components/toy-filter.vue";
 
 export default {
   data() {
@@ -24,6 +29,7 @@ export default {
     };
   },
   created() {
+<<<<<<< HEAD
     this.$store.dispatch({
       type: "loadDogs"
     });
@@ -35,6 +41,14 @@ export default {
     //   this.$store.commit("setFilter", filterBy);
     // },
 
+=======
+    // this.$store.dispatch({
+    //   type: "loadDogs"
+    // });
+    this.user = this.$store.getters.getLoggedinUser
+  },
+  methods: {
+>>>>>>> 0bdbb19cf539365ba44ade02250be171cccfa57f
     deleteDog(dogId) {
       this.$store.dispatch({
         type: "deleteDog",
@@ -53,8 +67,12 @@ export default {
     }
   },
   components: {
+<<<<<<< HEAD
     dogList
     // toyFilter,
+=======
+    dogList,
+>>>>>>> 0bdbb19cf539365ba44ade02250be171cccfa57f
   }
 };
 </script>
