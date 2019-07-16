@@ -17,7 +17,7 @@
     <section v-if="dogs" class="hero is-danger is-bold">
       <div class="hero-body">
         <h1 class="parks-title">Nearby Dogs</h1>
-        <dog-list :dogs="dogs" @delete="deleteDog"></dog-list>
+        <dog-list :dogs="dogsToShow" @delete="deleteDog"></dog-list>
         <div class="container"></div>
       </div>
     </section>
@@ -40,18 +40,39 @@ export default {
   name: "home",
 
   created() {
-    this.$store.dispatch({
-      type: "loadDogs"
+
+    this.$store.dispatch({ type: "loggedInUser" })
+    this.$store.dispatch({ type: "loadDogs" }).then(() => {
+      this.$store.dispatch({ type: "loadUserLoc" }).then(() => {
+        this.$store.dispatch({ type: "loadSortDogs" }).then(() => {
+          this.dogs = this.$store.getters.dogsToShow;
+        });
+      });
     });
-    this.$store.dispatch({ type: "loggedInUser" });
+  },
+    data() {
+    return {
+      dogs: null,
+    };
   },
   computed: {
+<<<<<<< HEAD
     dogs() {
       const dogs = this.$store.getters.dogsToShow;
       if (!dogs.length) return;
       const fourDogs = [dogs[0], dogs[1], dogs[2], dogs[3]];
       console.log(fourDogs);
       return fourDogs;
+=======
+    dogsToShow() {
+      var newDogs = [this.dogs[0],this.dogs[1],this.dogs[2],this.dogs[3]]
+      return newDogs;
+      // const dogs = this.$store.getters.dogsToShow;
+      // if(!dogs.length) return
+      // const fourDogs = [dogs[0], dogs[1], dogs[2], dogs[3]];
+      // console.log(fourDogs)
+      // return fourDogs;
+>>>>>>> 40c0dd1de6937bc1ea338e8d2e24ab23e9fb3d49
     }
   },
   methods: {

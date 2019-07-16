@@ -46,13 +46,18 @@ export default new Vuex.Store({
                 state.dogs[i].distanceTextFromUser = res.elements[i].distance.text;
                 state.dogs[i].distanceValueFromUser = res.elements[i].distance.value;
             }
+            if (!state.currPark) {
+                state.dogs.sort(function(a, b) {
+                    return a.distanceValueFromUser - b.distanceValueFromUser;
+                });
+            }
         },
         setSortDogsByMap(state, { res }) {
             for (var i = 0; i < state.dogs.length; i++) {
                 state.dogs[i].distanceTextFromMap = res.elements[i].distance.text;
                 state.dogs[i].distanceValueFromMap = res.elements[i].distance.value;
             }
-            state.dogs.sort(function(a, b) {
+            state.dogs.sort(function (a, b) {
                 return a.distanceValueFromUser - b.distanceValueFromUser;
             });
         },
@@ -123,6 +128,9 @@ export default new Vuex.Store({
         },
         getCurrPark(state) {
             return state.currPark;
+        },
+        getNotfications() {
+            return state.currUser[0].sentFriendsReq
         }
     },
 
