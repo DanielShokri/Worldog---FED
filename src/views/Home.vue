@@ -1,17 +1,13 @@
 <template>
   <div>
-    <section class="section">
+    <!-- <section class="section"> -->
+    <!-- <div class="container"> -->
+    <div>
+      <img slot="img" src="../../public/img/home.svg" alt />
+      <UsersFilter></UsersFilter>
+    </div>
 
-      <div class="container">
-        <h1 class="title">MeetHav</h1>
-        <h2 class="subtitle">
-          Meet new and intrensting dog's nearby
-        </h2>
-        
-      </div>
-    </section>
-
-    <section class="hero is-primary">
+    <section class="hero is-danger is-bold">
       <div class="hero-body">
         <h1 class="parks-title">Nearby Parks</h1>
         <park-list></park-list>
@@ -20,10 +16,9 @@
     </section>
 
     <!-- <section class="section"> -->
-      <div class="container">
-        <userLiList></userLiList>
-      
-      </div>
+    <div class="container">
+      <userLiList></userLiList>
+    </div>
     <!-- </section> -->
   </div>
 </template>
@@ -32,10 +27,10 @@
 import UserListMap from "../components/UsersListMap.cmp";
 import UserLiList from "../components/UserLiList.cmp";
 import ParkList from "../components/ParksList.cmp.vue";
-
+import UsersFilter from "../components/UsersFilter.cmp";
 export default {
   name: "home",
-  components: { UserListMap, ParkList, UserLiList },
+  components: { UserListMap, ParkList, UserLiList, UsersFilter },
 
   created() {
     this.$store.dispatch({ type: "loggedInUser" });
@@ -49,7 +44,10 @@ export default {
 .home-section {
   padding: 0;
 }
-.home-section img{
+.home-section img {
   width: 100%;
+}
+.home-header {
+  background-image: url("../../public/img/home.svg");
 }
 </style>
