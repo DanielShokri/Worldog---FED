@@ -33,7 +33,7 @@ export default {
         }
       };
       googleMapsService.getInfo(this.userLoc.position).then(pos => {
-        for (var i = 0; i < 3; i++) {
+        for (var i = 0; i < 4; i++) {
           this.gardens.push(pos[i]);
           this.photos.push(this.gardens[i].photos[0].photo_reference);
           this.gardens[i].img = (`https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=${
