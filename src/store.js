@@ -112,11 +112,7 @@ export default new Vuex.Store({
 
     actions: {
         loadSortDogs(context) {
-<<<<<<< HEAD
              
-=======
-
->>>>>>> aa6a259a0e2a02be418c93108bcea646f437dc2c
             var x = [];
             for (var i = 0; i < context.state.dogs.length; i++) {
                 x.push(context.state.dogs[i].location.lat + "," + context.state.dogs[i].location.lng);
