@@ -46,6 +46,11 @@ export default new Vuex.Store({
                 state.dogs[i].distanceTextFromUser = res.elements[i].distance.text;
                 state.dogs[i].distanceValueFromUser = res.elements[i].distance.value;
             }
+            if (!state.currPark) {
+                state.dogs.sort(function(a, b) {
+                    return a.distanceValueFromUser - b.distanceValueFromUser;
+                });
+            }
         },
         setSortDogsByMap(state, { res }) {
             for (var i = 0; i < state.dogs.length; i++) {
