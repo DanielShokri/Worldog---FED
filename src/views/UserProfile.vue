@@ -1,6 +1,7 @@
 <template>
   <div v-if="dog" class="container">
     <header>
+        <img :src="backImgToLoad"/>
       <i>
         <b-icon icon="menu"></b-icon>
       </i>
@@ -52,7 +53,7 @@
           </ul>
           <div class="row comp">
             <div v-if="this.comp ==='Gallery'">
-              <user-gallery></user-gallery>
+              <user-gallery :user="dog"></user-gallery>
             </div>
             <div v-if="this.comp==='Friends'">
               <user-friends></user-friends>
@@ -120,6 +121,11 @@ export default {
       console.log("this dog", this.dog);
       if (this.dog.profileImg) return this.dog.profileImg;
       else return "https://www.sunnyskyz.com/uploads/2016/12/nlf37-dog.jpg";
+    },
+    backImgToLoad(){
+       console.log("this dog", this.dog);
+      if (this.dog.profileImg) return this.dog.backImg;
+      else return "https://www.sunnyskyz.com/uploads/2016/12/nlf37-dog.jpg";
     }
   },
   components: {
@@ -147,22 +153,26 @@ body {
 }
 
 header {
-  background: #eee;
+  /* background: #eee;
   background-image: url("https://image.noelshack.com/fichiers/2017/38/2/1505775648-annapurnafocus.jpg");
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
-  background-color: red;
+  background-color: red; */
   height: 250px;
 }
 
 header i {
-  position: relative;
+  position: absolute;
   cursor: pointer;
   right: -90%;
   top: 25px;
   font-size: 18px !important;
   color: #fff;
+}
+header img{
+   height: 250px;
+   width: 100%
 }
 
 @media (max-width: 800px) {
@@ -170,9 +180,9 @@ header i {
     height: 150px;
   }
 
-  /* header i {
-    right: -45%;
-  } */
+  header img {
+    height: 150px;
+  }
 }
 
 main {
@@ -211,7 +221,12 @@ main {
     top: 50px;
   }
   header i {
-    right: -45%;
+    /* position: absolute;
+    top: -266px; */
+    color:rgb(255, 255, 255);
+        position: absolute;
+    top: 20px;
+    right: 20px;
   }
   .right {
     width: 100%;
@@ -307,7 +322,7 @@ main {
 }
 
 .right {
-  padding: 0 25px 0 25px !important;
+  padding: 0 25px 25px 25px !important;
 }
 
 .nav {
@@ -322,6 +337,7 @@ main {
   font-family: "Montserrat", sans-serif;
   font-weight: 500;
   color: #888;
+  border-bottom: 2px solid rgb(255, 254, 254);
 }
 
 .nav li:hover {
@@ -362,19 +378,5 @@ main {
     margin: 0 auto;
   }
 }
-.comp {
-  margin-top: 35px;
-}
 
-.comp div {
-  margin-bottom: 30px;
-}
-
-.comp img {
-  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1), 0 3px 6px rgba(0, 0, 0, 0.1);
-  width: auto;
-  height: auto;
-  cursor: pointer;
-  max-width: 100%;
-}
 </style>
