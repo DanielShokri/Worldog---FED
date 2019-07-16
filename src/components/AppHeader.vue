@@ -62,8 +62,8 @@
             <b-dropdown-item value="home" aria-role="menuitem">
               <b-icon icon="bell"></b-icon>Notification's
             </b-dropdown-item>
-            <b-dropdown-item value="settings">
-              <b-icon icon="settings"></b-icon>Profile
+            <b-dropdown-item v-on:click="goToMyProfile()" value="settings">
+              <b-icon  icon="settings"></b-icon>Profile
             </b-dropdown-item>
             <hr class="dropdown-divider" aria-role="menuitem" />
             <b-dropdown-item value="logout" @click="userLogout" aria-role="menuitem">
@@ -88,6 +88,9 @@ export default {
     };
   },
   methods: {
+    goToMyProfile(){
+      this.$router.push(`/user/${this.getUser[0]._id}`)
+    },
     cardModal() {
       this.$modal.open({
         parent: this,

@@ -1,8 +1,9 @@
 <template>
-<v-layout row wrap>
+<v-layout row wrap v-if="dogs">
 <v-flex xs12 sm6 mb4 lg3 v-for="dog in dogs" :key="dog._id">
 
             <dog-preview                             
+                            :loggedinUser="loggedinUser" 
                              :dog="dog" 
                              @delete="emitDeleteDog"
                             >
@@ -16,9 +17,7 @@
 import DogPreview from './DogPreview.cmp.vue'
 
 export default { 
-props: {
-    dogs: Array
-  },
+props: ["dogs", "loggedinUser"],
     data() {
         return {
 

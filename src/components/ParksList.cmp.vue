@@ -1,8 +1,14 @@
 <template>
   <section class="parksList" v-if="userLoc">
-    <div v-for="nearestGarden in gardens" :key="nearestGarden.id">
+    <v-layout row wrap>
+<v-flex xs12 sm6 mb4 lg3 v-for="nearestGarden in gardens" :key="nearestGarden.id">
+
+           <parkPrev  :park="nearestGarden"></parkPrev>
+</v-flex>
+</v-layout>
+    <!-- <div v-for="nearestGarden in gardens" :key="nearestGarden.id">
       <parkPrev  :park="nearestGarden"></parkPrev>
-    </div>
+    </div> -->
   </section>
 </template>
 

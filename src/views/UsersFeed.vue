@@ -1,14 +1,13 @@
 
 <template>
-  <section v-if="dogs">
+  <section v-if="dogs && loggedinUser" >
     <!-- <v-btn  color="indigo" class="btn-add-dog"> -->
-      <!-- <router-link :to="'user/edit'">Add Dog</router-link> -->
+    <!-- <router-link :to="'user/edit'">Add Dog</router-link> -->
     <!-- </v-btn> -->
 
     <!-- <toy-filter @set-filter="setFilter"></toy-filter> -->
 
-    <dog-list :dogs="dogs" @delete="deleteDog"></dog-list>
-
+    <dog-list :loggedinUser="loggedinUser" :dogs="dogs" @delete="deleteDog"></dog-list>
   </section>
 </template>
 
@@ -20,21 +19,18 @@ export default {
   data() {
     return {
       newDog: {
-        name: "",
-       
-      },
-      user:{
-      },
+        name: ""
+      }
     };
   },
   created() {
     this.$store.dispatch({
       type: "loadDogs"
     });
-    this.user = this.$store.getters.getLoggedinUser
+    this.$store.dispatch({ type: "loggedInUser" });
+    // this.user =
   },
   methods: {
-   
     // setFilter(filterBy) {
     //   this.$store.commit("setFilter", filterBy);
     // },
@@ -48,20 +44,22 @@ export default {
   },
 
   computed: {
+    loggedinUser() {
+      console.log("login user", this.$store.getters.getcurrLoggedinUser);
+      return this.$store.getters.getcurrLoggedinUser;
+    },
     dogs() {
       return this.$store.getters.dogsToShow;
     }
   },
   components: {
-    dogList,
+    dogList
     // toyFilter,
-    
   }
 };
 </script>
 
 <style scoped>
-
 </style>
 
 

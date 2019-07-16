@@ -8,7 +8,7 @@
       
       <div class="clash-card__unit-name">{{dog.owner.fullName}} and {{dog.preference.name}}</div>
       <div class="clash-card__unit-description">
-       TODO distance from you 
+      <h3> TODO distance from you </h3>
       </div>
 
       <div class="clash-card__unit-stats clash-card__unit-stats--barbarian clearfix">
@@ -33,13 +33,14 @@
 
     </div> <!-- end clash-card barbarian-->
   </div> <!-- end wrapper -->
-   <div  v-if="user">
-  <div  v-if="user.isAdmin">
+   <div v-if="loggedinUser">
+  <div  v-if="loggedinUser.isAdmin" >
+    
       <v-btn class="btn" small color="green accent-3">
         <router-link :to="'/user/edit/'+dog._id">Edit</router-link>
       </v-btn>
 
-      <v-btn small color="red lighten-1" v-on:click="emitDeleteDog(dog._id)">Delete</v-btn>
+      <v-btn small color="red lighten-1" v-on:click="emitDeleteDog(dog._id)">Delete</v-btn> --> -->
       </div>
          </div>
 </div> <!-- end container -->
@@ -48,16 +49,13 @@
 
 <script>
 export default {
-  props: {
-    dog: Object
-  },
+  props: ['dog', 'loggedinUser'],
   data() {
     return {
-      user: {}
     };
   },
   created() {
-    this.user = this.$store.getters.getLoggedinUser;
+    // this.user = this.$store.getters.getLoggedinUser;
     // console.log(this.user)
   },
 
@@ -89,10 +87,10 @@ export default {
 @import url(https://fonts.googleapis.com/css?family=Lato:400,700,900);
 
 $border-radius-size: 14px;
-$barbarian: #EC9B3B;
+$barbarian: #ff3860;
 $archer: #EE5487;
 $giant: #F6901A;
-$goblin: #82BB30;
+$goblin: rgb(88, 212, 181);
 $wizard: #4FACFF;
 
 *, *:before, *:after {
@@ -135,7 +133,7 @@ body {
   position: relative;
   text-align: center;
   box-shadow: -1px 15px 30px -12px black;
-  z-index: 9999;
+  z-index: 0;
 }
 
 .clash-card__image {
@@ -164,48 +162,21 @@ body {
 
 .clash-card__unit-description {
   padding: 20px;
-  margin-bottom: 10px;  
+  margin-bottom: 10px;
+  
+  h3{
+    color: #9E9E9E;
+  }
 }
 
 .clash-card__unit-stats--barbarian {
-  background: $barbarian;
-  
-  .one-third {
-     border-right: 1px solid #BD7C2F;
-  }
-}
-
-.clash-card__unit-stats--archer {
-  background: $archer;
-  
-  .one-third {
-     border-right: 1px solid #D04976;
-  }
-}
-
-.clash-card__unit-stats--giant {
-  background: $giant;
-  
-  .one-third {
-     border-right: 1px solid darken($giant, 8%);
-  }
-}
-
-.clash-card__unit-stats--goblin {
   background: $goblin;
   
   .one-third {
-     border-right: 1px solid darken($goblin, 6%);
+     border-right: 1px solid #5e1523;
   }
 }
 
-.clash-card__unit-stats--wizard {
-  background: $wizard;
-  
-  .one-third {
-     border-right: 1px solid darken($wizard, 6%);
-  }
-}
 
 .clash-card__unit-stats {
   
@@ -265,12 +236,12 @@ body {
 
 .slick-prev {
   left: 100px;
-  z-index: 999;
+  z-index: 0;
 }
 
 .slick-next {
   right: 100px;
-  z-index: 999;
+  z-index: 0;
 }
 /* li {
   display: flex;
