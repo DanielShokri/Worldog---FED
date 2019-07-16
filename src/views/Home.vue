@@ -48,9 +48,9 @@ export default {
   computed: {
     dogs() {
       const dogs = this.$store.getters.dogsToShow;
-      if(!dogs.length) return
+      if (!dogs.length) return;
       const fourDogs = [dogs[0], dogs[1], dogs[2], dogs[3]];
-      console.log(fourDogs)
+      console.log(fourDogs);
       return fourDogs;
     }
   },
@@ -59,7 +59,7 @@ export default {
       // console.log('This is home filter', filterBy)
       this.$store.dispatch({ type: "loadDogs", filterBy });
     },
-    
+
     deleteDog(dogId) {
       this.$store.dispatch({
         type: "deleteDog",
@@ -71,6 +71,11 @@ export default {
 };
 </script>
 <style scoped>
+h1 {
+  font-size: 20px;
+  text-align: left;
+  padding-left: 28px;
+}
 .hero-body {
   margin: 0 30px;
 }

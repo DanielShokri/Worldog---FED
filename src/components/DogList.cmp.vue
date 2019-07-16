@@ -29,14 +29,9 @@ props: ["dogs", "loggedinUser"],
         },
        
     },
-    components: {
-        DogPreview,
-
-    }
-  },
+    
   components: {
     DogPreview,
-    userFilter
   }
-};
+}
 </script>

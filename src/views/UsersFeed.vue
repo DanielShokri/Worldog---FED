@@ -1,6 +1,6 @@
 
 <template>
-  <section v-if="dogs && loggedinUser" >
+  <section v-if="dogs" >
     <!-- <v-btn  color="indigo" class="btn-add-dog"> -->
     <!-- <router-link :to="'user/edit'">Add Dog</router-link> -->
     <!-- </v-btn> -->
