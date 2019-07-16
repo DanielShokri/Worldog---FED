@@ -52,7 +52,7 @@ export default new Vuex.Store({
                 state.dogs[i].distanceTextFromMap = res.elements[i].distance.text;
                 state.dogs[i].distanceValueFromMap = res.elements[i].distance.value;
             }
-            state.dogs.sort(function(a, b) {
+            state.dogs.sort(function (a, b) {
                 return a.distanceValueFromUser - b.distanceValueFromUser;
             });
         },
@@ -123,6 +123,9 @@ export default new Vuex.Store({
         },
         getCurrPark(state) {
             return state.currPark;
+        },
+        getNotfications() {
+            return state.currUser[0].sentFriendsReq
         }
     },
 

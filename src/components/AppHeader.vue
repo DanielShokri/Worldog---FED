@@ -47,10 +47,17 @@
         </div>
       </div>
 
+      
+
       <div v-if="getUser" class="navbar-menu">
         <div class="navbar-end">
-          <b-dropdown position="is-bottom-left" aria-role="menu">
-            <a class="navbar-item" slot="trigger" role="button">
+          <b-dropdown position="is-bottom-left"  aria-role="menu">
+            <a class="navbar-item" slot="trigger"  role="button">
+              <v-badge left>
+                <template v-slot:badge>
+                  <span>6</span>
+                </template>
+              </v-badge>
               <span>Menu</span>
               <b-icon icon="menu-down"></b-icon>
             </a>
@@ -63,7 +70,7 @@
               <b-icon icon="bell"></b-icon>Notification's
             </b-dropdown-item>
             <b-dropdown-item v-on:click="goToMyProfile()" value="settings">
-              <b-icon  icon="settings"></b-icon>Profile
+              <b-icon icon="settings"></b-icon>Profile
             </b-dropdown-item>
             <hr class="dropdown-divider" aria-role="menuitem" />
             <b-dropdown-item value="logout" @click="userLogout" aria-role="menuitem">
@@ -88,8 +95,8 @@ export default {
     };
   },
   methods: {
-    goToMyProfile(){
-      this.$router.push(`/user/${this.getUser[0]._id}`)
+    goToMyProfile() {
+      this.$router.push(`/user/${this.getUser[0]._id}`);
     },
     cardModal() {
       this.$modal.open({
@@ -106,6 +113,9 @@ export default {
   computed: {
     getUser() {
       return this.$store.getters.getcurrLoggedinUser;
+    },
+    getNotfications(){
+      
     }
   }
 };

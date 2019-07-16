@@ -1,58 +1,61 @@
 <template>
-<div class="slide-container">
-  <div class="wrapper">
-    <div class="clash-card barbarian">
-      <div class="clash-card__image clash-card__image--barbarian">
-        <img :src="imgToLoad" alt="barbarian" />
-      </div>
-      
-      <div class="clash-card__unit-name">{{dog.owner.fullName}} and {{dog.preference.name}}</div>
-      <div class="clash-card__unit-description">
-      <h3> TODO distance from you </h3>
-      </div>
-
-      <div class="clash-card__unit-stats clash-card__unit-stats--barbarian clearfix">
-        <div class="one-third">
-                    <div class="stat">24</div>
-
-          <div class="stat-value">Friend</div>
+  <div class="slide-container">
+    <div class="wrapper">
+      <div class="clash-card barbarian">
+        <div class="clash-card__image clash-card__image--barbarian">
+          <img :src="imgToLoad" alt="barbarian" />
         </div>
 
-        <div class="one-third">
-                    <div class="stat">+</div>
-
-           <div class="stat-value"><button v-on:click="addFrind(dog._id)">FrienDog</button></div>
+        <div class="clash-card__unit-name">{{dog.owner.fullName}} and {{dog.preference.name}}</div>
+        <div class="clash-card__unit-description">
+          <h3>TODO distance from you</h3>
         </div>
 
-        <div class="one-third no-border">
-                              <div class="stat">v</div>
+        <div class="clash-card__unit-stats clash-card__unit-stats--barbarian clearfix">
+          <div class="one-third">
+            <div class="stat">24</div>
 
-          <div class="stat-value"><router-link :to="'/user/'+dog._id">Profile</router-link></div>
+            <div class="stat-value">Friend</div>
+          </div>
+
+          <div class="one-third">
+            <div class="stat">+</div>
+
+            <div class="stat-value">
+              <button v-on:click="addFrind(dog._id)">FrienDog</button>
+            </div>
+          </div>
+
+          <div class="one-third no-border">
+            <div class="stat">v</div>
+
+            <div class="stat-value">
+              <router-link :to="'/user/'+dog._id">Profile</router-link>
+            </div>
+          </div>
         </div>
       </div>
+      <!-- end clash-card barbarian-->
+    </div>
+    <!-- end wrapper -->
+    <div v-if="loggedinUser">
+      <div v-if="loggedinUser.isAdmin">
+        <v-btn class="btn" small color="green accent-3">
+          <router-link :to="'/user/edit/'+dog._id">Edit</router-link>
+        </v-btn>
 
-    </div> <!-- end clash-card barbarian-->
-  </div> <!-- end wrapper -->
-   <div v-if="loggedinUser">
-  <div  v-if="loggedinUser.isAdmin" >
-    
-      <v-btn class="btn" small color="green accent-3">
-        <router-link :to="'/user/edit/'+dog._id">Edit</router-link>
-      </v-btn>
-
-      <v-btn small color="red lighten-1" v-on:click="emitDeleteDog(dog._id)">Delete</v-btn> --> -->
+        <v-btn small color="red lighten-1" v-on:click="emitDeleteDog(dog._id)">Delete</v-btn>--> -->
       </div>
-         </div>
-</div> <!-- end container -->
-
+    </div>
+  </div>
+  <!-- end container -->
 </template>
 
 <script>
 export default {
-  props: ['dog', 'loggedinUser'],
+  props: ["dog", "loggedinUser"],
   data() {
-    return {
-    };
+    return {};
   },
   created() {
     // this.user = this.$store.getters.getLoggedinUser;
@@ -62,9 +65,9 @@ export default {
   methods: {
     addFrind(dogId) {
       console.log("adding friend");
-       this.$store.dispatch({ type: "updateFriendReq",dogId }).then(() => {
-         console.log("added friend");
-       })
+      this.$store.dispatch({ type: "updateFriendReq", dogId }).then(() => {
+        console.log("added friend");
+      });
     },
     emitDeleteDog(dogId) {
       this.$emit("delete", dogId);
@@ -74,7 +77,6 @@ export default {
     getLocation() {
       // console.log('user is', this.dog.location)
       var location = this.dog.location;
-      
     },
     imgToLoad() {
       if (this.dog.profileImg) {
@@ -87,25 +89,34 @@ export default {
 };
 </script>
 <style scoped lang="scss">
-@import url(https://fonts.googleapis.com/css?family=Lato:400,700,900);
+// @import url('https://fonts.googleapis.com/css?family=Lato:400');
 
 $border-radius-size: 14px;
 $barbarian: #ff3860;
-$archer: #EE5487;
-$giant: #F6901A;
+$archer: #ee5487;
+$giant: #f6901a;
 $goblin: rgb(88, 212, 181);
-$wizard: #4FACFF;
+$wizard: #4facff;
 
-*, *:before, *:after {
+*,
+*:before,
+*:after {
   box-sizing: border-box;
 }
 
 body {
-  background: linear-gradient(to bottom, rgba(140,122,122,1) 0%, rgba(175,135,124,1) 65%, rgba(175,135,124,1) 100%) fixed;
-  background: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/coc-background.jpg') no-repeat center center fixed;
+  background: linear-gradient(
+      to bottom,
+      rgba(140, 122, 122, 1) 0%,
+      rgba(175, 135, 124, 1) 65%,
+      rgba(175, 135, 124, 1) 100%
+    )
+    fixed;
+  background: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/coc-background.jpg")
+    no-repeat center center fixed;
   background-size: cover;
   font: 14px/20px "Lato", Arial, sans-serif;
-  color: #9E9E9E;
+  color: #9e9e9e;
   margin-top: 30px;
 }
 
@@ -119,13 +130,11 @@ body {
   padding-top: 40px;
   padding-bottom: 40px;
   width: 350px;
-  
+
   &:focus {
     outline: 0;
   }
 }
-
-
 
 .clash-card {
   background: white;
@@ -146,14 +155,12 @@ body {
   border-top-left-radius: $border-radius-size;
   border-top-right-radius: $border-radius-size;
   img {
-        width: 100%;
-        height: 200px;
-            border-top-left-radius: 19px;
+    width: 100%;
+    height: 200px;
+    border-top-left-radius: 19px;
     border-top-right-radius: 19px;
-
   }
 }
-
 
 .clash-card__unit-name {
   font-size: 20px;
@@ -166,60 +173,57 @@ body {
 .clash-card__unit-description {
   padding: 20px;
   margin-bottom: 10px;
-  
-  h3{
-    color: #9E9E9E;
+
+  h3 {
+    color: #9e9e9e;
   }
 }
 
 .clash-card__unit-stats--barbarian {
   background: $goblin;
-  
+
   .one-third {
-     border-right: 1px solid #5e1523;
+    border-right: 1px solid #5e1523;
   }
 }
 
-
 .clash-card__unit-stats {
-  
   color: white;
   font-weight: 700;
   border-bottom-left-radius: $border-radius-size;
   border-bottom-right-radius: $border-radius-size;
-  
+
   .one-third {
     width: 33%;
     float: left;
     padding: 20px 15px;
   }
-  
+
   sup {
     position: absolute;
-    bottom: 4px; 
+    bottom: 4px;
     font-size: 45%;
     margin-left: 2px;
   }
-  
+
   .stat {
     position: relative;
     font-size: 16px;
     // margin-bottom: 10px;
   }
-  
+
   .stat-value {
     text-transform: uppercase;
     font-weight: 400;
     font-size: 13px;
-    a{
-    color: white;
+    a {
+      color: white;
       text-decoration: none;
     }
-    button{
-          text-transform: uppercase;
+    button {
+      text-transform: uppercase;
 
-          font-size: 13px;
-
+      font-size: 13px;
     }
   }
 
@@ -229,12 +233,12 @@ body {
 }
 
 .clearfix:after {
-	visibility: hidden;
-	display: block;
-	font-size: 0;
-	content: " ";
-	clear: both;
-	height: 0;
+  visibility: hidden;
+  display: block;
+  font-size: 0;
+  content: " ";
+  clear: both;
+  height: 0;
 }
 
 .slick-prev {
