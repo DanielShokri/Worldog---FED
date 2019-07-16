@@ -11,7 +11,7 @@ export default {
     logOut,
     signUp,
     getLoggedinUser,
-    getPosition
+    getPosition,
 }
 
 
@@ -31,8 +31,10 @@ function getPosition() {
 
 
 function query(filterBy) {
+    console.log('this is service', filterBy)
     return httpService.get(_getUrl(), filterBy)
 }
+
 
 
 function getById(dogId) {

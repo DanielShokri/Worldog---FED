@@ -24,7 +24,7 @@ export default new Vuex.Store({
             state.filterBy = JSON.parse(JSON.stringify(filter));
         },
         setLoc(state, { pos }) {
-            console.log(pos)
+            // console.log(pos)
             state.userLoc = {
                 position: {
                     lat: pos.coords.latitude,
@@ -36,7 +36,7 @@ export default new Vuex.Store({
             state.currUser = currUserLoggedIn;
         },
         setLoggedUser(state, { userLoggedNow }) {
-            console.log('this is the loggeduser store mutation', userLoggedNow);
+            // console.log('this is the loggeduser store mutation', userLoggedNow);
             state.currUser = userLoggedNow;
         },
         setLoggedOutUser(state) {
@@ -112,13 +112,12 @@ export default new Vuex.Store({
 
     actions: {
         loadSortDogs(context) {
-             
+
             var x = [];
             for (var i = 0; i < context.state.dogs.length; i++) {
                 x.push(context.state.dogs[i].location.lat + "," + context.state.dogs[i].location.lng);
             }
             x = x.join("|");
-
             googleMapsService
                 .getDist({
 
@@ -151,9 +150,10 @@ export default new Vuex.Store({
 
         },
 
-        loadDogs(context, {filterBy}) {
+        loadDogs(context, { filterBy }) {
             return dogsService.query(filterBy)
                 .then(dogs => {
+                    console.log('this is load dog store', dogs)
                     context.commit({
                         type: 'setDogs',
                         dogs

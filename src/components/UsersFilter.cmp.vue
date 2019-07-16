@@ -1,5 +1,5 @@
 <template>
-  <form @submit.prevent="searchUser">
+  <div>
     <b-input
       class="search-box"
       v-model="filterBy.txt"
@@ -7,7 +7,8 @@
       type="search"
       icon="magnify"
     ></b-input>
-  </form>
+    <button @click="searchUser">Search</button>
+  </div>
 </template>
 
 
@@ -21,9 +22,10 @@ export default {
     };
   },
   methods: {
-      searchUser(){
-          this.$emit('setFilter', this.filterBy);
-      }
+    searchUser() {
+      this.$emit("setFilter", this.filterBy);
+      this.$router.push('/user');
+    }
   }
 };
 </script>

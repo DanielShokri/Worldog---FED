@@ -1,5 +1,5 @@
 <template>
-  <v-card class="text-xs-center ma-3" v-if="dog">
+  <v-card class="text-xs-center ma-3" v-if="dog && dog.owner">
     <v-responsive class="pt-4">
       <v-img aspect-ratio="1.75" :src="imgToLoad"></v-img>
     </v-responsive>

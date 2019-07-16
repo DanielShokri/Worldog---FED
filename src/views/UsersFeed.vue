@@ -6,7 +6,7 @@
     <!-- </v-btn> -->
 
     <!-- <toy-filter @set-filter="setFilter"></toy-filter> -->
-
+    
     <dog-list :dogs="dogs" @delete="deleteDog"></dog-list>
 
   </section>
@@ -14,7 +14,6 @@
 
 <script>
 import dogList from "../components/DogList.cmp.vue";
-// import toyFilter from "../components/toy-filter.vue";
 
 export default {
   data() {
@@ -28,17 +27,12 @@ export default {
     };
   },
   created() {
-    this.$store.dispatch({
-      type: "loadDogs"
-    });
+    // this.$store.dispatch({
+    //   type: "loadDogs"
+    // });
     this.user = this.$store.getters.getLoggedinUser
   },
   methods: {
-   
-    // setFilter(filterBy) {
-    //   this.$store.commit("setFilter", filterBy);
-    // },
-
     deleteDog(dogId) {
       this.$store.dispatch({
         type: "deleteDog",
@@ -54,8 +48,6 @@ export default {
   },
   components: {
     dogList,
-    // toyFilter,
-    
   }
 };
 </script>
