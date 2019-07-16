@@ -21,42 +21,29 @@
         <div class="one-third">
                     <div class="stat">+</div>
 
-           <div class="stat-value">FrienDog</div>
+           <div class="stat-value"><button v-on:click="addFrind(dog._id)">FrienDog</button></div>
         </div>
 
         <div class="one-third no-border">
                               <div class="stat">v</div>
 
-          <div class="stat-value">Profile</div>
+          <div class="stat-value"><router-link :to="'/user/'+dog._id">Profile</router-link></div>
         </div>
       </div>
 
     </div> <!-- end clash-card barbarian-->
   </div> <!-- end wrapper -->
-  
-</div> <!-- end container -->
-
-  <!-- <v-card class="text-xs-center ma-3" v-if="dog">
-    <v-responsive class="pt-4">
-      <v-img aspect-ratio="1.75" :src="imgToLoad"></v-img>
-    </v-responsive>
-    <v-card-text>
-      <div class="headline mb-0">{{dog.owner.fullName}} and {{dog.preference.name}}</div>
-      <div>{{getLocation}}</div>
-    </v-card-text>
-    <v-card-actions class="buttons" d-flex>
-      <v-btn class="btn" small color="yellow accent-4">
-        <router-link :to="'/user/'+dog._id">Profile</router-link>
-      </v-btn>
-      <v-btn small color="blue lighten-1" v-on:click="addFrind(dog._id)">Add Friend</v-btn>
-
+   <div  v-if="user">
+  <div  v-if="user.isAdmin">
       <v-btn class="btn" small color="green accent-3">
         <router-link :to="'/user/edit/'+dog._id">Edit</router-link>
       </v-btn>
 
       <v-btn small color="red lighten-1" v-on:click="emitDeleteDog(dog._id)">Delete</v-btn>
-    </v-card-actions>
-  </v-card> -->
+      </div>
+         </div>
+</div> <!-- end container -->
+
 </template>
 
 <script>
@@ -166,21 +153,13 @@ body {
   }
 }
 
-.btn-friendog{
-// background-color: $wizard;
-// color: white;
-    // height: 30px;
-    // width: 78px;
-    // border-radius: 7px;
-    // margin: 15px;
-
-}
 
 .clash-card__unit-name {
   font-size: 20px;
   color: black;
   font-weight: 900;
   margin-bottom: 5px;
+  margin-top: 10px;
 }
 
 .clash-card__unit-description {
@@ -258,6 +237,16 @@ body {
     text-transform: uppercase;
     font-weight: 400;
     font-size: 13px;
+    a{
+    color: white;
+      text-decoration: none;
+    }
+    button{
+          text-transform: uppercase;
+
+          font-size: 13px;
+
+    }
   }
 
   .no-border {
