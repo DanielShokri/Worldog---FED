@@ -33,10 +33,7 @@ props: ["dogs", "loggedinUser"],
         DogPreview,
 
     }
-  },
-  components: {
-    DogPreview,
-    userFilter
-  }
+
+
 };
 </script>
