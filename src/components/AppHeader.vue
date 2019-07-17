@@ -55,7 +55,7 @@
             <a class="navbar-item" slot="trigger"  role="button">
               <v-badge left>
                 <template v-slot:badge>
-                  <span>6</span>
+                  <span>{{getNotfications.length}}</span>
                 </template>
               </v-badge>
               <span>Menu</span>
@@ -66,10 +66,10 @@
               Logged as
               <b>{{getUser[0].owner.fullName}}</b>
             </b-dropdown-item>
-            <b-dropdown-item value="home" aria-role="menuitem">
+            <b-dropdown-item @click="goToMyProfile"  aria-role="menuitem">
               <b-icon icon="bell"></b-icon>Notification's
             </b-dropdown-item>
-            <b-dropdown-item v-on:click="goToMyProfile()" value="settings">
+            <b-dropdown-item @click="goToMyProfile" value="settings">
               <b-icon icon="settings"></b-icon>Profile
             </b-dropdown-item>
             <hr class="dropdown-divider" aria-role="menuitem" />
@@ -115,7 +115,7 @@ export default {
       return this.$store.getters.getcurrLoggedinUser;
     },
     getNotfications(){
-      
+      return this.$store.getters.getNotfications;
     }
   }
 };

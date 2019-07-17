@@ -35,7 +35,6 @@ export default new Vuex.Store({
             state.currUser = currUserLoggedIn;
         },
         setLoggedUser(state, { userLoggedNow }) {
-            // console.log('this is the loggeduser store mutation', userLoggedNow);
             state.currUser = userLoggedNow;
         },
         setLoggedOutUser(state) {
@@ -91,15 +90,13 @@ export default new Vuex.Store({
 
         },
         updateDogFriendReq(state, { updatedDogId }) {
-            console.log(updatedDogId)
 
             const dogIdx = state.dogs.findIndex(dog => dog._id === updatedDogId)
             var dog;
             state.dogs.forEach(currDog => {
                 if (currDog._id === updatedDogId) dog = currDog
             })
-            console.log(dog)
-            console.log(state.currUser[0])
+           
             dog.gotFriendsReq.push({ userId: state.currUser[0]._id, userImg: state.currUser[0].profileImg, userName: state.currUser[0].owner.fullName })
             const userIdx = state.dogs.findIndex(dog => dog._id === state.currUser[0]._id)
             state.currUser[0].sentFriendsReq.push(updatedDogId)
@@ -149,7 +146,11 @@ export default new Vuex.Store({
             return state.currPark;
         },
         getNotfications(state) {
+<<<<<<< HEAD
             return state.currUser[0].sentFriendsReq
+=======
+            return state.currUser[0].gotFriendsReq
+>>>>>>> 54e5847220cf12988df6343c7a4b6a575ec24417
         }
     },
 
@@ -195,7 +196,6 @@ export default new Vuex.Store({
         updateFriendReq(context, { dogId }) {
             return dogsService.sendFriendReq(dogId)
                 .then(updatedDogId => {
-                    console.log(updatedDogId)
                     context.commit({
                         type: 'updateDogFriendReq',
                         updatedDogId
@@ -218,7 +218,6 @@ export default new Vuex.Store({
         loadDogs(context, { filterBy }) {
             return dogsService.query(filterBy)
                 .then(dogs => {
-                    console.log('this is load dog store', dogs)
                     context.commit({
                         type: 'setDogs',
                         dogs
@@ -263,7 +262,6 @@ export default new Vuex.Store({
         addDog(context, {
             dog
         }) {
-            console.log('in store', dog)
             return dogsService.add(dog)
                 .then(addedDog => {
                     context.commit({
@@ -305,7 +303,6 @@ export default new Vuex.Store({
         loggedInUser(context) {
             return dogsService.getLoggedinUser()
                 .then((userLoggedNow) => {
-                    // console.log(userLoggedNow,'This is store')
                     context.commit({ type: 'setLoggedUser', userLoggedNow })
                 })
         },

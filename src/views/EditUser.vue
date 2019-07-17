@@ -29,7 +29,6 @@ export default {
       })
       .then(() => {
         this.copyDog = JSON.parse(JSON.stringify(this.$store.getters.getDog));
-        console.log(this.copyDog);
       });
   },
   methods: {

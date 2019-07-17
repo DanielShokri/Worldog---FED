@@ -97,7 +97,6 @@ export default {
   },
   methods: {
     setCenter(pos, zoom = 15, event) {
-      console.log(event.wa.x);
       this.$refs.mapRef.$mapPromise.then(map => {
         map.panTo(pos);
         this.zoomIn = zoom;
@@ -124,9 +123,6 @@ if(!marker.position) marker.position = marker.location
    
   },
   created() {
-    //  console.log(this.currPark.geometry)
-    //  console.log(this.currPark.geometry.location)
-    //  console.log(this.currPark.geometry.location.lat)
 
     this.$store.dispatch({ type: "loadDogs" }).then(() => {
       this.dogs = this.$store.getters.dogsToShow;

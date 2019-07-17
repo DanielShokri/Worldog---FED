@@ -1,9 +1,6 @@
 
 <template>
-  <section v-if="dogs" >
-    <!-- <v-btn  color="indigo" class="btn-add-dog"> -->
-    <!-- <router-link :to="'user/edit'">Add Dog</router-link> -->
-    <!-- </v-btn> -->
+  <section v-if="dogs">
 
     <!-- <toy-filter @set-filter="setFilter"></toy-filter> -->
 
@@ -27,7 +24,6 @@ export default {
       type: "loadDogs"
     });
     this.$store.dispatch({ type: "loggedInUser" });
-    // this.user =
   },
   methods: {
     // setFilter(filterBy) {
@@ -44,7 +40,7 @@ export default {
 
   computed: {
     loggedinUser() {
-      console.log("login user", this.$store.getters.getcurrLoggedinUser);
+      console.log("loggedinUser", this.$store.getters.getcurrLoggedinUser);
       return this.$store.getters.getcurrLoggedinUser;
     },
     dogs() {

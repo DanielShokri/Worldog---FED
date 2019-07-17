@@ -34,7 +34,6 @@ function getPosition() {
 
 
 function query(filterBy) {
-    console.log('this is service', filterBy)
     return httpService.get(_getUrl(), filterBy)
 }
 
@@ -67,7 +66,6 @@ function getById(dogId) {
 }
 
 function add(dog) {
-    console.log('un service', dog)
     return httpService.post(_getUrl('add'), dog)
 }
 
@@ -76,7 +74,6 @@ function remove(dogId) {
 }
 
 function update(updateDog) {
-    console.log('edit!!', updateDog)
     return httpService.put(_getUrl(`edit/${updateDog._id}`), updateDog)
 }
 
@@ -87,13 +84,11 @@ function getLoggedinUser() {
 }
 
 function logIn(user) {
-    console.log('doing login');
 
     return httpService.post(_getUrl(), user)
         .then(res => {
             if (!res) throw new Error('Cant Login')
             sessionStorage.setItem('LoggedUser', JSON.stringify(res));
-            console.log(res)
             return res;
         })
         .catch(err => {

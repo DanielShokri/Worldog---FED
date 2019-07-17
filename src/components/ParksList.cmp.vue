@@ -46,7 +46,6 @@ export default {
             this.gardens[i].photos[0].photo_reference
           }&key=AIzaSyCrVxVPta_TOsFatlYL7vOx_stAJNlV8ws`)
         }
-        console.log(this.gardens)
       });
     });
   },
