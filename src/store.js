@@ -106,21 +106,30 @@ export default new Vuex.Store({
         },
         updateDogFriendShip(state, { updatedDog }) {
             console.log(updatedDog)
-            const dogIdx = state.dogs.findIndex(dog => dog._id === updatedDog._id)
+            const dogIdx = state.dogs.findIndex(dog => dog._id === updatedDog.userId)
             var dog;
             state.dogs.forEach(currDog => {
-                if (currDog._id === updatedDog._id) dog = currDog
+                if (currDog._id === updatedDog.userId) dog = currDog
             })
-            console.log(dog)
-            console.log(state.currUser[0])
             dog.friends.push({ userId: state.currUser[0]._id, userImg: state.currUser[0].profileImg, userName: state.currUser[0].owner.fullName });
             state.currUser[0].friends.push(updatedDog)
+            dog.sentFriendsReq.forEach((id, idx) => {
+                if (id === state.currUser[0]._id)
+                    dog.sentFriendsReq.splice(idx, 1);
+            })
+            state.currUser[0].gotFriendsReq.forEach((object1, idx) => {
+                if (object1.userId === dog._id)
+                    state.currUser[0].gotFriendsReq.splice(idx, 1);
+            })
 
+            console.log(state.currUser, 'user!!')
+            console.log(dog, 'dogi');
 
 
             const userIdx = state.dogs.findIndex(dog => dog._id === state.currUser[0]._id)
             state.dogs.splice(userIdx, 1, state.currUser[0]);
             state.dogs.splice(dogIdx, 1, dog)
+            state.dog = state.currUser[0];
         },
 
         setCurrPark(state, { park }) {
@@ -146,7 +155,7 @@ export default new Vuex.Store({
             return state.currPark;
         },
         getNotfications(state) {
-            return state.currUser[0].sentFriendsReq
+            return state.currUser[0].gotFriendsReq
         }
     },
 

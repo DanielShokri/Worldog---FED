@@ -43,6 +43,7 @@ function sendFriendReq(dogId) {
 }
 
 function makeFriendshipOn(dog) {
+    console.log(dog)
     const user = JSON.parse(sessionStorage.getItem('LoggedUser'));
     return httpService.put(_getUrl('makeFriendship'), { dog, user })
 }
