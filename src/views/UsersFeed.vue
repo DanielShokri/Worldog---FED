@@ -2,8 +2,6 @@
 <template>
   <section v-if="dogs">
 
-    <!-- <toy-filter @set-filter="setFilter"></toy-filter> -->
-<!-- {{loggedinUser}} -->
     <dog-list :loggedinUser="loggedinUser" :dogs="dogs" @delete="deleteDog"></dog-list>
   </section>
 </template>
@@ -26,9 +24,6 @@ export default {
     this.$store.dispatch({ type: "loggedInUser" });
   },
   methods: {
-    // setFilter(filterBy) {
-    //   this.$store.commit("setFilter", filterBy);
-    // },
 
     deleteDog(dogId) {
       this.$store.dispatch({
@@ -44,9 +39,7 @@ export default {
       console.log("loggedinUser", this.$store.getters.getcurrLoggedinUser[0]);
       return this.$store.getters.getcurrLoggedinUser[0];
     },
-    // dogs() {
-    //   return  this.$store.getters.dogsToShow;
-    // }
+  
      dogs() {
       const dogs = this.$store.getters.dogsToShow;
       if(!this.loggedinUser) return dogs
