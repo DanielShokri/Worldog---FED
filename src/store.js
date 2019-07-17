@@ -96,7 +96,7 @@ export default new Vuex.Store({
             state.dogs.forEach(currDog => {
                 if (currDog._id === updatedDogId) dog = currDog
             })
-           
+
             dog.gotFriendsReq.push({ userId: state.currUser[0]._id, userImg: state.currUser[0].profileImg, userName: state.currUser[0].owner.fullName })
             const userIdx = state.dogs.findIndex(dog => dog._id === state.currUser[0]._id)
             state.currUser[0].sentFriendsReq.push(updatedDogId)
@@ -146,11 +146,7 @@ export default new Vuex.Store({
             return state.currPark;
         },
         getNotfications(state) {
-<<<<<<< HEAD
             return state.currUser[0].sentFriendsReq
-=======
-            return state.currUser[0].gotFriendsReq
->>>>>>> 54e5847220cf12988df6343c7a4b6a575ec24417
         }
     },
 
