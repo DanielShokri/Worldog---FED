@@ -15,11 +15,10 @@ export default {
 props:['user'],
     data() {
         return {
-
+user:'chen'
         }
     },
     methods: {
-      
        
     },
   
