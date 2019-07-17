@@ -57,7 +57,7 @@ export default new Vuex.Store({
                 state.dogs[i].distanceTextFromMap = res.elements[i].distance.text;
                 state.dogs[i].distanceValueFromMap = res.elements[i].distance.value;
             }
-            state.dogs.sort(function (a, b) {
+            state.dogs.sort(function(a, b) {
                 return a.distanceValueFromUser - b.distanceValueFromUser;
             });
         },
@@ -107,6 +107,25 @@ export default new Vuex.Store({
             state.dogs.splice(userIdx, 1, state.currUser[0]);
             state.dogs.splice(dogIdx, 1, dog)
         },
+        updateDogFriendShip(state, { updatedDog }) {
+            console.log(updatedDog)
+            const dogIdx = state.dogs.findIndex(dog => dog._id === updatedDog._id)
+            var dog;
+            state.dogs.forEach(currDog => {
+                if (currDog._id === updatedDog._id) dog = currDog
+            })
+            console.log(dog)
+            console.log(state.currUser[0])
+            dog.friends.push({ userId: state.currUser[0]._id, userImg: state.currUser[0].profileImg, userName: state.currUser[0].owner.fullName });
+            state.currUser[0].friends.push(updatedDog)
+
+
+
+            const userIdx = state.dogs.findIndex(dog => dog._id === state.currUser[0]._id)
+            state.dogs.splice(userIdx, 1, state.currUser[0]);
+            state.dogs.splice(dogIdx, 1, dog)
+        },
+
         setCurrPark(state, { park }) {
             state.currPark = park;
         }
@@ -129,7 +148,7 @@ export default new Vuex.Store({
         getCurrPark(state) {
             return state.currPark;
         },
-        getNotfications() {
+        getNotfications(state) {
             return state.currUser[0].sentFriendsReq
         }
     },
@@ -182,6 +201,17 @@ export default new Vuex.Store({
                         updatedDogId
                     })
                     return updatedDogId
+                })
+        },
+        makeFriendShip(context, { dog }) {
+            return dogsService.makeFriendshipOn(dog)
+                .then(updatedDog => {
+                    console.log(updatedDog)
+                    context.commit({
+                        type: 'updateDogFriendShip',
+                        updatedDog
+                    })
+                    return updatedDog
                 })
         },
 
