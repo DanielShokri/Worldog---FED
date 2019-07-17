@@ -1,10 +1,6 @@
 
 <template>
   <section v-if="dogs">
-<<<<<<< HEAD
-=======
-
->>>>>>> 74b67f4c0cfe2906a736c957a27a302f809b2d6b
     <dog-list :loggedinUser="loggedinUser" :dogs="dogs" @delete="deleteDog"></dog-list>
   </section>
 </template>

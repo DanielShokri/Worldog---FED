@@ -163,12 +163,7 @@ body {
   padding-top: 40px;
   padding-bottom: 40px;
   width: 350px;
-<<<<<<< HEAD
-  margin-top: 30px;
-=======
   margin-top: 40px;
->>>>>>> 74b67f4c0cfe2906a736c957a27a302f809b2d6b
-
   &:focus {
     outline: 0;
   }
