@@ -55,7 +55,7 @@
             <a class="navbar-item" slot="trigger"  role="button">
               <v-badge left>
                 <template v-slot:badge>
-                  <span>{{getNotfications.length}}</span>
+                  <span v-if="getNotfications">{{getNotfications.length}}</span>
                 </template>
               </v-badge>
               <span>Menu</span>
