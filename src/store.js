@@ -126,8 +126,8 @@ export default new Vuex.Store({
         getCurrPark(state) {
             return state.currPark;
         },
-        getNotfications() {
-            return state.currUser[0].sentFriendsReq
+        getNotfications(state) {
+            return state.currUser[0].gotFriendsReq
         }
     },
 

@@ -1,7 +1,7 @@
 <template>
   <div v-if="dog" class="container">
     <header>
-        <img :src="backImgToLoad"/>
+      <img :src="backImgToLoad" />
       <i>
         <b-icon icon="menu"></b-icon>
       </i>
@@ -45,12 +45,36 @@
         </div>
         <span class="follow">Follow</span>
         <div class="right col-lg-8">
-          <ul class="nav">
-            <li v-on:click="openCopm('Gallery')">Gallery</li>
-            <li v-on:click="openCopm('Friends')">Friends</li>
-            <li v-on:click="openCopm('Messages')">Messages</li>
-            <li v-on:click="openCopm('Notfication')">Notfication</li>
-          </ul>
+          <!-- This is start -->
+          <v-tabs  centered color="white" light slider-color icons-and-text>
+            <v-tabs-slider color="yellow"></v-tabs-slider>
+
+            <v-tab @click="openCopm('Gallery')">
+              Gallery
+              <b-icon icon="image"></b-icon>
+            </v-tab>
+
+            <v-tab @click="openCopm('Friends')">
+              Friends
+              <b-icon icon="account-group"></b-icon>
+            </v-tab>
+
+            <v-tab @click="openCopm('Messages')">
+              Messages
+              <b-icon icon="message-bulleted"></b-icon>
+            </v-tab>
+
+            <v-tab @click="openCopm('Notfication')">
+              Notification's
+              <b-icon icon="bell-ring"></b-icon>
+            </v-tab>
+          </v-tabs>
+          <!-- <ul class="nav">
+            <li @click="openCopm('Gallery')">Gallery</li>
+            <li @click="openCopm('Friends')">Friends</li>
+            <li @click="openCopm('Messages')">Messages</li>
+            <li @click="openCopm('Notfication')">Notfication</li>
+          </ul>-->
           <div class="row comp">
             <div v-if="this.comp ==='Gallery'">
               <user-gallery :user="dog"></user-gallery>
@@ -64,7 +88,6 @@
             <div v-if="this.comp==='Notfication'">
               <user-notfication :user="dog"></user-notfication>
             </div>
-          
           </div>
         </div>
       </div>
@@ -84,7 +107,7 @@ export default {
     return {
       user: null,
       //   dog:null
-      comp:'Gallery'
+      comp: "Gallery"
     };
   },
   created() {
@@ -103,7 +126,6 @@ export default {
     }
   },
   computed: {
-    
     dog() {
       return this.$store.getters.getDog;
     },
@@ -167,9 +189,9 @@ header i {
   font-size: 18px !important;
   color: #fff;
 }
-header img{
-   height: 250px;
-   width: 100%
+header img {
+  height: 250px;
+  width: 100%;
 }
 
 @media (max-width: 800px) {
@@ -220,8 +242,8 @@ main {
   header i {
     /* position: absolute;
     top: -266px; */
-    color:rgb(255, 255, 255);
-        position: absolute;
+    color: rgb(255, 255, 255);
+    position: absolute;
     top: 20px;
     right: 20px;
   }
@@ -375,5 +397,4 @@ main {
     margin: 0 auto;
   }
 }
-
 </style>
