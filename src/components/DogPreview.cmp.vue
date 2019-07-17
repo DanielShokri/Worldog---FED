@@ -40,7 +40,7 @@
           <v-btn class="btn" small color="green accent-3">
             <router-link :to="'/user/edit/'+dog._id">Edit</router-link>
           </v-btn>
-          <v-btn small color="red lighten-1" @:click="emitDeleteDog(dog._id)">Delete</v-btn>--> -->
+          <v-btn small color="red lighten-1" @:click="emitDeleteDog(dog._id)">Delete</v-btn>
         </div>
       </div>
     </div>
@@ -55,10 +55,7 @@ export default {
   data() {
     return {};
   },
-  created() {
-    // this.user = this.$store.getters.getLoggedinUser;
-  },
-
+  
   methods: {
     addFriend(dogId) {
       console.log("adding friend");
