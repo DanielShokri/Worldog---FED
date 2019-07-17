@@ -22,15 +22,7 @@ props: ["dogs", "loggedinUser"],
         },
        
     },
-     computed: {
-dogsToShow(){
-  if(!this.loggedinUser) return this.dogs
-  else if (this.loggedinUser){
-    console.log(loggedinUser , dogs)
-  }
-}
-
-     },
+    
   components: {
     DogPreview,
   }
