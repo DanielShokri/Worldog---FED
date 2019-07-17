@@ -141,7 +141,7 @@ export default new Vuex.Store({
             return state.dogs
         },
         getLoggedinUser(state) {
-            return state.loggedinUser
+            return state.currUser
         },
 
         getcurrLoggedinUser(state) {

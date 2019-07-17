@@ -67,7 +67,7 @@ export default {
         const userFriends = this.loggedinUser.friends;
         console.log(
           "user friend",
-          this.loggedinUser.friends.userId,
+          this.loggedinUser.friends,
           "dog id is",
           this.dog._id
         );
