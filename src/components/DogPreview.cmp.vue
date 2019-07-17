@@ -50,6 +50,9 @@
 </template>
 
 <script>
+// import io from "socket.io-client";
+// const socket = io("http://localhost:3000");
+
 export default {
   props: ["dog", "loggedinUser"],
   data() {
@@ -63,6 +66,9 @@ export default {
     addFriend(dogId) {
       console.log("adding friend");
       this.$store.dispatch({ type: "updateFriendReq", dogId }).then(() => {
+        // socket.on("friend req", () => {
+        //   console.log("user joind friend req!");
+        // });
       });
     },
     emitDeleteDog(dogId) {
@@ -125,6 +131,7 @@ body {
   padding-top: 40px;
   padding-bottom: 40px;
   width: 350px;
+  margin-top: 30px;
 
   &:focus {
     outline: 0;

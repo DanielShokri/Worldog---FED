@@ -32,10 +32,10 @@
                 
               </v-list-tile-content>
               <v-list-tile-action>
-              <v-btn icon ripple>
+              <v-btn>
                 Confirm
               </v-btn>
-              <v-btn icon ripple>
+              <v-btn>
                 Reject
               </v-btn>
             </v-list-tile-action>

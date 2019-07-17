@@ -1,7 +1,6 @@
 <template>
   <div>
-    <!-- <section class="section"> -->
-    <!-- <div class="container"> -->
+
     <div>
       <img slot="img" src="../../public/img/home.svg" alt />
       <UsersFilter @setFilter="setFilter"></UsersFilter>
@@ -40,7 +39,6 @@ export default {
   name: "home",
 
   created() {
-
     this.$store.dispatch({ type: "loggedInUser" })
     this.$store.dispatch({ type: "loadDogs" }).then(() => {
       this.$store.dispatch({ type: "loadUserLoc" }).then(() => {

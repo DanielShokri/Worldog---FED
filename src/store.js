@@ -182,6 +182,7 @@ export default new Vuex.Store({
         },
 
         loadDogs(context, { filterBy }) {
+            console.log('LoadDogs dispach happend!')
             return dogsService.query(filterBy)
                 .then(dogs => {
                     context.commit({
