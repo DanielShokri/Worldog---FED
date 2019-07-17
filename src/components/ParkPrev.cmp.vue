@@ -1,21 +1,22 @@
 <template>
-<div class="slide-container">
-  <div class="wrapper">
-    <div class="clash-card barbarian">
-      <div class="clash-card__image clash-card__image--barbarian">
-    <img @click="goParkDetails" aspect-ratio="1.75" :src="park.img"/>
+  <div class="slide-container">
+    <div class="wrapper">
+      <div class="clash-card barbarian">
+        <div class="clash-card__image clash-card__image--barbarian">
+          <img @click="goParkDetails" aspect-ratio="1.75" :src="park.img" />
+        </div>
+        <button class="btn-read-more" @click="goParkDetails">Read More</button>
+        <div class="clash-card__unit-name">{{park.name}}</div>
+
+        <div class="clash-card__unit-description">
+          <b>{{new Date() | timeAgo}}</b>
+        </div>
       </div>
-           <button class="btn-read-more" @click="goParkDetails">Read More</button>
-      <div class="clash-card__unit-name">{{park.name}} </div>
-      
- <div class="clash-card__unit-description">
-   <b>{{new Date() | timeAgo}}</b>
-      </div>
-      
-    </div> <!-- end clash-card barbarian-->
-  </div> <!-- end wrapper -->
-  
-</div> <!-- end container -->
+      <!-- end clash-card barbarian-->
+    </div>
+    <!-- end wrapper -->
+  </div>
+  <!-- end container -->
   <!-- <div class="blog-grid">
     <v-img @click="goParkDetails" aspect-ratio="1.75" :src="park.img"></v-img>
     <div class="blog-grid1">
@@ -85,25 +86,34 @@ export default {
 
 
 <style scoped lang="scss">
-@import url(https://fonts.googleapis.com/css?family=Lato:400,700,900);
+@import url('https://fonts.googleapis.com/css?family=Lato:400');
 
-$border-radius-size: 14px;
+$border-radius-size: 5px;
 $barbarian: #ff3860;
-$archer: #EE5487;
-$giant: #F6901A;
-$goblin: #82BB30;
-$wizard: #4FACFF;
+$archer: #ee5487;
+$giant: #f6901a;
+$goblin: #82bb30;
+$wizard: #4facff;
 
-*, *:before, *:after {
+*,
+*:before,
+*:after {
   box-sizing: border-box;
 }
 
 body {
-  background: linear-gradient(to bottom, rgba(140,122,122,1) 0%, rgba(175,135,124,1) 65%, rgba(175,135,124,1) 100%) fixed;
-  background: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/coc-background.jpg') no-repeat center center fixed;
+  background: linear-gradient(
+      to bottom,
+      rgba(140, 122, 122, 1) 0%,
+      rgba(175, 135, 124, 1) 65%,
+      rgba(175, 135, 124, 1) 100%
+    )
+    fixed;
+  background: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/coc-background.jpg")
+    no-repeat center center fixed;
   background-size: cover;
   font: 14px/20px "Lato", Arial, sans-serif;
-  color: #9E9E9E;
+  color: #9e9e9e;
   margin-top: 30px;
 }
 
@@ -117,31 +127,29 @@ body {
   padding-top: 40px;
   padding-bottom: 40px;
   width: 350px;
-  
+
   &:focus {
     outline: 0;
   }
 }
 
-.btn-read-more{
-  background-color:$barbarian;
-  color:white;
-      height: 30px;
-    width: 100px;
-    border-radius: 22px;
+.btn-read-more {
+  background-color: $barbarian;
+  color: white;
+  height: 30px;
+  width: 100px;
+  border-radius: 22px;
 }
-
-
 
 .clash-card {
   background: white;
   width: 300px;
   display: inline-block;
   margin: auto;
-  border-radius: $border-radius-size + 5;
+  border-radius: $border-radius-size;
   position: relative;
   text-align: center;
-  box-shadow: -1px 15px 30px -12px black;
+  box-shadow: -1px 15px 7px -12px black;
   z-index: 0;
   padding-bottom: 12px;
 }
@@ -153,14 +161,12 @@ body {
   border-top-left-radius: $border-radius-size;
   border-top-right-radius: $border-radius-size;
   img {
-        width: 100%;
-        height: 200px;
-            border-top-left-radius: 19px;
-    border-top-right-radius: 19px;
-
+    width: 100%;
+    height: 200px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
   }
 }
-
 
 .clash-card__unit-name {
   font-size: 20px;
@@ -177,52 +183,49 @@ body {
 
 .clash-card__unit-stats--barbarian {
   background: $barbarian;
-  
+
   .one-third {
-     border-right: 1px solid #5e1523;
+    border-right: 1px solid #5e1523;
   }
 }
 
-
 .clash-card__unit-stats {
-  
   color: white;
   font-weight: 700;
   border-bottom-left-radius: $border-radius-size;
   border-bottom-right-radius: $border-radius-size;
-  
+
   .one-third {
     width: 33%;
     float: left;
     padding: 20px 15px;
   }
-  
+
   sup {
     position: absolute;
-    bottom: 4px; 
+    bottom: 4px;
     font-size: 45%;
     margin-left: 2px;
   }
-  
+
   .stat {
     position: relative;
     font-size: 16px;
     // margin-bottom: 10px;
   }
-  
+
   .stat-value {
     text-transform: uppercase;
     font-weight: 400;
     font-size: 13px;
-    a{
-    color: white;
+    a {
+      color: white;
       text-decoration: none;
     }
-    button{
-          text-transform: uppercase;
+    button {
+      text-transform: uppercase;
 
-          font-size: 13px;
-
+      font-size: 13px;
     }
   }
 
@@ -232,12 +235,12 @@ body {
 }
 
 .clearfix:after {
-	visibility: hidden;
-	display: block;
-	font-size: 0;
-	content: " ";
-	clear: both;
-	height: 0;
+  visibility: hidden;
+  display: block;
+  font-size: 0;
+  content: " ";
+  clear: both;
+  height: 0;
 }
 
 .slick-prev {
@@ -249,6 +252,5 @@ body {
   right: 100px;
   z-index: 0;
 }
-
 </style>
 

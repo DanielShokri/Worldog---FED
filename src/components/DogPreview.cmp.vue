@@ -1,48 +1,52 @@
 <template>
-<div class="slide-container" v-if="dog">
-  <div class="wrapper">
-    <div class="clash-card barbarian">
-      <div class="clash-card__image clash-card__image--barbarian">
-        <img :src="imgToLoad" alt="barbarian" />
-      </div>
-      <div class="clash-card__unit-name">{{dog.owner.fullName}} and {{dog.preference.name}}</div>
-      <div class="clash-card__unit-description">
-      <h3 v-if="dog.distanceTextFromUser"> {{dog.distanceTextFromUser}} from you </h3>
-      <h3 v-else>2.3 mi from you</h3>
-      </div>
+  <div class="slide-container" v-if="dog">
+    <div class="wrapper">
+      <div class="clash-card barbarian">
+        <div class="clash-card__image clash-card__image--barbarian">
+          <img :src="imgToLoad" alt="barbarian" />
+        </div>
+        <div class="clash-card__unit-name">{{dog.owner.fullName}} and {{dog.preference.name}}</div>
+        <div class="clash-card__unit-description">
+          <h3 v-if="dog.distanceTextFromUser">{{dog.distanceTextFromUser}} from you</h3>
+          <h3 v-else>2.3 mi from you</h3>
+        </div>
         <div class="clash-card__unit-stats clash-card__unit-stats--barbarian clearfix">
           <div class="one-third">
             <div class="stat">24</div>
-            <div class="stat-value">Friend</div>
+            <div class="stat-value">Friend's</div>
           </div>
           <div class="one-third">
-            <div class="stat">+</div>
             <div class="stat-value">
-              <button v-on:click="addFrind(dog._id)">FrienDog</button>
+              <button @click="addFriend(dog._id)">
+                <b-icon icon="account-plus"></b-icon>FrienDog
+              </button>
             </div>
           </div>
           <div class="one-third no-border">
-            <div class="stat">v</div>
             <div class="stat-value">
-              <router-link :to="'/user/'+dog._id">Profile</router-link>
+              <router-link :to="'/user/'+dog._id">
+                <b-icon icon="account"></b-icon>Profile
+              </router-link>
             </div>
           </div>
         </div>
-      </div>  <!-- end clash-card barbarian-->
-    </div><!-- end wrapper -->
-   <div> 
-    <div v-if="loggedinUser">
-      <div v-if="loggedinUser.isAdmin">
-        <v-btn class="btn" small color="green accent-3">
-          <router-link :to="'/user/edit/'+dog._id">Edit</router-link>
-        </v-btn>
-        <v-btn small color="red lighten-1" v-on:click="emitDeleteDog(dog._id)">Delete</v-btn>--> -->
+      </div>
+      <!-- end clash-card barbarian-->
+    </div>
+    <!-- end wrapper -->
+    <div>
+      <div v-if="loggedinUser">
+        <div v-if="loggedinUser.isAdmin">
+          <v-btn class="btn" small color="green accent-3">
+            <router-link :to="'/user/edit/'+dog._id">Edit</router-link>
+          </v-btn>
+          <v-btn small color="red lighten-1" @:click="emitDeleteDog(dog._id)">Delete</v-btn>--> -->
+        </div>
       </div>
     </div>
   </div>
- </div>
 
-   <!-- end container -->
+  <!-- end container -->
 </template>
 
 <script>
@@ -57,7 +61,7 @@ export default {
   },
 
   methods: {
-    addFrind(dogId) {
+    addFriend(dogId) {
       console.log("adding friend");
       this.$store.dispatch({ type: "updateFriendReq", dogId }).then(() => {
         console.log("added friend");
@@ -85,7 +89,7 @@ export default {
 <style scoped lang="scss">
 // @import url('https://fonts.googleapis.com/css?family=Lato:400');
 
-$border-radius-size: 14px;
+$border-radius-size: 5px;
 $barbarian: #ff3860;
 $archer: #ee5487;
 $giant: #f6901a;
@@ -135,10 +139,10 @@ body {
   width: 300px;
   display: inline-block;
   margin: auto;
-  border-radius: $border-radius-size + 5;
+  border-radius: $border-radius-size;
   position: relative;
   text-align: center;
-  box-shadow: -1px 15px 30px -12px black;
+  box-shadow: -1px 15px 7px -12px black;
   z-index: 0;
 }
 
@@ -151,8 +155,8 @@ body {
   img {
     width: 100%;
     height: 200px;
-    border-top-left-radius: 19px;
-    border-top-right-radius: 19px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
   }
 }
 
