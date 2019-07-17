@@ -56,13 +56,13 @@
               <user-gallery :user="dog"></user-gallery>
             </div>
             <div v-if="this.comp==='Friends'">
-              <user-friends></user-friends>
+              <user-friends :user="dog"></user-friends>
             </div>
             <div v-if="this.comp==='Messages'">
-              <user-messages></user-messages>
+              <user-messages :user="dog"></user-messages>
             </div>
             <div v-if="this.comp==='Notfication'">
-              <user-notfication></user-notfication>
+              <user-notfication :user="dog"></user-notfication>
             </div>
           
           </div>
@@ -99,7 +99,6 @@ export default {
   },
   methods: {
     openCopm(cmp) {
-      console.log("copm is", cmp);
       this.comp = cmp;
     }
   },
@@ -118,12 +117,10 @@ export default {
       return this.dog.owner.fullName;
     },
     imgToLoad() {
-      console.log("this dog", this.dog);
       if (this.dog.profileImg) return this.dog.profileImg;
       else return "https://www.sunnyskyz.com/uploads/2016/12/nlf37-dog.jpg";
     },
     backImgToLoad(){
-       console.log("this dog", this.dog);
       if (this.dog.profileImg) return this.dog.backImg;
       else return "https://www.sunnyskyz.com/uploads/2016/12/nlf37-dog.jpg";
     }

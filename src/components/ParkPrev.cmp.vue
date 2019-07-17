@@ -58,12 +58,10 @@ export default {
   },
   created() {
     this.user = this.$store.getters.getLoggedinUser;
-    // console.log(this.user)
   },
 
   methods: {
     addReview() {
-      console.log("adding review");
     },
     goParkDetails() {
       this.$store.dispatch({ type: "goToPark", park: this.park }).then(() => {

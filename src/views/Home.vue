@@ -59,16 +59,11 @@ export default {
     dogsToShow() {
       var newDogs = [this.dogs[0],this.dogs[1],this.dogs[2],this.dogs[3]]
       return newDogs;
-      // const dogs = this.$store.getters.dogsToShow;
-      // if(!dogs.length) return
-      // const fourDogs = [dogs[0], dogs[1], dogs[2], dogs[3]];
-      // console.log(fourDogs)
-      // return fourDogs;
+    
     }
   },
   methods: {
     setFilter(filterBy) {
-      // console.log('This is home filter', filterBy)
       this.$store.dispatch({ type: "loadDogs", filterBy });
     },
 

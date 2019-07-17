@@ -53,14 +53,11 @@ export default {
   },
   created() {
     // this.user = this.$store.getters.getLoggedinUser;
-    // console.log(this.user)
   },
 
   methods: {
     addFrind(dogId) {
-      console.log("adding friend");
       this.$store.dispatch({ type: "updateFriendReq", dogId }).then(() => {
-        console.log("added friend");
       });
     },
     emitDeleteDog(dogId) {
@@ -69,7 +66,6 @@ export default {
   },
   computed: {
     getLocation() {
-      // console.log('user is', this.dog.location)
       var location = this.dog.location;
     },
     imgToLoad() {
