@@ -85,8 +85,8 @@
             <div v-if="this.comp==='Messages'">
               <user-messages :user="dog"></user-messages>
             </div>
-            <div v-if="this.comp==='Notfication'">
-              <user-notfication :user="dog"></user-notfication>
+            <div v-if="this.comp ==='Notfication'">
+              <user-notfication @makeFriends="makeFriendship" :user="dog"></user-notfication>
             </div>
           </div>
         </div>
@@ -123,6 +123,9 @@ export default {
   methods: {
     openCopm(cmp) {
       this.comp = cmp;
+    }, 
+    makeFriendship(sentUser){ 
+            this.$store.dispatch({ type: "makeFriendShip" , dog: sentUser })
     }
   },
   computed: {

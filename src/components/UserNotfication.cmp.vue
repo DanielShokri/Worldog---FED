@@ -27,18 +27,11 @@
                 <img :src="notfication.userImg" />
               </v-list-tile-avatar>
               {{notfication.userName}} Has sent you friend request
-              <v-list-tile-content>
-                      
-                
-              </v-list-tile-content>
+              <v-list-tile-content></v-list-tile-content>
               <v-list-tile-action>
-              <v-btn icon ripple>
-                Confirm
-              </v-btn>
-              <v-btn icon ripple>
-                Reject
-              </v-btn>
-            </v-list-tile-action>
+                <v-btn @click="confirmFriendShip(notfication)" icon ripple>Confirm</v-btn>
+                <v-btn icon ripple>Reject</v-btn>
+              </v-list-tile-action>
             </v-list-tile>
           </v-list>
 
@@ -51,6 +44,11 @@
 
 <script>
 export default {
-  props: ["user"]
+  props: ["user"],
+  methods: {
+    confirmFriendShip(sentUser) {
+      this.$emit('makeFriends', sentUser)
+    }
+  }
 };
 </script>
