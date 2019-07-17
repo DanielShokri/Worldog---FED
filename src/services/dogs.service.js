@@ -14,7 +14,7 @@ export default {
     getPosition,
     sendFriendReq,
     getFriendReq,
-    makeFriendship,
+    makeFriendshipOn,
 }
 
 
@@ -38,7 +38,14 @@ function query(filterBy) {
 }
 
 function sendFriendReq(dogId) {
-    return httpService.put(_getUrl('sendFriendReq'), { dogId })
+    const user = JSON.parse(sessionStorage.getItem('LoggedUser'));
+    return httpService.put(_getUrl('sendFriendReq'), { dogId, user })
+}
+
+function makeFriendshipOn(dog) {
+    console.log(dog)
+    const user = JSON.parse(sessionStorage.getItem('LoggedUser'));
+    return httpService.put(_getUrl('makeFriendship'), { dog, user })
 }
 
 function getFriendReq(dogId, dogImg, dogName) {
@@ -50,14 +57,7 @@ function getFriendReq(dogId, dogImg, dogName) {
     return httpService.post(_getUrl('getFriendReq'), sendDog)
 }
 
-function makeFriendship(dogId, dogImg, dogName) {
-    var sendDog = {
-        dogId,
-        dogImg,
-        dogName
-    }
-    return httpService.post(_getUrl('makeFriendship'), sendDog)
-}
+
 
 
 

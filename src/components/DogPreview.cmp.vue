@@ -29,21 +29,23 @@
               </router-link>
             </div>
           </div>
+
+
+        </div>
+      </div>
+      <div class="admin-action-wrapper" v-if="loggedinUser">
+        <div v-if="loggedinUser.isAdmin">
+          <button @click="goToEdit(dog._id)">
+            <b-icon icon="square-edit-outline"></b-icon>
+          </button>
+          <button @click="emitDeleteDog(dog._id)">
+            <b-icon icon="trash-can-outline"></b-icon>
+          </button>
         </div>
       </div>
       <!-- end clash-card barbarian-->
     </div>
     <!-- end wrapper -->
-    <div>
-      <div v-if="loggedinUser">
-        <div v-if="loggedinUser.isAdmin">
-          <v-btn class="btn" small color="green accent-3">
-            <router-link :to="'/user/edit/'+dog._id">Edit</router-link>
-          </v-btn>
-          <v-btn small color="red lighten-1" @:click="emitDeleteDog(dog._id)">Delete</v-btn>--> -->
-        </div>
-      </div>
-    </div>
   </div>
 
   <!-- end container -->
@@ -58,20 +60,43 @@ export default {
   data() {
     return {};
   },
-  created() {
-    // this.user = this.$store.getters.getLoggedinUser;
-  },
 
   methods: {
     addFriend(dogId) {
-      console.log("adding friend");
-      this.$store.dispatch({ type: "updateFriendReq", dogId }).then(() => {
-        // socket.on("friend req", () => {
-        //   console.log("user joind friend req!");
-        // });
-      });
+      if (!this.loggedinUser) {
+        console.log("cant adding friend you need to login");
+        this.$toast.open({ message: "You need to login", type: "is-danger" });
+      } else {
+        const userFriends = this.loggedinUser.friends;
+        console.log(
+          "user friend",
+          this.loggedinUser.friends,
+          "dog id is",
+          this.dog._id
+        );
+        if (userFriends.find(friend => friend.userId === this.dog._id)) {
+          console.log(" you are alredy friend");
+          this.$toast.open({
+            message: "You are alredy friend",
+            type: "is-danger"
+          });
+        } else {
+          console.log("adding friend", this.loggedinUser);
+          this.$store.dispatch({ type: "updateFriendReq", dogId }).then(() => {
+            this.$toast.open({
+              message: "friend request successfully sent!",
+              type: "is-success"
+            });
+          });
+        }
+      }
+    },
+    goToEdit(dogId) {
+      // console.log('edit')
+      this.$router.push(`/user/edit/${dogId}`);
     },
     emitDeleteDog(dogId) {
+      // console.log('deleted')
       this.$emit("delete", dogId);
     }
   },
@@ -120,7 +145,14 @@ body {
   color: #9e9e9e;
   margin-top: 30px;
 }
-
+.admin-action-wrapper{
+  text-align: -webkit-right;
+    padding: 10px;
+    position: relative;
+    color: white;
+        top: -954px;
+    right: 28px;
+}
 .slide-container {
   margin: auto;
   width: 350px;
@@ -131,7 +163,11 @@ body {
   padding-top: 40px;
   padding-bottom: 40px;
   width: 350px;
+<<<<<<< HEAD
   margin-top: 30px;
+=======
+  margin-top: 40px;
+>>>>>>> 74b67f4c0cfe2906a736c957a27a302f809b2d6b
 
   &:focus {
     outline: 0;

@@ -1,6 +1,10 @@
 
 <template>
   <section v-if="dogs">
+<<<<<<< HEAD
+=======
+
+>>>>>>> 74b67f4c0cfe2906a736c957a27a302f809b2d6b
     <dog-list :loggedinUser="loggedinUser" :dogs="dogs" @delete="deleteDog"></dog-list>
   </section>
 </template>
@@ -31,10 +35,18 @@ export default {
 
   computed: {
     loggedinUser() {
-      return this.$store.getters.getcurrLoggedinUser;
+      if(!this.$store.getters.getcurrLoggedinUser) return
+      console.log("loggedinUser", this.$store.getters.getcurrLoggedinUser[0]);
+      return this.$store.getters.getcurrLoggedinUser[0];
     },
-    dogs() {
-      return this.$store.getters.dogsToShow;
+  
+     dogs() {
+      const dogs = this.$store.getters.dogsToShow;
+      if(!this.loggedinUser) return dogs
+      else{
+        const dogsToShow = dogs.filter(dog => dog._id !== this.loggedinUser._id);
+        return dogsToShow;
+      }
     }
   },
   components: {
