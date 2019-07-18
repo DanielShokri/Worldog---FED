@@ -1,5 +1,25 @@
 <template>
-  <div class="slide-container">
+  <main>
+    <figure>
+      <img @click="goParkDetails" aspect-ratio="1.75" :src="park.img" />
+    </figure>
+    <section class="content">
+      <a href="#">
+        <h2 class="title">{{park.name}}</h2>
+      </a>
+      <p
+        class="subtitle"
+      > {{new Date() | timeAgo}} &nbsp; &bull; &nbsp; 3 KM</p>
+      <p></p>
+    </section>
+    <footer>
+      <a href="#">
+        <span>go to park</span>
+      </a>
+    </footer>
+  </main>
+
+  <!-- <div class="slide-container">
     <div class="wrapper">
       <div class="clash-card barbarian">
         <div class="clash-card__image clash-card__image--barbarian">
@@ -11,11 +31,11 @@
         <div class="clash-card__unit-description">
           <b>{{new Date() | timeAgo}}</b>
         </div>
-      </div>
-      <!-- end clash-card barbarian-->
-    </div>
-    <!-- end wrapper -->
-  </div>
+  </div>-->
+  <!-- end clash-card barbarian-->
+  <!-- </div> -->
+  <!-- end wrapper -->
+  <!-- </div> -->
   <!-- end container -->
   <!-- <div class="blog-grid">
     <v-img @click="goParkDetails" aspect-ratio="1.75" :src="park.img"></v-img>
@@ -62,8 +82,7 @@ export default {
   },
 
   methods: {
-    addReview() {
-    },
+    addReview() {},
     goParkDetails() {
       this.$store.dispatch({ type: "goToPark", park: this.park }).then(() => {
         this.$router.push("/park-details");
@@ -84,171 +103,97 @@ export default {
 
 
 <style scoped lang="scss">
-@import url('https://fonts.googleapis.com/css?family=Lato:400');
+@import url("https://fonts.googleapis.com/css?family=Nunito+Sans");
 
-$border-radius-size: 5px;
-$barbarian: #ff3860;
-$archer: #ee5487;
-$giant: #f6901a;
-$goblin: #82bb30;
-$wizard: #4facff;
-
-*,
-*:before,
-*:after {
-  box-sizing: border-box;
-}
+$color: #44a3d9; // #2f559e;
 
 body {
-  background: linear-gradient(
-      to bottom,
-      rgba(140, 122, 122, 1) 0%,
-      rgba(175, 135, 124, 1) 65%,
-      rgba(175, 135, 124, 1) 100%
-    )
-    fixed;
-  background: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/coc-background.jpg")
-    no-repeat center center fixed;
-  background-size: cover;
-  font: 14px/20px "Lato", Arial, sans-serif;
-  color: #9e9e9e;
-  margin-top: 30px;
+  height: 100vh;
+
+  background-color: #eceff1;
+  font-family: "Nunito Sans", sans-serif;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
-
-.slide-container {
-  margin: auto;
-  width: 350px;
-  text-align: center;
-}
-
-.wrapper {
-  padding-top: 40px;
-  padding-bottom: 40px;
-  width: 350px;
-
-  &:focus {
-    outline: 0;
-  }
-}
-
-.btn-read-more {
-  background-color: $barbarian;
-  color: white;
-  height: 30px;
-  width: 100px;
-  border-radius: 22px;
-}
-
-.clash-card {
+main {
+  max-width: 20rem;
   background: white;
-  width: 300px;
-  display: inline-block;
-  margin: auto;
-  border-radius: $border-radius-size;
-  position: relative;
-  text-align: center;
-  box-shadow: -1px 15px 7px -12px black;
-  z-index: 0;
-  padding-bottom: 12px;
-}
+  color: #263238;
+  //   border-radius: 0.5rem;
+  overflow: hidden;
 
-.clash-card__image {
-  position: relative;
-  height: 220px;
-  // margin-bottom: 35px;
-  border-top-left-radius: $border-radius-size;
-  border-top-right-radius: $border-radius-size;
-  img {
-    width: 100%;
-    height: 200px;
-    border-top-left-radius: 5px;
-    border-top-right-radius: 5px;
+  //   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+
+  figure {
+    padding: 0;
+    margin: 0;
+    line-height: 0;
+    img {
+      image-rendering: crisp-edges;
+      object-fit: cover;
+      width: 100%;
+      height: 160px;
+    }
   }
-}
+  .content {
+    padding: 1.5rem;
 
-.clash-card__unit-name {
-  font-size: 20px;
-  color: black;
-  font-weight: 900;
-  margin-bottom: 5px;
-  margin-top: 10px;
-}
-
-.clash-card__unit-description {
-  padding: 15px;
-  color: rgb(120, 115, 126);
-}
-
-.clash-card__unit-stats--barbarian {
-  background: $barbarian;
-
-  .one-third {
-    border-right: 1px solid #5e1523;
-  }
-}
-
-.clash-card__unit-stats {
-  color: white;
-  font-weight: 700;
-  border-bottom-left-radius: $border-radius-size;
-  border-bottom-right-radius: $border-radius-size;
-
-  .one-third {
-    width: 33%;
-    float: left;
-    padding: 20px 15px;
-  }
-
-  sup {
-    position: absolute;
-    bottom: 4px;
-    font-size: 45%;
-    margin-left: 2px;
-  }
-
-  .stat {
-    position: relative;
-    font-size: 16px;
-    // margin-bottom: 10px;
-  }
-
-  .stat-value {
-    text-transform: uppercase;
-    font-weight: 400;
-    font-size: 13px;
     a {
-      color: white;
       text-decoration: none;
+      color: $color;
+      h2 {
+        font-size: 1.75rem;
+        display: inline;
+        margin: 0;
+        margin-left: -1px;
+      }
+      &:hover {
+        color: darken($color, 10%);
+      }
     }
-    button {
+    > p.subtitle {
+      display: inline-block;
+      font-size: 0.8rem;
+      color: #607d8b;
+      margin: 0;
+      margin-top: 0.25rem;
+    }
+    > p {
+      line-height: 1.25rem;
+      font-size: 0.95rem;
+      text-align: justify;
+      margin: 0;
+      margin-top: 1.25rem;
+    }
+  }
+  footer {
+    background: rgba($color, 0.1);
+    a {
+      display: flex;
+      border-top: 1px solid rgba(grey, 0.1);
+      font-size: 0.9rem;
+      padding: 1rem 1.5rem;
+      text-decoration: none;
+      font-weight: 600;
+      color: $color;
       text-transform: uppercase;
-
-      font-size: 13px;
+      letter-spacing: 1.5px;
+      flex-direction: row;
+      align-items: center;
+      &:hover {
+        color: darken($color, 10%);
+        background: rgba($color, 0.2);
+      }
+      &::after {
+        content: " → ";
+        margin-left: auto;
+        transition: 0.3s;
+        font-size: 1.25rem;
+      }
     }
   }
-
-  .no-border {
-    border-right: none;
-  }
-}
-
-.clearfix:after {
-  visibility: hidden;
-  display: block;
-  font-size: 0;
-  content: " ";
-  clear: both;
-  height: 0;
-}
-
-.slick-prev {
-  left: 100px;
-  z-index: 0;
-}
-
-.slick-next {
-  right: 100px;
-  z-index: 0;
 }
 </style>
 
