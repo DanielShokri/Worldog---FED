@@ -39,6 +39,7 @@ export default {
   name: "home",
 
   created() {
+     this.$store.dispatch({ type: "loadCompImProfile" , comp: "gallery"} )
     this.$store.dispatch({ type: "loggedInUser" });
     this.$store.dispatch({ type: "loadDogs" }).then(() => {
       this.$store.dispatch({ type: "loadUserLoc" }).then(() => {

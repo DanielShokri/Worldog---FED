@@ -16,6 +16,7 @@ export default {
     getFriendReq,
     makeFriendshipOn,
     rejectFriendshipOn,
+    addLike,
 }
 
 
@@ -41,6 +42,13 @@ function query(filterBy) {
 function sendFriendReq(dogId) {
     const user = JSON.parse(sessionStorage.getItem('LoggedUser'));
     return httpService.put(_getUrl('sendFriendReq'), { dogId, user })
+}
+
+function addLike(dogId){
+    console.log('in front service add like')
+    const user = JSON.parse(sessionStorage.getItem('LoggedUser'));
+    return httpService.put(_getUrl('addLike'), { dogId, user })
+
 }
 
 function makeFriendshipOn(dog) {

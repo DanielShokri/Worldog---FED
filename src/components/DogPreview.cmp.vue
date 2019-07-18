@@ -1,7 +1,7 @@
 <template>
   <div class="grid">
     <div class="card">
-      <img :src="imgToLoad" class="card__thumbnail" />
+      <!-- <img :src="imgToLoad" class="card__thumbnail" /> -->
 
       <div class="card__content">
         <img
@@ -90,7 +90,9 @@
 export default {
   props: ["dog", "loggedinUser"],
   data() {
-    return {};
+    return {
+      
+    };
   },
 
   methods: {

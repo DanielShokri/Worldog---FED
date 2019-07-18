@@ -11,12 +11,12 @@ import dogList from "../components/DogList.cmp.vue";
 export default {
   data() {
     return {
-      newDog: {
-        name: ""
-      }
+    
     };
   },
   created() {
+         this.$store.dispatch({ type: "loadCompImProfile" , comp: "gallery"} )
+
     this.$store.dispatch({ type: "loggedInUser" });
     
   },
@@ -32,7 +32,6 @@ export default {
   computed: {
     loggedinUser() {
       if(!this.$store.getters.getcurrLoggedinUser) return
-      console.log("loggedinUser", this.$store.getters.getcurrLoggedinUser[0]);
       return this.$store.getters.getcurrLoggedinUser[0];
     },
   

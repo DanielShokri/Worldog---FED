@@ -23,9 +23,11 @@
                 <img :src="dog.profileImg" />
               </v-list-tile-avatar>
               <v-list-tile-content v-if="dog.distanceTextFromUser">
-                <v-list-tile-title v-html="dog.preference.name  + ' & '+  dog.owner.fullName + ' ' + '(' + (dog.distanceValueFromUser/1000) + 'km from you'+ ')'"></v-list-tile-title>
+                <v-list-tile-title
+                  v-html="dog.preference.name  + ' & '+  dog.owner.fullName + ' ' + '(' + (dog.distanceValueFromUser/1000) + 'km from you'+ ')'"
+                ></v-list-tile-title>
               </v-list-tile-content>
-               <v-list-tile-content v-else>
+              <v-list-tile-content v-else>
                 <v-list-tile-title v-html="dog.preference.name  + ' & '+  dog.owner.fullName "></v-list-tile-title>
               </v-list-tile-content>
 
@@ -46,10 +48,7 @@
 import dogsService from "../services/dogs.service";
 import googleMapsService from "../services/googleMaps.service.js";
 
-
 // todo : filter dogs by 2 mi from park, filter already is on dog.distanceValueFromMap - just do it !! ;
-
-
 
 export default {
   name: "usersList",
@@ -63,12 +62,13 @@ export default {
   props: ["currPark"],
 
   computed: {
-    distanceInKm(dog){
+    distanceInKm(dog) {
       return dog.distanceValueFromUser / 1000;
     }
   },
   methods: {
     goToUserProfile(dogId) {
+      this.$store.dispatch({ type: "loadCompImProfile", comp: "Gallery" });
       this.$router.push(`/user/${dogId}`);
     }
   },
