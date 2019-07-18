@@ -46,7 +46,7 @@
         <span class="follow">Follow</span>
         <div class="right col-lg-8">
           <!-- This is start -->
-          <v-tabs  centered color="white" light slider-color icons-and-text>
+          <!-- <v-tabs  centered color="white" light slider-color icons-and-text>
             <v-tabs-slider color="yellow"></v-tabs-slider>
 
             <v-tab @click="openCopm('Gallery')">
@@ -68,13 +68,13 @@
               Notification's
               <b-icon icon="bell-ring"></b-icon>
             </v-tab>
-          </v-tabs>
-          <!-- <ul class="nav">
-            <li @click="openCopm('Gallery')">Gallery</li>
-            <li @click="openCopm('Friends')">Friends</li>
-            <li @click="openCopm('Messages')">Messages</li>
-            <li @click="openCopm('Notfication')">Notfication</li>
-          </ul>-->
+          </v-tabs> -->
+          <ul class="nav">
+            <li @click="openCopm('Gallery')"><b-icon icon="image"></b-icon> Gallery</li>
+            <li @click="openCopm('Friends')"><b-icon icon="account-group"></b-icon>  Friends</li>
+            <li @click="openCopm('Messages')"><b-icon icon="message-bulleted"></b-icon>  Messages</li>
+            <li @click="openCopm('Notfication')"><b-icon icon="bell-ring"></b-icon>  Notfication</li>
+          </ul>
           <div class="row comp">
             <div v-if="this.comp ==='Gallery'">
               <user-gallery :user="dog"></user-gallery>

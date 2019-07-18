@@ -6,7 +6,7 @@
       </header>
       <section class="modal-card-body">
         <b-field label="Username">
-          <b-input v-model="user.name" type="text" placeholder="Your username" required></b-input>
+          <b-input ref="username" v-model="user.name" type="text" placeholder="Your username" required></b-input>
         </b-field>
 
         <b-field label="Password">
@@ -35,6 +35,9 @@ export default {
         pass: ""
       }
     };
+  },
+  mounted() {
+    this.$refs.username.focus()
   },
   methods: {
     loginUser() {

@@ -1,28 +1,27 @@
 <template>
-  <!-- <div class="notfication-container">
-    <h1>Nutfication</h1>
-
-    <div
-      class="notfications"
-      v-for="notfication in user.gotFriendsReq"
-      :key="notfication.userId"
-    >{{notfication}}</div>
-  </div>-->
-  <section class="userLiList">
+  <section v-if="user" class="userLiList">
     <v-layout row>
       <v-flex>
         <v-card>
-          <v-toolbar dense expand dark>
-            <!-- <v-toolbar-side-icon></v-toolbar-side-icon> -->
-
-            <v-toolbar-title class="text-xs-center">Notfications</v-toolbar-title>
-
-            <v-spacer></v-spacer>
-          </v-toolbar>
-
+          <section v-if="user.gotFriendsReq.length">
+            <v-toolbar dense expand dark>
+              <v-toolbar-title class="text-xs-center">Notfications</v-toolbar-title>
+              <v-spacer></v-spacer>
+            </v-toolbar>
+          </section>
+          <section v-else>
+            <v-toolbar dense expand dark>
+              <v-toolbar-title class="text-xs-center">Nothing Here.</v-toolbar-title>
+              <v-spacer></v-spacer>
+            </v-toolbar>
+          </section>
           <v-list subheader>
             <!-- <v-subheader>Dogs in the park</v-subheader> -->
-            <v-list-tile v-for="notfication in user.gotFriendsReq" :key="notfication.userId" avatar>
+            <v-list-tile
+              v-for="notfication in user.gotFriendsReq"
+              :key="notfication.userName"
+              avatar
+            >
               <v-list-tile-avatar>
                 <img :src="notfication.userImg" />
               </v-list-tile-avatar>
@@ -40,15 +39,34 @@
       </v-flex>
     </v-layout>
   </section>
+  <section v-else class="no-notification">Nothing here.</section>
 </template>
 
 <script>
 export default {
   props: ["user"],
+  data() {
+    return {
+      currUser: null
+    };
+  },
   methods: {
     confirmFriendShip(sentUser) {
-      this.$emit('makeFriends', sentUser)
+      this.$emit("makeFriends", sentUser);
+    }
+  },
+  computed: {
+    checkIfNotfications() {
+      if (this.user.gotFriendsReq) return "Notfications";
+      else return "Nothing Here.";
     }
   }
 };
 </script>
+
+
+<style scoped>
+.no-notification {
+  margin: 0 auto;
+}
+</style>

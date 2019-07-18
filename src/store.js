@@ -18,6 +18,7 @@ export default new Vuex.Store({
         sortByDistanceDogs: null,
         userLoc: null,
         currPark: null,
+        parks: null
     },
     mutations: {
         setFilter(state, filter) {
@@ -41,12 +42,12 @@ export default new Vuex.Store({
             state.currUser = '';
         },
         setSortDogs(state, { res }) {
-            for (var i = 0; i < state.dogs.length; i++) {
+            for (var i = 0; i < state.parks; i++) {
                 state.dogs[i].distanceTextFromUser = res.elements[i].distance.text;
                 state.dogs[i].distanceValueFromUser = res.elements[i].distance.value;
             }
             if (!state.currPark) {
-                state.dogs.sort(function(a, b) {
+                state.dogs.sort(function (a, b) {
                     return a.distanceValueFromUser - b.distanceValueFromUser;
                 });
             }
@@ -56,7 +57,7 @@ export default new Vuex.Store({
                 state.dogs[i].distanceTextFromMap = res.elements[i].distance.text;
                 state.dogs[i].distanceValueFromMap = res.elements[i].distance.value;
             }
-            state.dogs.sort(function(a, b) {
+            state.dogs.sort(function (a, b) {
                 return a.distanceValueFromUser - b.distanceValueFromUser;
             });
         },
@@ -319,9 +320,11 @@ export default new Vuex.Store({
                     context.commit({ type: 'setLoggedOutUser' })
                 })
         },
+
         goToPark(context, { park }) {
             context.commit({ type: 'setCurrPark', park })
-        }
+        },
+       
     },
     modules: {
 

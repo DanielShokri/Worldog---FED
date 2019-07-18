@@ -22,9 +22,8 @@
               <v-list-tile-avatar>
                 <img :src="dog.profileImg" />
               </v-list-tile-avatar>
-
               <v-list-tile-content v-if="dog.distanceTextFromUser">
-                <v-list-tile-title v-html="dog.preference.name  + ' & '+  dog.owner.fullName + ' ' +'(' + dog.distanceTextFromUser + ' from you)'  "></v-list-tile-title>
+                <v-list-tile-title v-html="dog.preference.name  + ' & '+  dog.owner.fullName + ' ' + '(' + (dog.distanceValueFromUser/1000) + 'km from you'+ ')'"></v-list-tile-title>
               </v-list-tile-content>
                <v-list-tile-content v-else>
                 <v-list-tile-title v-html="dog.preference.name  + ' & '+  dog.owner.fullName "></v-list-tile-title>
@@ -63,7 +62,11 @@ export default {
   },
   props: ["currPark"],
 
-  computed: {},
+  computed: {
+    distanceInKm(dog){
+      return dog.distanceValueFromUser / 1000;
+    }
+  },
   methods: {
     goToUserProfile(dogId) {
       this.$router.push(`/user/${dogId}`);
