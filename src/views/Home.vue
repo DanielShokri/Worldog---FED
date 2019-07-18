@@ -1,11 +1,10 @@
 <template>
   <div>
-
     <div>
       <img slot="img" src="../../public/img/home.svg" alt />
       <UsersFilter @setFilter="setFilter"></UsersFilter>
     </div>
-
+    <!-- <bla2></bla2> -->
     <section class="hero is-light is-bold">
       <div class="hero-body">
         <h1 class="parks-title">Nearby Parks</h1>
@@ -35,11 +34,12 @@ import UserLiList from "../components/UserLiList.cmp";
 import ParkList from "../components/ParksList.cmp.vue";
 import DogList from "../components/DogList.cmp.vue";
 import UsersFilter from "../components/UsersFilter.cmp";
+import bla2 from "../components/bla2";
 export default {
   name: "home",
 
   created() {
-    this.$store.dispatch({ type: "loggedInUser" })
+    this.$store.dispatch({ type: "loggedInUser" });
     this.$store.dispatch({ type: "loadDogs" }).then(() => {
       this.$store.dispatch({ type: "loadUserLoc" }).then(() => {
         this.$store.dispatch({ type: "loadSortDogs" }).then(() => {
@@ -48,16 +48,15 @@ export default {
       });
     });
   },
-    data() {
+  data() {
     return {
-      dogs: null,
+      dogs: null
     };
   },
   computed: {
     dogsToShow() {
-      var newDogs = [this.dogs[0],this.dogs[1],this.dogs[2],this.dogs[3]]
+      var newDogs = [this.dogs[0], this.dogs[1], this.dogs[2], this.dogs[3]];
       return newDogs;
-    
     }
   },
   methods: {
@@ -77,7 +76,7 @@ export default {
       });
     }
   },
-  components: { UserListMap, ParkList, UserLiList, UsersFilter, DogList }
+  components: { UserListMap, ParkList, UserLiList, UsersFilter, DogList, bla2 }
 };
 </script>
 <style scoped lang="scss">

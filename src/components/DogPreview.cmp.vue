@@ -1,5 +1,40 @@
 <template>
-  <div class="slide-container" v-if="dog">
+  <div class="grid">
+    <div class="card">
+      <img :src="imgToLoad" class="card__thumbnail" />
+
+      <div class="card__content">
+        <img
+          src="https://www.crearlogogratisonline.com/images/crearlogogratis_1024x1024_01.png"
+          class="author"
+        />
+        <h4>Lorem ipsum dolor</h4>
+        <span class="ago">Two days ago</span>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla nec neque quis velit bibendum efficitur sed non tortor. Nullam vestibulum tortor quis ligula auctor, quis viverra mauris viverra. Proin vulputate pellentesque efficitur.</p>
+        <span class="read-more">Read more</span>
+      </div>
+      <div class="card__footer">
+        <div class="card__footer__meta">
+          <span class="meta" tooltip="Like">
+            <i class="fa fa-heart favorite"></i>
+          </span>
+          <span class="meta more" tooltip="Options">
+            <i class="fa fa-ellipsis-h"></i>
+          </span>
+          <span class="more stats" tooltip="Shares">
+            12
+            <i class="fa fa-share"></i>
+          </span>
+          <span class="more stats" tooltip="Views">
+            256
+            <i class="fa fa-eye"></i>
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- <div class="slide-container" v-if="dog">
     <div class="wrapper">
       <div class="clash-card barbarian">
         <div class="clash-card__image clash-card__image--barbarian">
@@ -43,10 +78,10 @@
           </button>
         </div>
       </div>
-      <!-- end clash-card barbarian-->
-    </div>
-    <!-- end wrapper -->
-  </div>
+  <!-- end clash-card barbarian-->
+  <!-- </div> -->
+  <!-- end wrapper -->
+  <!-- </div> -->
 
   <!-- end container -->
 </template>
@@ -121,35 +156,12 @@ export default {
 </script>
 <style scoped lang="scss">
 // @import url('https://fonts.googleapis.com/css?family=Lato:400');
-
-$border-radius-size: 5px;
-$barbarian: #ff3860;
-$archer: #ee5487;
-$giant: #f6901a;
-$goblin: rgb(88, 212, 181);
-$wizard: #4facff;
-
-*,
-*:before,
-*:after {
-  box-sizing: border-box;
-}
-
 body {
-  background: linear-gradient(
-      to bottom,
-      rgba(140, 122, 122, 1) 0%,
-      rgba(175, 135, 124, 1) 65%,
-      rgba(175, 135, 124, 1) 100%
-    )
-    fixed;
-  background: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/coc-background.jpg")
-    no-repeat center center fixed;
-  background-size: cover;
-  font: 14px/20px "Lato", Arial, sans-serif;
-  color: #9e9e9e;
-  margin-top: 30px;
+  background-color: #f8f8f8;
+  margin: 0;
+  padding: 0;
 }
+<<<<<<< HEAD
 .admin-action-wrapper {
   text-align: -webkit-right;
   padding: 10px;
@@ -171,33 +183,78 @@ body {
   // margin-top: 40px;
   &:focus {
     outline: 0;
-  }
+=======
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  grid-auto-flow: row dense;
+  grid-gap: 1.9vw;
+  padding-top: 50px;
+  padding-bottom: 50px;
 }
-
-.clash-card {
-  background: white;
-  width: 300px;
-  display: inline-block;
-  margin: auto;
-  border-radius: $border-radius-size;
-  position: relative;
-  text-align: center;
-  box-shadow: -1px 15px 7px -12px black;
-  z-index: 0;
-}
-
-.clash-card__image {
-  position: relative;
-  height: 200px;
-  // margin-bottom: 35px;
-  border-top-left-radius: $border-radius-size;
-  border-top-right-radius: $border-radius-size;
-  img {
-    width: 100%;
-    height: 200px;
-    border-top-left-radius: 5px;
-    border-top-right-radius: 5px;
+.card {
+  transition-delay: 0.1s;
+  border-radius: 4px;
+  transform: translate(0, 0);
+  will-change: transform, box-shadow;
+  background-color: #fff;
+  box-shadow: 0 2px 20px 0 rgba(0, 0, 0, 0.05);
+  transition: box-shadow 0.3s ease-out, transform 0.3s ease-out;
+  &:hover {
+    box-shadow: rgba(45, 45, 45, 0.05) 0px 2px 2px,
+      rgba(49, 49, 49, 0.05) 0px 4px 4px, rgba(42, 42, 42, 0.05) 0px 8px 8px,
+      rgba(32, 32, 32, 0.05) 0px 16px 16px, rgba(49, 49, 49, 0.05) 0px 32px 32px,
+      rgba(35, 35, 35, 0.05) 0px 64px 64px;
+    transform: translate(0, -4px);
+    .card__thumbnail__share {
+      opacity: 1;
+      pointer-events: all;
+    }
+    .read-more {
+      color: rgba(0, 0, 0, 0.5);
+    }
+>>>>>>> fe84c949f777b9299d344564f2a3f09b0380b0ec
   }
+  &__thumbnail {
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+    background-color: transparent;
+    position: relative;
+    height: 350px;
+    &__share {
+      width: 80px;
+      position: absolute;
+      opacity: 0;
+      will-change: opacity;
+      right: 10px;
+      top: 10px;
+      pointer-events: none;
+      transition: opacity 0.35s 0.2s;
+      ul {
+        list-style-type: none;
+        li {
+          background-color: #fff;
+          border-radius: 50%;
+          width: 25px;
+          height: 25px;
+          line-height: 25px;
+          margin-bottom: 10px;
+          text-align: center;
+          color: #4f575b;
+          box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+          cursor: pointer;
+          i {
+            font-size: 12px;
+          }
+          &:hover {
+            color: #000;
+          }
+        }
+      }
+    }
+  }
+<<<<<<< HEAD
 }
 
 .clash-card__unit-name {
@@ -219,91 +276,148 @@ body {
   h2{
     color: #464040;
     font-size: 17px;
-  }
-}
-
-.clash-card__unit-stats--barbarian {
-  background: $goblin;
-
-  .one-third {
-    border-right: 1px solid #5e1523;
-  }
-}
-
-.clash-card__unit-stats {
-  color: white;
-  font-weight: 700;
-  border-bottom-left-radius: $border-radius-size;
-  border-bottom-right-radius: $border-radius-size;
-
-  .one-third {
-    width: 33%;
-    float: left;
-    padding: 20px 15px;
-  }
-
-  sup {
-    position: absolute;
-    bottom: 4px;
-    font-size: 45%;
-    margin-left: 2px;
-  }
-
-  .stat {
+=======
+  &__content {
+    font-family: Arial, sans-serif;
     position: relative;
-    font-size: 16px;
-    // margin-bottom: 10px;
-  }
-
-  .stat-value {
-    text-transform: uppercase;
-    font-weight: 400;
-    font-size: 13px;
-    a {
-      color: white;
-      text-decoration: none;
+    padding: 20px 25px 20px 25px;
+    h4 {
+      font-size: 18x;
+      font-weight: normal;
+      color: #000;
+      margin-top: 5px;
+      margin-bottom: 5px;
     }
-    button {
-      text-transform: uppercase;
-
-      font-size: 13px;
+    p {
+      font-size: 12px;
+      position: relative;
+      margin-top: 5px;
+      margin-bottom: 5px;
+      &:before {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 40px;
+        box-shadow: inset 0px -50px 50px -15px rgba(255, 255, 255, 1);
+      }
+    }
+    .read-more,
+    .ago {
+      color: rgba(179, 192, 200, 1);
+      font-size: 12px;
+      text-align: left;
+      transition: color 0.35s;
+    }
+    .read-more {
+      cursor: pointer;
+    }
+    .author {
+      width: 20px;
+      height: 20px;
+      position: absolute;
+      top: -20px;
+      background-color: #fff;
+      border-radius: 50%;
+      padding: 10px;
+    }
+>>>>>>> fe84c949f777b9299d344564f2a3f09b0380b0ec
+  }
+  &__footer {
+    border-top: 1px solid #eaf1f6;
+    min-height: 50px;
+    &__meta {
+      display: block;
+      min-height: 50px;
+      padding: 12px 15px;
+      box-sizing: border-box;
+      .meta {
+        cursor: pointer;
+        display: block;
+        width: 26px;
+        height: 26px;
+        float: left;
+        background-color: #edf2f6;
+        color: #b2c0c8;
+        line-height: 26px;
+        text-align: center;
+        font-size: 12px;
+        border-radius: 50%;
+        transition: color 0.35s, border 0.35s;
+        box-sizing: border-box;
+        &:hover {
+          color: #778d99;
+        }
+      }
+      .more {
+        background-color: transparent;
+        line-height: 26px;
+        font-size: 16px;
+        margin-left: 5px;
+        color: #b2c0c8;
+      }
+      .stats {
+        float: right;
+        font-family: Arial, sans-serif;
+        color: #b3c0c8;
+        font-size: 11px;
+        line-height: 22px;
+        vertical-align: middle;
+        margin-right: 5px;
+        .fa {
+          cursor: inherit;
+          background-color: transparent;
+          margin-left: 5px;
+        }
+      }
     }
   }
+}
 
-  .no-border {
-    border-right: none;
+[tooltip] {
+  position: relative;
+  font-family: Arial, sans-serif;
+  &:hover {
+    &:before {
+      opacity: 1;
+    }
+    &:after {
+      opacity: 1;
+    }
+  }
+  &:before {
+    content: "";
+    position: absolute;
+    top: -6px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-width: 4px 6px 0 6px;
+    border-style: solid;
+    border-color: rgba(0, 0, 0, 0.7) transparent transparent transparent;
+    z-index: 100;
+    opacity: 0;
+    will-change: opacity;
+    transition: opacity 0.3s ease-out;
+  }
+  &:after {
+    content: attr(tooltip);
+    position: absolute;
+    left: 50%;
+    top: -6px;
+    transform: translateX(-50%) translateY(-100%);
+    background: rgba(0, 0, 0, 0.7);
+    text-align: center;
+    color: #fff;
+    padding: 2px 8px;
+    font-size: 11px;
+    letter-spacing: 1px;
+    border-radius: 3px;
+    pointer-events: none;
+    opacity: 0;
+    will-change: opacity;
+    transition: opacity 0.3s ease-out;
   }
 }
-
-.clearfix:after {
-  visibility: hidden;
-  display: block;
-  font-size: 0;
-  content: " ";
-  clear: both;
-  height: 0;
-}
-
-.slick-prev {
-  left: 100px;
-  z-index: 0;
-}
-
-.slick-next {
-  right: 100px;
-  z-index: 0;
-}
-/* li {
-  display: flex;
-  padding: 10px;
-}
-.buttons {
-  display: flex;
-  justify-content: space-between;
-}
-.btn a {
-  text-decoration: none;
-  color: black;
-} */
 </style>
 

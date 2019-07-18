@@ -51,6 +51,7 @@ export default {
   data() {
     return {
       userLoc: null,
+      currUser:null,
       dogs: null,
       langs: ["he", "en"],
       times: [1552552892953, 1552552891953, 1552522892953],
@@ -127,13 +128,18 @@ if(!marker.position) marker.position = marker.location
     this.$store.dispatch({ type: "loadDogs" }).then(() => {
       this.dogs = this.$store.getters.dogsToShow;
     });
+    this.$store.dispatch({ type: "loggedInUser" }).then(() => {
+      this.currUser = this.$store.getters.getLoggedinUser;
+    });
     dogsService.getPosition().then(pos => {
+      if(this.currUser[0]) var toShow = `<p>${this.currUser[0].owner.fullName}</p>`; 
+      else var toShow = `<p>Guest</p>`
       this.userLoc = {
         position: {
           lat: pos.coords.latitude,
           lng: pos.coords.longitude
         },
-        infoText: `<p>Guest</p>`
+        infoText: toShow
       };
     });
   }

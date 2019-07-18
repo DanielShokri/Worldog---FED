@@ -46,7 +46,11 @@
         </div>
         <div class="right col-lg-8">
           <!-- This is start -->
+<<<<<<< HEAD
           <v-tabs centered color="white" light slider-color icons-and-text>
+=======
+          <!-- <v-tabs  centered color="white" light slider-color icons-and-text>
+>>>>>>> fe84c949f777b9299d344564f2a3f09b0380b0ec
             <v-tabs-slider color="yellow"></v-tabs-slider>
 
             <v-tab @click="openCopm('Gallery')">
@@ -68,25 +72,25 @@
               Notification's({{dog.gotFriendsReq.length}})
               <b-icon icon="bell-ring"></b-icon>
             </v-tab>
-          </v-tabs>
-          <!-- <ul class="nav">
-            <li @click="openCopm('Gallery')">Gallery</li>
-            <li @click="openCopm('Friends')">Friends</li>
-            <li @click="openCopm('Messages')">Messages</li>
-            <li @click="openCopm('Notfication')">Notfication</li>
-          </ul>-->
+          </v-tabs> -->
+          <ul class="nav">
+            <li @click="openCopm('Gallery')"><b-icon icon="image"></b-icon> Gallery</li>
+            <li @click="openCopm('Friends')"><b-icon icon="account-group"></b-icon>  Friends</li>
+            <li @click="openCopm('Messages')"><b-icon icon="message-bulleted"></b-icon>  Messages</li>
+            <li @click="openCopm('Notfication')"><b-icon icon="bell-ring"></b-icon>  Notfication</li>
+          </ul>
           <div class="row comp">
-            <div v-if="this.comp ==='Gallery'">
+            <div style="width: 100%;" v-if="this.comp ==='Gallery'">
               <user-gallery :user="dog"></user-gallery>
             </div>
-            <div v-if="this.comp==='Friends'">
-              <user-friends :user="dog"></user-friends>
+            <div style="width: 100%;" v-if="this.comp==='Friends'">
+              <user-friends @goTO="onGoTo" :user="dog"></user-friends>
             </div>
-            <div v-if="this.comp==='Messages'">
+            <div style="width: 100%;" v-if="this.comp==='Messages'">
               <user-messages :user="dog"></user-messages>
             </div>
-            <div v-if="this.comp ==='Notfication'">
-              <user-notfication @makeFriends="makeFriendship" :user="dog"></user-notfication>
+            <div style="width: 100%;" v-if="this.comp ==='Notfication'">
+              <user-notfication @rejectReq="rejectFriendReq" @makeFriends="makeFriendship" :user="dog"></user-notfication>
             </div>
           </div>
         </div>
@@ -124,7 +128,12 @@ export default {
       type: "loadDogById",
       dogId
     });
+<<<<<<< HEAD
     this.$store.dispatch({ type: "loggedInUser" });
+=======
+
+    this.user = this.$store.getters.getDog;
+>>>>>>> fe84c949f777b9299d344564f2a3f09b0380b0ec
   },
   methods: {
     addFriend(dogId) {
@@ -161,8 +170,24 @@ export default {
       console.log('open comp', cmp)
       this.comp = cmp;
     },
+<<<<<<< HEAD
     makeFriendship(sentUser) {
       this.$store.dispatch({ type: "makeFriendShip", dog: sentUser });
+=======
+    onGoTo(dogId) {
+        this.$store.dispatch({
+      type: "loadDogById",
+      dogId
+    });
+      this.$router.push(`/user/${dogId}`);
+    },
+
+    makeFriendship(sentUser) {
+      this.$store.dispatch({ type: "makeFriendShip", dog: sentUser });
+    },
+    rejectFriendReq(sentUser) { 
+       this.$store.dispatch({ type: "rejectFriendShip", dog: sentUser });
+>>>>>>> fe84c949f777b9299d344564f2a3f09b0380b0ec
     }
   },
   computed: {
