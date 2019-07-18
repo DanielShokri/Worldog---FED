@@ -15,6 +15,14 @@
           </div>
           <h4 class="name">{{dog.owner.fullName}} and {{dog.preference.name}}</h4>
 
+          <div class="btn-wrapper" v-if="notMyProfile">
+            <span @click="addFriend(dog._id)" class="add-friend">Add Friend</span>
+            <span @click="addLike(dog._id)" class="like-friend">Like ({{dog.gotLikes.length}})</span>
+            <!-- <b-icon icon="thumb-up"></b-icon> -->
+          </div>
+          <div class="btn-wrapper" v-if="!notMyProfile">
+            <span class="like-friend">{{dog.gotLikes.length}} Likes</span>
+          </div>
           <p class="desc">
             Hi ! My name is {{dog.owner.fullName}}
             I am {{dog.owner.age}} year old,
@@ -28,7 +36,7 @@
             and so.
             We are living in {{dog.address}}
           </p>
-          <span v-if="notMyProfile" @click="addFriend(dog._id)" class="add-friend">Add Friend</span>
+
           <div class="social">
             <i>
               <b-icon icon="facebook-box"></b-icon>
@@ -76,10 +84,17 @@
             <li @click="openCopm('Friends')">
               <b-icon icon="account-group"></b-icon>Friends
             </li>
+<<<<<<< HEAD
             <li @click="openCopm('Messages')">
               <b-icon icon="message-bulleted"></b-icon>Messages
             </li>
             <li @click="openCopm('Notfication')">
+=======
+            <li v-if="!notMyProfile" @click="openCopm('Messages')">
+              <b-icon icon="message-bulleted"></b-icon>Messages
+            </li>
+            <li v-if="!notMyProfile" @click="openCopm('Notfication')">
+>>>>>>> 427e0576c1bc7ea3291dacad36b9bf3c1f5dd634
               <b-icon icon="bell-ring"></b-icon>Notfication
             </li>
           </ul>
@@ -101,6 +116,7 @@
               ></user-notfication>
             </div>
           </div>
+           
         </div>
       </div>
     </main>
@@ -112,12 +128,12 @@ import UserGallery from "../components/UserGallery.cmp.vue";
 import UserFriends from "../components/UserFriends.cmp.vue";
 import UserMessages from "../components/UserMessages.cmp.vue";
 import UserNotfication from "../components/UserNotfication.cmp.vue";
-import eventBus from "../services/eventBus.js";
 
 export default {
   name: "profile",
   data() {
     return {
+<<<<<<< HEAD
       comp: "Gallery"
     };
   },
@@ -129,35 +145,62 @@ export default {
     });
   },
   created() {
+=======
+      comp: "",
+    };
+  },
+  mounted() {},
+  created() {
+    this.comp = this.$store.getters.compToShoe;
+
+>>>>>>> 427e0576c1bc7ea3291dacad36b9bf3c1f5dd634
     var dogId = this.$route.params.id;
     this.$store.dispatch({
       type: "loadDogById",
       dogId
     });
     this.$store.dispatch({ type: "loggedInUser" });
+
   },
   methods: {
+   
+    addLike(dogId) {
+      if (!this.loggedinUser) {
+        this.$toast.open({ message: "You need to login", type: "is-danger" });
+      } else {
+        const userSentLikes = this.loggedinUser.sentLikes;
+        if (userSentLikes.find(id => id === this.dog._id)) {
+          this.$toast.open({
+            message: "You are already Liked",
+            type: "is-danger"
+          });
+        } else {
+          this.$store.dispatch({ type: "updateFriendLike", dogId }).then(() => {
+            this.$toast.open({
+              message: "Like successfully!",
+              type: "is-success"
+            });
+          });
+        }
+      }
+    },
     addFriend(dogId) {
       if (!this.loggedinUser) {
-        // console.log("cant adding friend you need to login");
         this.$toast.open({ message: "You need to login", type: "is-danger" });
       } else {
         const userFriends = this.loggedinUser.friends;
         const userSentFriendReq = this.loggedinUser.sentFriendsReq;
         if (userFriends.find(friend => friend.userId === this.dog._id)) {
-          // console.log(" you are alredy friend");
           this.$toast.open({
             message: "You are alredy friend",
             type: "is-danger"
           });
         } else if (userSentFriendReq.find(id => id === this.dog._id)) {
-          // console.log("You have already sent friend request");
-          this.$toast.open({
+         this.$toast.open({
             message: "You have already sent friend request",
             type: "is-danger"
           });
         } else {
-          // console.log("adding friend", this.loggedinUser);
           this.$store.dispatch({ type: "updateFriendReq", dogId }).then(() => {
             this.$toast.open({
               message: "friend request successfully sent!",
@@ -168,7 +211,10 @@ export default {
       }
     },
     openCopm(cmp) {
+<<<<<<< HEAD
       console.log("open comp", cmp);
+=======
+>>>>>>> 427e0576c1bc7ea3291dacad36b9bf3c1f5dd634
       this.comp = cmp;
     },
     onGoTo(dogId) {
@@ -184,6 +230,7 @@ export default {
     },
     rejectFriendReq(sentUser) {
       this.$store.dispatch({ type: "rejectFriendShip", dog: sentUser });
+<<<<<<< HEAD
     },
     removeUser(dogId) {
       console.log(dogId);
@@ -192,6 +239,8 @@ export default {
         message: "friend request successfully sent!",
         type: "is-success"
       });
+=======
+>>>>>>> 427e0576c1bc7ea3291dacad36b9bf3c1f5dd634
     }
   },
   computed: {
@@ -201,10 +250,8 @@ export default {
     },
     loggedinUser() {
       if (!this.$store.getters.getcurrLoggedinUser) return;
-      console.log("loggedinUser", this.$store.getters.getcurrLoggedinUser[0]);
       return this.$store.getters.getcurrLoggedinUser[0];
     },
-
     dog() {
       return this.$store.getters.getDog;
     },
@@ -228,7 +275,8 @@ export default {
     UserGallery,
     UserFriends,
     UserMessages,
-    UserNotfication
+    UserNotfication,
+    
   }
 };
 </script>
@@ -301,6 +349,9 @@ main {
   .photo {
     margin-top: -70px;
   }
+}
+.btn-wrapper {
+  padding: 20px;
 }
 .active {
   width: 20px;
@@ -386,11 +437,11 @@ main {
 .desc {
   text-align: center;
   margin-top: 25px;
-  margin: 25px 40px;
+  margin: 5px 40px;
   color: #999;
   font-size: 16pt;
   font-family: "Open Sans";
-  padding-bottom: 25px;
+  padding-bottom: 15px;
   border-bottom: 1px solid #ededed;
 }
 
@@ -457,8 +508,22 @@ main {
   font-weight: 400;
   width: 250px;
 }
+.like-friend {
+  font-size: 11pt;
+  background-color: #fa4270;
+  color: #fff;
+  padding: 8px 15px;
+  cursor: pointer;
+  transition: all 0.4s;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 400;
+  width: 250px;
+}
 
 .add-friend:hover {
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.2), 0 0 15px rgba(0, 0, 0, 0.2);
+}
+.like-friend:hover {
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.2), 0 0 15px rgba(0, 0, 0, 0.2);
 }
 

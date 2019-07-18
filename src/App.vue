@@ -2,6 +2,7 @@
   <v-app>
     <v-content>
       <app-header></app-header>
+      <chat v-if="isChatOpen"></chat>
       <router-view />
     </v-content>
   </v-app>
@@ -9,11 +10,18 @@
 
 <script>
 import AppHeader from "./components/AppHeader.vue";
+<<<<<<< HEAD
 import io from "socket.io-client";
 const socket = io("http://localhost:3000");
+=======
+import socket from "./services/socket.service.js";
+import chat from "./components/chat.cmp.vue";
+
+>>>>>>> 427e0576c1bc7ea3291dacad36b9bf3c1f5dd634
 export default {
   components: {
-    AppHeader
+    AppHeader,
+    chat
   },
   data() {
     return {
@@ -21,19 +29,18 @@ export default {
     };
   },
   created() {
+    socket.on("friend req sent", user => {
+      console.log("Listen to emit");
+      this.$toast.open({
+        message: `You have got freind request from ${user}`,
+        type: "is-success"
+      });
+    });
     this.$store.dispatch({ type: "loggedInUser" });
   },
-  updated() {
-    console.log(this.$store.getters.getcurrLoggedinUser)
-    if (!this.$store.getters.getcurrLoggedinUser[0]) return;
-    else {
-      socket.on("friend req sent", user => {
-        console.log("Listen to emit");
-        this.$toast.open({
-          message: `You have got freind request from ${user.owner.fullName}`,
-          type: "is-success"
-        });
-      });
+  computed: {
+    isChatOpen() {
+      return this.$store.getters.isChatOpen;
     }
   }
 };

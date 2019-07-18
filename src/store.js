@@ -18,13 +18,26 @@ export default new Vuex.Store({
         sortByDistanceDogs: null,
         userLoc: null,
         currPark: null,
-        parks: null
+        parks: null,
+        compInProfile: "Gallery",
+        isChatOpen: false
     },
     mutations: {
+        setIsOpenChat(state) {
+            console.log('in store', state.isChatOpen)
+            state.isChatOpen = !state.isChatOpen
+        },
+        updateCompInProfile(state, {
+            comp
+        }) {
+            state.compInProfile = comp
+        },
         setFilter(state, filter) {
             state.filterBy = JSON.parse(JSON.stringify(filter));
         },
-        setLoc(state, { pos }) {
+        setLoc(state, {
+            pos
+        }) {
             state.userLoc = {
                 position: {
                     lat: pos.coords.latitude,
@@ -32,39 +45,48 @@ export default new Vuex.Store({
                 }
             };
         },
-        setLoginUser(state, { currUserLoggedIn }) {
+        setLoginUser(state, {
+            currUserLoggedIn
+        }) {
             state.currUser = currUserLoggedIn;
         },
-        setLoggedUser(state, { userLoggedNow }) {
+        setLoggedUser(state, {
+            userLoggedNow
+        }) {
             state.currUser = userLoggedNow;
         },
         setLoggedOutUser(state) {
             state.currUser = '';
         },
-        setSortDogs(state, { res }) {
+        setSortDogs(state, {
+            res
+        }) {
             for (var i = 0; i < state.dogs.length; i++) {
                 state.dogs[i].distanceTextFromUser = res.elements[i].distance.text;
                 state.dogs[i].distanceValueFromUser = res.elements[i].distance.value;
             }
             if (!state.currPark) {
-                state.dogs.sort(function(a, b) {
+                state.dogs.sort(function (a, b) {
                     return a.distanceValueFromUser - b.distanceValueFromUser;
                 });
             }
         },
-        setSortParksNearUser(state, { res }) {
+        setSortParksNearUser(state, {
+            res
+        }) {
             for (var i = 0; i < state.parks.length; i++) {
                 state.parks[i].distanceTextFromUser = res.elements[i].distance.text;
                 state.parks[i].distanceValueFromUser = res.elements[i].distance.value;
             }
         },
-
-        setSortDogsByMap(state, { res }) {
+        setSortDogsByMap(state, {
+            res
+        }) {
             for (var i = 0; i < state.dogs.length; i++) {
                 state.dogs[i].distanceTextFromMap = res.elements[i].distance.text;
                 state.dogs[i].distanceValueFromMap = res.elements[i].distance.value;
             }
-            state.dogs.sort(function(a, b) {
+            state.dogs.sort(function (a, b) {
                 return a.distanceValueFromUser - b.distanceValueFromUser;
             });
         },
@@ -97,7 +119,29 @@ export default new Vuex.Store({
             state.dogs.splice(idx, 1, dog);
 
         },
-        updateDogFriendReq(state, { updatedDogId }) {
+        updateDogLikes(state, {
+            updatedDogId
+        }) {
+            const dogIdx = state.dogs.findIndex(dog => dog._id === updatedDogId)
+            var dog;
+            state.dogs.forEach(currDog => {
+                if (currDog._id === updatedDogId) dog = currDog
+            })
+            dog.gotLikes.push({
+                userId: state.currUser[0]._id,
+                userImg: state.currUser[0].profileImg,
+                userName: state.currUser[0].owner.fullName
+            })
+            const userIdx = state.dogs.findIndex(dog => dog._id === state.currUser[0]._id)
+            state.currUser[0].sentLikes.push(updatedDogId)
+
+            state.dogs.splice(userIdx, 1, state.currUser[0]);
+            state.dogs.splice(dogIdx, 1, dog)
+        },
+
+        updateDogFriendReq(state, {
+            updatedDogId
+        }) {
 
             const dogIdx = state.dogs.findIndex(dog => dog._id === updatedDogId)
             var dog;
@@ -105,21 +149,31 @@ export default new Vuex.Store({
                 if (currDog._id === updatedDogId) dog = currDog
             })
 
-            dog.gotFriendsReq.push({ userId: state.currUser[0]._id, userImg: state.currUser[0].profileImg, userName: state.currUser[0].owner.fullName })
+            dog.gotFriendsReq.push({
+                userId: state.currUser[0]._id,
+                userImg: state.currUser[0].profileImg,
+                userName: state.currUser[0].owner.fullName
+            })
             const userIdx = state.dogs.findIndex(dog => dog._id === state.currUser[0]._id)
             state.currUser[0].sentFriendsReq.push(updatedDogId)
 
             state.dogs.splice(userIdx, 1, state.currUser[0]);
             state.dogs.splice(dogIdx, 1, dog)
         },
-        updateDogFriendShip(state, { updatedDog }) {
+        updateDogFriendShip(state, {
+            updatedDog
+        }) {
             console.log(updatedDog)
             const dogIdx = state.dogs.findIndex(dog => dog._id === updatedDog.userId)
             var dog;
             state.dogs.forEach(currDog => {
                 if (currDog._id === updatedDog.userId) dog = currDog
             })
-            dog.friends.push({ userId: state.currUser[0]._id, userImg: state.currUser[0].profileImg, userName: state.currUser[0].owner.fullName });
+            dog.friends.push({
+                userId: state.currUser[0]._id,
+                userImg: state.currUser[0].profileImg,
+                userName: state.currUser[0].owner.fullName
+            });
             state.currUser[0].friends.push(updatedDog)
             dog.sentFriendsReq.forEach((id, idx) => {
                 if (id === state.currUser[0]._id)
@@ -135,7 +189,9 @@ export default new Vuex.Store({
             state.dogs.splice(dogIdx, 1, dog)
             state.dog = state.currUser[0];
         },
-        rejectDogFriendShip(state, { updatedDog }) {
+        rejectDogFriendShip(state, {
+            updatedDog
+        }) {
             console.log(updatedDog)
             const dogIdx = state.dogs.findIndex(dog => dog._id === updatedDog.userId)
             var dog;
@@ -159,6 +215,7 @@ export default new Vuex.Store({
 
         },
 
+<<<<<<< HEAD
         removeDogFriendShip(state, { updatedDog }) {
             console.log(updatedDog)
             const dogIdx = state.dogs.findIndex(dog => dog._id === updatedDog)
@@ -183,24 +240,33 @@ export default new Vuex.Store({
         },
 
         setCurrPark(state, { park }) {
+=======
+        setCurrPark(state, {
+            park
+        }) {
+>>>>>>> 427e0576c1bc7ea3291dacad36b9bf3c1f5dd634
             state.currPark = park;
         },
-        setParks(state, { gardens }) {
+
+        setParks(state, {
+            gardens
+        }) {
             state.parks = gardens;
         }
     },
     getters: {
+        compToShoe(state) {
+            return state.compInProfile
+        },
         dogsToShow(state) {
             return state.dogs
         },
         getLoggedinUser(state) {
             return state.currUser
         },
-
         getcurrLoggedinUser(state) {
             return state.currUser
         },
-
         getDog(state) {
             return state.dog
         },
@@ -210,12 +276,24 @@ export default new Vuex.Store({
         getNotfications(state) {
             return state.currUser[0].gotFriendsReq
         },
+        gotLikes(state) {
+            return state.currUser[0].gotLikes
+        },
         getParks(state) {
             return state.parks;
+        },
+        isChatOpen(state){
+            return state.isChatOpen
         }
     },
 
     actions: {
+        isChatOpen(context){
+            context.commit({
+                type: 'setIsOpenChat',
+            })
+        },
+
         loadSortDogs(context) {
 
             var x = [];
@@ -254,7 +332,18 @@ export default new Vuex.Store({
             }
 
         },
-        loadParks(context, { gardens }) {
+        loadCompInProfile(context, {
+            comp
+        }) {
+            context.commit({
+                type: 'updateCompInProfile',
+                comp
+            })
+            return comp
+        },
+        loadParks(context, {
+            gardens
+        }) {
             context.commit({
                 type: 'setParks',
                 gardens
@@ -281,7 +370,9 @@ export default new Vuex.Store({
                 });
         },
 
-        updateFriendReq(context, { dogId }) {
+        updateFriendReq(context, {
+            dogId
+        }) {
             return dogsService.sendFriendReq(dogId)
                 .then(updatedDogId => {
                     context.commit({
@@ -290,8 +381,25 @@ export default new Vuex.Store({
                     })
                     return updatedDogId
                 })
+
         },
-        makeFriendShip(context, { dog }) {
+
+        updateFriendLike(context, {
+            dogId
+        }) {
+            return dogsService.addLike(dogId)
+                .then(updatedDogId => {
+                    context.commit({
+                        type: 'updateDogLikes',
+                        updatedDogId
+                    })
+                    return updatedDogId
+                })
+        },
+
+        makeFriendShip(context, {
+            dog
+        }) {
             return dogsService.makeFriendshipOn(dog)
                 .then(updatedDog => {
                     console.log(updatedDog)
@@ -302,10 +410,11 @@ export default new Vuex.Store({
                     return updatedDog
                 })
         },
-        rejectFriendShip(context, { dog }) {
+        rejectFriendShip(context, {
+            dog
+        }) {
             return dogsService.rejectFriendshipOn(dog)
                 .then(updatedDog => {
-                    console.log(updatedDog)
                     context.commit({
                         type: 'rejectDogFriendShip',
                         updatedDog
@@ -327,8 +436,9 @@ export default new Vuex.Store({
 
 
 
-        loadDogs(context, { filterBy }) {
-            console.log('LoadDogs dispach happend!')
+        loadDogs(context, {
+            filterBy
+        }) {
             return dogsService.query(filterBy)
                 .then(dogs => {
                     context.commit({
@@ -385,7 +495,9 @@ export default new Vuex.Store({
                 })
         },
 
-        updateDog(context, { dog }) {
+        updateDog(context, {
+            dog
+        }) {
             return dogsService.update(dog)
                 .then(updatedDog => {
                     context.commit({
@@ -396,17 +508,24 @@ export default new Vuex.Store({
                 })
         },
 
-        userLogin(context, { currUser }) {
+        userLogin(context, {
+            currUser
+        }) {
             return dogsService.logIn(currUser)
                 .then(currUserLoggedIn => {
-                    context.commit({ type: 'setLoginUser', currUserLoggedIn })
+                    context.commit({
+                        type: 'setLoginUser',
+                        currUserLoggedIn
+                    })
                 }).catch((err) => {
                     console.log(err, 'This err store')
                     return Promise.reject('cant find user')
                 })
         },
 
-        userSignup(context, { user }) {
+        userSignup(context, {
+            user
+        }) {
             return dogsService.signUp(user)
                 .then(userSignedUp => {
                     console.log('This is Great signup!', userSignedUp)
@@ -416,23 +535,31 @@ export default new Vuex.Store({
         loggedInUser(context) {
             return dogsService.getLoggedinUser()
                 .then((userLoggedNow) => {
-                    context.commit({ type: 'setLoggedUser', userLoggedNow })
+                    context.commit({
+                        type: 'setLoggedUser',
+                        userLoggedNow
+                    })
                 })
         },
 
         userLogout(context) {
             dogsService.logOut()
                 .then(() => {
-                    context.commit({ type: 'setLoggedOutUser' })
+                    context.commit({
+                        type: 'setLoggedOutUser'
+                    })
                 })
         },
 
-        goToPark(context, { park }) {
-            context.commit({ type: 'setCurrPark', park })
-        },
-
-    },
-    modules: {
+        goToPark(context, {
+            park
+        }) {
+            context.commit({
+                type: 'setCurrPark',
+                park
+            })
+        }
 
     }
+
 })
