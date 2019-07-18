@@ -38,7 +38,6 @@
             </button>
           </span>
 
-
           <span class="more stats" tooltip="Friends">
             {{dog.friends.length}}
             <i class="fa fa-share"></i>
@@ -101,54 +100,53 @@
 </template>
 
 <script>
-import socket from '../services/socket.service.js'
-
+import socket from "../services/socket.service.js";
 
 export default {
   props: ["dog", "loggedinUser"],
   data() {
-    return {
-    };
+    return {};
   },
 
   methods: {
     openChat() {
-      this.$store.dispatch({ type: "isChatOpen" })
-      console.log('chat is open' )
+      this.$store.dispatch({ type: "isChatOpen" });
+      console.log("chat is open");
     },
 
     addFriend(dogId) {
       if (!this.loggedinUser) {
         this.$toast.open({ message: "You need to login", type: "is-danger" });
-      }
-      //  else {
-      //   const userFriends = this.loggedinUser.friends;
-      //   const userSentFriendReq = this.loggedinUser.sentFriendsReq;
-        // if (userFriends.find(friend => friend.userId === this.dog._id)) {
-        //   // console.log(" you are alredy friend");
-        //   this.$toast.open({
-        //     message: "You are already friends",
-        //     type: "is-danger"
-        //   });
-        // } else if (userSentFriendReq.find(id => id === this.dog._id)) {
-        //   // console.log("You have already sent friend request");
-        //   this.$toast.open({
-        //     message: "You have already sent friend request",
-        //     type: "is-danger"
-        //   });
-        // }
-         else {
+      } else {
+        const userFriends = this.loggedinUser.friends;
+        const userSentFriendReq = this.loggedinUser.sentFriendsReq;
+        if (userFriends.find(friend => friend.userId === this.dog._id)) {
+          // console.log(" you are alredy friend");
+          this.$toast.open({
+            message: "You are already friends",
+            type: "is-danger"
+          });
+        } else if (userSentFriendReq.find(id => id === this.dog._id)) {
+          // console.log("You have already sent friend request");
+          this.$toast.open({
+            message: "You have already sent friend request",
+            type: "is-danger"
+          });
+        } else {
           // console.log("adding friend", this.loggedinUser);
           this.$store.dispatch({ type: "updateFriendReq", dogId }).then(() => {
-            socket.emit("friend req", this.dog, this.$store.getters.getcurrLoggedinUser[0])
+            socket.emit(
+              "friend req",
+              this.dog,
+              this.$store.getters.getcurrLoggedinUser[0]
+            );
             this.$toast.open({
               message: "friend request successfully sent!",
               type: "is-success"
             });
           });
-        });
+        }
       }
-      // }
     },
     addLike(dogId) {
       if (!this.loggedinUser) {
@@ -197,8 +195,7 @@ export default {
       }
     }
   },
-  components: {
-  }
+  components: {}
 };
 </script>
 <style scoped lang="scss">
