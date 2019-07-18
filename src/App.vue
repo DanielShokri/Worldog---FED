@@ -9,8 +9,7 @@
 
 <script>
 import AppHeader from "./components/AppHeader.vue";
-import io from "socket.io-client";
-const socket = io("http://localhost:3000");
+import socket from "./services/socket.service.js";
 export default {
   components: {
     AppHeader
@@ -21,20 +20,14 @@ export default {
     };
   },
   created() {
-    this.$store.dispatch({ type: "loggedInUser" });
-  },
-  updated() {
-    console.log(this.$store.getters.getcurrLoggedinUser)
-    if (!this.$store.getters.getcurrLoggedinUser[0]) return;
-    else {
-      socket.on("friend req sent", user => {
-        console.log("Listen to emit");
-        this.$toast.open({
-          message: `You have got freind request from ${user.owner.fullName}`,
-          type: "is-success"
-        });
+    socket.on("friend req sent", user => {
+      console.log("Listen to emit");
+      this.$toast.open({
+        message: `You have got freind request from ${user}`,
+        type: "is-success"
       });
-    }
+    });
+    this.$store.dispatch({ type: "loggedInUser" });
   }
 };
 </script>

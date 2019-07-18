@@ -94,8 +94,8 @@
 </template>
 
 <script>
-import io from "socket.io-client";
-const socket = io("http://localhost:3000");
+import socket from '../services/socket.service.js'
+
 
 export default {
   props: ["dog", "loggedinUser"],
@@ -130,7 +130,7 @@ export default {
          else {
           // console.log("adding friend", this.loggedinUser);
           this.$store.dispatch({ type: "updateFriendReq", dogId }).then(() => {
-            socket.emit("friend req", this.dog)
+            socket.emit("friend req", this.dog, this.$store.getters.getcurrLoggedinUser[0])
             this.$toast.open({
               message: "friend request successfully sent!",
               type: "is-success"

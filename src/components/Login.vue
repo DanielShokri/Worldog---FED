@@ -33,8 +33,8 @@
 </template>
 
 <script>
-import io from "socket.io-client";
-const socket = io("http://localhost:3000");
+import socket from '../services/socket.service.js'
+
 export default {
   data() {
     return {
@@ -52,14 +52,8 @@ export default {
     loginUser() {
       this.$store
         .dispatch({ type: "userLogin", currUser: this.user })
-        .then(() => {
-          socket.on("friend req sent", user => {
-            console.log("Listen to emit");
-            this.$toast.open({
-              message: `You have got freind request from ${user.owner.fullName}`,
-              type: "is-success"
-            });
-          });
+        .then((res) => {
+          socket.emit("user login", this.$store.getters.getcurrLoggedinUser[0]._id);
           this.$toast.open({
             message: "Login Successfully!",
             type: "is-success"
