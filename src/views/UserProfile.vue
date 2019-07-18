@@ -84,17 +84,10 @@
             <li @click="openCopm('Friends')">
               <b-icon icon="account-group"></b-icon>Friends
             </li>
-<<<<<<< HEAD
-            <li @click="openCopm('Messages')">
-              <b-icon icon="message-bulleted"></b-icon>Messages
-            </li>
-            <li @click="openCopm('Notfication')">
-=======
             <li v-if="!notMyProfile" @click="openCopm('Messages')">
               <b-icon icon="message-bulleted"></b-icon>Messages
             </li>
             <li v-if="!notMyProfile" @click="openCopm('Notfication')">
->>>>>>> 427e0576c1bc7ea3291dacad36b9bf3c1f5dd634
               <b-icon icon="bell-ring"></b-icon>Notfication
             </li>
           </ul>
@@ -197,10 +190,6 @@ export default {
       }
     },
     openCopm(cmp) {
-<<<<<<< HEAD
-      console.log("open comp", cmp);
-=======
->>>>>>> 427e0576c1bc7ea3291dacad36b9bf3c1f5dd634
       this.comp = cmp;
     },
     onGoTo(dogId) {
@@ -216,7 +205,6 @@ export default {
     },
     rejectFriendReq(sentUser) {
       this.$store.dispatch({ type: "rejectFriendShip", dog: sentUser });
-<<<<<<< HEAD
     },
     removeUser(dogId) {
       console.log(dogId);
@@ -225,8 +213,6 @@ export default {
         message: "friend request successfully sent!",
         type: "is-success"
       });
-=======
->>>>>>> 427e0576c1bc7ea3291dacad36b9bf3c1f5dd634
     }
   },
   computed: {
