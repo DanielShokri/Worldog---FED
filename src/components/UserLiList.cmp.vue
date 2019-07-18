@@ -99,7 +99,7 @@ export default {
   },
   methods: {
     goToUserProfile(dogId) {
-      this.$store.dispatch({ type: "loadCompImProfile", comp: "Gallery" });
+      this.$store.dispatch({ type: "loadCompInProfile", comp: "Gallery" });
       this.$router.push(`/user/${dogId}`);
     }
   },

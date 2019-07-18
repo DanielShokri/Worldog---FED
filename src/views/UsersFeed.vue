@@ -15,7 +15,7 @@ export default {
     };
   },
   created() {
-         this.$store.dispatch({ type: "loadCompImProfile" , comp: "gallery"} )
+         this.$store.dispatch({ type: "loadCompInProfile" , comp: "gallery"} )
 
     this.$store.dispatch({ type: "loggedInUser" });
   },
