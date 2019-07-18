@@ -10,14 +10,9 @@
 
 <script>
 import AppHeader from "./components/AppHeader.vue";
-<<<<<<< HEAD
-import io from "socket.io-client";
-const socket = io("http://localhost:3000");
-=======
 import socket from "./services/socket.service.js";
 import chat from "./components/chat.cmp.vue";
 
->>>>>>> 427e0576c1bc7ea3291dacad36b9bf3c1f5dd634
 export default {
   components: {
     AppHeader,

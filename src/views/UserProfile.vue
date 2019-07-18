@@ -133,19 +133,6 @@ export default {
   name: "profile",
   data() {
     return {
-<<<<<<< HEAD
-      comp: "Gallery"
-    };
-  },
-  mounted() {
-    eventBus.$on("openWithNotfication", () => {
-      console.log("eveeeeeeent buuuuuuus");
-      this.comp = "Notfication";
-      console.log("eventttt", this.comp);
-    });
-  },
-  created() {
-=======
       comp: "",
     };
   },
@@ -153,7 +140,6 @@ export default {
   created() {
     this.comp = this.$store.getters.compToShoe;
 
->>>>>>> 427e0576c1bc7ea3291dacad36b9bf3c1f5dd634
     var dogId = this.$route.params.id;
     this.$store.dispatch({
       type: "loadDogById",

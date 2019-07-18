@@ -66,7 +66,7 @@ export default new Vuex.Store({
                 state.dogs[i].distanceValueFromUser = res.elements[i].distance.value;
             }
             if (!state.currPark) {
-                state.dogs.sort(function (a, b) {
+                state.dogs.sort(function(a, b) {
                     return a.distanceValueFromUser - b.distanceValueFromUser;
                 });
             }
@@ -86,7 +86,7 @@ export default new Vuex.Store({
                 state.dogs[i].distanceTextFromMap = res.elements[i].distance.text;
                 state.dogs[i].distanceValueFromMap = res.elements[i].distance.value;
             }
-            state.dogs.sort(function (a, b) {
+            state.dogs.sort(function(a, b) {
                 return a.distanceValueFromUser - b.distanceValueFromUser;
             });
         },
@@ -215,7 +215,6 @@ export default new Vuex.Store({
 
         },
 
-<<<<<<< HEAD
         removeDogFriendShip(state, { updatedDog }) {
             console.log(updatedDog)
             const dogIdx = state.dogs.findIndex(dog => dog._id === updatedDog)
@@ -240,11 +239,6 @@ export default new Vuex.Store({
         },
 
         setCurrPark(state, { park }) {
-=======
-        setCurrPark(state, {
-            park
-        }) {
->>>>>>> 427e0576c1bc7ea3291dacad36b9bf3c1f5dd634
             state.currPark = park;
         },
 
@@ -282,13 +276,13 @@ export default new Vuex.Store({
         getParks(state) {
             return state.parks;
         },
-        isChatOpen(state){
+        isChatOpen(state) {
             return state.isChatOpen
         }
     },
 
     actions: {
-        isChatOpen(context){
+        isChatOpen(context) {
             context.commit({
                 type: 'setIsOpenChat',
             })
