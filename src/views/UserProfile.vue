@@ -17,7 +17,7 @@
 
           <div class="btn-wrapper" v-if="notMyProfile">
             <span @click="addFriend(dog._id)" class="add-friend">Add Friend</span>
-            <span @click="likeFriend(dog._id)" class="like-friend">Like ({{dog.gotLikes.length}})</span>
+            <span @click="addLike(dog._id)" class="like-friend">Like ({{dog.gotLikes.length}})</span>
             <!-- <b-icon icon="thumb-up"></b-icon> -->
           </div>
           <div class="btn-wrapper" v-if="!notMyProfile">
@@ -143,20 +143,17 @@ export default {
     // this.user = this.$store.getters.getDog;
   },
   methods: {
-    likeFriend(dogId) {
+    addLike(dogId) {
       if (!this.loggedinUser) {
         this.$toast.open({ message: "You need to login", type: "is-danger" });
       } else {
         const userSentLikes = this.loggedinUser.sentLikes;
-        console.log("like friend user sent likes", userSentLikes);
         if (userSentLikes.find(id => id === this.dog._id)) {
-          console.log(" you are already liked");
           this.$toast.open({
             message: "You are already Liked",
             type: "is-danger"
           });
         } else {
-          console.log("adding like", this.loggedinUser);
           this.$store.dispatch({ type: "updateFriendLike", dogId }).then(() => {
             this.$toast.open({
               message: "Like successfully!",
@@ -168,7 +165,6 @@ export default {
     },
     addFriend(dogId) {
       if (!this.loggedinUser) {
-        // console.log("cant adding friend you need to login");
         this.$toast.open({ message: "You need to login", type: "is-danger" });
       } else {
         const userFriends = this.loggedinUser.friends;
@@ -180,13 +176,11 @@ export default {
             type: "is-danger"
           });
         } else if (userSentFriendReq.find(id => id === this.dog._id)) {
-          // console.log("You have already sent friend request");
-          this.$toast.open({
+=          this.$toast.open({
             message: "You have already sent friend request",
             type: "is-danger"
           });
         } else {
-          // console.log("adding friend", this.loggedinUser);
           this.$store.dispatch({ type: "updateFriendReq", dogId }).then(() => {
             this.$toast.open({
               message: "friend request successfully sent!",
@@ -197,7 +191,6 @@ export default {
       }
     },
     openCopm(cmp) {
-      console.log("open comp", cmp);
       this.comp = cmp;
     },
     onGoTo(dogId) {

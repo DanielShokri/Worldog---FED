@@ -108,27 +108,23 @@ export default {
   methods: {
     addFriend(dogId) {
       if (!this.loggedinUser) {
-        // console.log("cant adding friend you need to login");
         this.$toast.open({ message: "You need to login", type: "is-danger" });
       }
       //  else {
       //   const userFriends = this.loggedinUser.friends;
       //   const userSentFriendReq = this.loggedinUser.sentFriendsReq;
         // if (userFriends.find(friend => friend.userId === this.dog._id)) {
-        //   // console.log(" you are alredy friend");
         //   this.$toast.open({
         //     message: "You are already friends",
         //     type: "is-danger"
         //   });
         // } else if (userSentFriendReq.find(id => id === this.dog._id)) {
-        //   // console.log("You have already sent friend request");
         //   this.$toast.open({
         //     message: "You have already sent friend request",
         //     type: "is-danger"
         //   });
         // }
          else {
-          // console.log("adding friend", this.loggedinUser);
           this.$store.dispatch({ type: "updateFriendReq", dogId }).then(() => {
             socket.emit("friend req", this.dog)
             this.$toast.open({
@@ -139,18 +135,30 @@ export default {
         }
       // }
     },
-    addLike(dogId) {
+     addLike(dogId) {
       if (!this.loggedinUser) {
-        // console.log("cant adding friend you need to login");
         this.$toast.open({ message: "You need to login", type: "is-danger" });
+      } else {
+        const userSentLikes = this.loggedinUser.sentLikes;
+        if (userSentLikes.find(id => id === this.dog._id)) {
+          this.$toast.open({
+            message: "You are already Liked",
+            type: "is-danger"
+          });
+        } else {
+          this.$store.dispatch({ type: "updateFriendLike", dogId }).then(() => {
+            this.$toast.open({
+              message: "Like successfully!",
+              type: "is-success"
+            });
+          });
+        }
       }
     },
     goToEdit(dogId) {
-      // console.log('edit')
       this.$router.push(`/user/edit/${dogId}`);
     },
     emitDeleteDog(dogId) {
-      // console.log('deleted')
       this.$emit("delete", dogId);
     },
     openProfile(dogId) {

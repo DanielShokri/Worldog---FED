@@ -109,14 +109,11 @@ export default new Vuex.Store({
 
         },
         updateDogLikes(state ,{updatedDogId}){
-            console.log('dogsssssss', state.dogs)
             const dogIdx = state.dogs.findIndex(dog => dog._id === updatedDogId)
             var dog;
             state.dogs.forEach(currDog => {
-                console.log('curr sogggg',currDog)
                 if (currDog._id === updatedDogId) dog = currDog
             })
-            console.log('in storrrrrr dog is' , dog)
             dog.gotLikes.push({
                 userId: state.currUser[0]._id,
                 userImg: state.currUser[0].profileImg,
@@ -362,7 +359,6 @@ export default new Vuex.Store({
     }) {
         return dogsService.rejectFriendshipOn(dog)
             .then(updatedDog => {
-                console.log(updatedDog)
                 context.commit({
                     type: 'rejectDogFriendShip',
                     updatedDog
@@ -374,7 +370,6 @@ export default new Vuex.Store({
     loadDogs(context, {
         filterBy
     }) {
-        console.log('LoadDogs dispach happend!')
         return dogsService.query(filterBy)
             .then(dogs => {
                 context.commit({
