@@ -68,25 +68,37 @@
               Notification's({{dog.gotFriendsReq.length}})
               <b-icon icon="bell-ring"></b-icon>
             </v-tab>
-          </v-tabs> -->
+          </v-tabs>-->
           <ul class="nav">
-            <li @click="openCopm('Gallery')"><b-icon icon="image"></b-icon> Gallery</li>
-            <li @click="openCopm('Friends')"><b-icon icon="account-group"></b-icon>  Friends</li>
-            <li @click="openCopm('Messages')"><b-icon icon="message-bulleted"></b-icon>  Messages</li>
-            <li @click="openCopm('Notfication')"><b-icon icon="bell-ring"></b-icon>  Notfication</li>
+            <li @click="openCopm('Gallery')">
+              <b-icon icon="image"></b-icon>Gallery
+            </li>
+            <li @click="openCopm('Friends')">
+              <b-icon icon="account-group"></b-icon>Friends
+            </li>
+            <li @click="openCopm('Messages')">
+              <b-icon icon="message-bulleted"></b-icon>Messages
+            </li>
+            <li @click="openCopm('Notfication')">
+              <b-icon icon="bell-ring"></b-icon>Notfication
+            </li>
           </ul>
           <div class="row comp">
             <div style="width: 100%;" v-if="this.comp ==='Gallery'">
               <user-gallery :user="dog"></user-gallery>
             </div>
             <div style="width: 100%;" v-if="this.comp==='Friends'">
-              <user-friends @goTO="onGoTo" :user="dog"></user-friends>
+              <user-friends @removeUser="removeUser" @goTO="onGoTo" :user="dog"></user-friends>
             </div>
             <div style="width: 100%;" v-if="this.comp==='Messages'">
               <user-messages :user="dog"></user-messages>
             </div>
             <div style="width: 100%;" v-if="this.comp ==='Notfication'">
-              <user-notfication @rejectReq="rejectFriendReq" @makeFriends="makeFriendship" :user="dog"></user-notfication>
+              <user-notfication
+                @rejectReq="rejectFriendReq"
+                @makeFriends="makeFriendship"
+                :user="dog"
+              ></user-notfication>
             </div>
           </div>
         </div>
@@ -106,19 +118,17 @@ export default {
   name: "profile",
   data() {
     return {
-      comp: "Gallery",
+      comp: "Gallery"
     };
   },
-  mounted(){
+  mounted() {
     eventBus.$on("openWithNotfication", () => {
       console.log("eveeeeeeent buuuuuuus");
-      this.comp = "Notfication"
-      console.log('eventttt',this.comp)
+      this.comp = "Notfication";
+      console.log("eventttt", this.comp);
     });
-
   },
   created() {
-
     var dogId = this.$route.params.id;
     this.$store.dispatch({
       type: "loadDogById",
@@ -158,22 +168,30 @@ export default {
       }
     },
     openCopm(cmp) {
-      console.log('open comp', cmp)
+      console.log("open comp", cmp);
       this.comp = cmp;
     },
     onGoTo(dogId) {
-        this.$store.dispatch({
-      type: "loadDogById",
-      dogId
-    });
+      this.$store.dispatch({
+        type: "loadDogById",
+        dogId
+      });
       this.$router.push(`/user/${dogId}`);
     },
 
     makeFriendship(sentUser) {
       this.$store.dispatch({ type: "makeFriendShip", dog: sentUser });
     },
-    rejectFriendReq(sentUser) { 
-       this.$store.dispatch({ type: "rejectFriendShip", dog: sentUser });
+    rejectFriendReq(sentUser) {
+      this.$store.dispatch({ type: "rejectFriendShip", dog: sentUser });
+    },
+    removeUser(dogId) {
+      console.log(dogId);
+      this.$store.dispatch({ type: "removeFriend", dogId });
+      this.$toast.open({
+        message: "friend request successfully sent!",
+        type: "is-success"
+      });
     }
   },
   computed: {
@@ -195,7 +213,6 @@ export default {
       else return "he";
     },
     who() {
-      
       return this.dog.owner.fullName;
     },
     imgToLoad() {

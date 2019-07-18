@@ -1,5 +1,5 @@
 <template>
-  <section class="parksList" v-if="userLoc" style="mar">
+  <section class="parksFeed" v-if="userLoc" style="mar">
     <v-layout row wrap>
       <v-flex xs12 sm6 mb4 lg3 v-for="nearestGarden in gardens" :key="nearestGarden.id">
         <parkPrev :park="nearestGarden"></parkPrev>
@@ -14,7 +14,7 @@ import dogsService from "../services/dogs.service";
 import parkPrev from "../components/ParkPrev.cmp.vue";
 
 export default {
-  name: "parksList",
+  name: "parksFeed",
   data() {
     return {
       distance: "",
@@ -35,9 +35,11 @@ export default {
         }
       };
       googleMapsService.getInfo(this.userLoc.position).then(pos => {
-        for (var i = 0; i < 4; i++) {
+        for (var i = 0; i < pos.length; i++) {
           this.gardens.push(pos[i]);
-          this.photos.push(this.gardens[i].photos[0].photo_reference);
+          if(this.gardens[i].photos.length>0) this.photos.push(this.gardens[i].photos[0].photo_reference);
+          else this.photos.push('https://farm66.static.flickr.com/65535/47022341624_c26416f670_b.jpg')
+         if(this.gardens[i].photos[0].photo_reference)
           this.gardens[
             i
           ].img = `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=${this.gardens[i].photos[0].photo_reference}&key=AIzaSyCrVxVPta_TOsFatlYL7vOx_stAJNlV8ws`;

@@ -9,6 +9,7 @@
       <div class="hero-body">
         <h1 class="parks-title">Nearby Parks</h1>
         <park-list></park-list>
+           <h1 v-on:click="seeMoreParks" class="see-more">See More <b-icon class="icon" icon="chevron-right"></b-icon></h1>
       </div>
     </section>
     <section v-if="dogs" class="hero is-danger is-bold">
@@ -49,7 +50,8 @@ export default {
   },
   data() {
     return {
-      dogs: null
+      dogs: null,
+      numOfParks:4,
     };
   },
   computed: {
@@ -73,6 +75,9 @@ export default {
         type: "deleteDog",
         dogId
       });
+    },
+    seeMoreParks(){
+        this.$router.push('/parks')
     }
   },
   components: { UserListMap, ParkList, UserLiList, UsersFilter, DogList }
