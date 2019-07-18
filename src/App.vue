@@ -13,13 +13,33 @@ import AppHeader from "./components/AppHeader.vue";
 export default {
   components: {
     AppHeader
+  },
+  data() {
+    return {
+      user: null
+    };
+  },
+  created() {
+    this.$store.dispatch({ type: "loggedInUser" });
+  },
+  updated() {
+    console.log(this.$store.getters.getcurrLoggedinUser)
+    if (!this.$store.getters.getcurrLoggedinUser[0]) return;
+    else {
+      socket.on("friend req sent", user => {
+        console.log("Listen to emit");
+        this.$toast.open({
+          message: `You have got freind request from ${user.owner.fullName}`,
+          type: "is-success"
+        });
+      });
+    }
   }
 };
 </script>
 
 
 <style lang="scss">
-
 #app {
   // font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;

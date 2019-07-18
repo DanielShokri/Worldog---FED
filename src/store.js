@@ -53,27 +53,29 @@ export default new Vuex.Store({
         setLoggedOutUser(state) {
             state.currUser = '';
         },
-        setSortDogs(state, {
-            res
-        }) {
-            for (var i = 0; i < state.parks; i++) {
+        setSortDogs(state, { res }) {
+            for (var i = 0; i < state.dogs.length; i++) {
                 state.dogs[i].distanceTextFromUser = res.elements[i].distance.text;
                 state.dogs[i].distanceValueFromUser = res.elements[i].distance.value;
             }
             if (!state.currPark) {
-                state.dogs.sort(function (a, b) {
+                state.dogs.sort(function(a, b) {
                     return a.distanceValueFromUser - b.distanceValueFromUser;
                 });
             }
         },
-        setSortDogsByMap(state, {
-            res
-        }) {
+        setSortParksNearUser(state, { res }) {
+            for (var i = 0; i < state.parks.length; i++) {
+                state.parks[i].distanceTextFromUser = res.elements[i].distance.text;
+                state.parks[i].distanceValueFromUser = res.elements[i].distance.value;
+            }
+        },
+        setSortDogsByMap(state, { res }) {
             for (var i = 0; i < state.dogs.length; i++) {
                 state.dogs[i].distanceTextFromMap = res.elements[i].distance.text;
                 state.dogs[i].distanceValueFromMap = res.elements[i].distance.value;
             }
-            state.dogs.sort(function (a, b) {
+            state.dogs.sort(function(a, b) {
                 return a.distanceValueFromUser - b.distanceValueFromUser;
             });
         },
@@ -124,6 +126,7 @@ export default new Vuex.Store({
             state.dogs.splice(userIdx, 1, state.currUser[0]);
             state.dogs.splice(dogIdx, 1, dog)
         },
+
         updateDogFriendReq(state, {
             updatedDogId
         }) {
@@ -204,6 +207,10 @@ export default new Vuex.Store({
             park
         }) {
             state.currPark = park;
+        },
+
+        setParks(state, { gardens }) {
+            state.parks = gardens;
         }
     },
     getters: {
@@ -216,11 +223,9 @@ export default new Vuex.Store({
         getLoggedinUser(state) {
             return state.currUser
         },
-
         getcurrLoggedinUser(state) {
             return state.currUser
         },
-
         getDog(state) {
             return state.dog
         },
@@ -232,6 +237,9 @@ export default new Vuex.Store({
         },
         gotLikes(state){
             return state.currUser[0].gotLikes
+        },
+        getParks(state) {
+            return state.parks;
         }
     },
 
@@ -284,19 +292,45 @@ export default new Vuex.Store({
             })
             return comp
         },
-    
-    updateFriendReq(context, {
-        dogId
-    }) {
-        return dogsService.sendFriendReq(dogId)
-            .then(updatedDogId => {
-                context.commit({
-                    type: 'updateDogFriendReq',
-                    updatedDogId
-                })
-                return updatedDogId
+        loadParks(context, { gardens }) {
+            context.commit({
+                type: 'setParks',
+                gardens
             })
+        },
+        loadParksLocFromUser(context) {
+            var x = [];
+            for (var i = 0; i < context.state.parks.length; i++) {
+                x.push(context.state.parks[i].geometry.location.lat + "," + context.state.parks[i].geometry.location.lng);
+            }
+            x = x.join("|");
+            googleMapsService
+                .getDist({
+
+                    userLoc: context.state.userLoc.position.lat + "," + context.state.userLoc.position.lng,
+                    usersLoc: x
+                })
+                .then(res => {
+                    context.commit({
+                        type: 'setSortParksNearUser',
+                        res
+                    })
+                    return res
+                });
+        },
+
+        updateFriendReq(context, { dogId }) {
+            return dogsService.sendFriendReq(dogId)
+                .then(updatedDogId => {
+                    context.commit({
+                        type: 'updateDogFriendReq',
+                        updatedDogId
+                    })
+                    return updatedDogId
+                })
+            
     },
+
     updateFriendLike(context ,{dogId}){
         return dogsService.addLike(dogId)
             .then(updatedDogId => {
@@ -448,7 +482,7 @@ export default new Vuex.Store({
                 context.commit({
                     type: 'setLoggedOutUser'
                 })
-            })
+        })
     },
 
     goToPark(context, {

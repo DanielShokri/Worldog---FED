@@ -18,7 +18,6 @@ export default {
          this.$store.dispatch({ type: "loadCompImProfile" , comp: "gallery"} )
 
     this.$store.dispatch({ type: "loggedInUser" });
-    
   },
   methods: {
     deleteDog(dogId) {
