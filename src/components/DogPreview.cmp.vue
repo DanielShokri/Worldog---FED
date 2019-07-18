@@ -100,7 +100,9 @@ const socket = io("http://localhost:3000");
 export default {
   props: ["dog", "loggedinUser"],
   data() {
-    return {};
+    return {
+      
+    };
   },
 
   methods: {
