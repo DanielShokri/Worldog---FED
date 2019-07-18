@@ -1,11 +1,13 @@
 <template>
   <div class="friends-container" v-if="user">
     <div class="card" v-for="dog in user.friends" :key="dog.userId">
-        <img @click="goToUser(dog.userId)"  :src="dog.userImg" alt="Avatar" />
+      <img @click="goToUser(dog.userId)" :src="dog.userImg" alt="Avatar" />
       <div class="container">
         <h4>
-          <b class="dogName" @click="goToUser(dog.userId)" >{{dog.userName}}</b>
+          <b class="dogName" @click="goToUser(dog.userId)">{{dog.userName}}</b>
         </h4>
+        <br />
+       <button @click="removeUser(dog.userId)"><b-icon class="remove" icon="account-remove"></b-icon></button> 
       </div>
     </div>
   </div>
@@ -19,7 +21,10 @@ export default {
   props: ["user"],
   methods: {
     goToUser(dogId) {
-      this.$emit('goTO', dogId);
+      this.$emit("goTO", dogId);
+    },
+    removeUser(dogId) {
+      this.$emit("removeUser", dogId);
     }
   }
 };
@@ -31,11 +36,19 @@ export default {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   transition: 0.3s;
   margin: 10px;
-  max-width: 135px;
+  max-width: 150px;
+  height: 170px;
 }
 
-.dogName{ 
-cursor: pointer;
+.remove {
+  cursor: pointer;
+  position: relative;
+  bottom: 0px;
+  right: -51px;
+}
+
+.dogName {
+  cursor: pointer;
 }
 
 .card:hover {

@@ -96,7 +96,7 @@
               <user-gallery :user="dog"></user-gallery>
             </div>
             <div style="width: 100%;" v-if="this.comp==='Friends'">
-              <user-friends @goTO="onGoTo" :user="dog"></user-friends>
+              <user-friends @removeUser="removeUser" @goTO="onGoTo" :user="dog"></user-friends>
             </div>
             <div style="width: 100%;" v-if="this.comp==='Messages'">
               <user-messages :user="dog"></user-messages>
@@ -205,6 +205,14 @@ export default {
     },
     rejectFriendReq(sentUser) {
       this.$store.dispatch({ type: "rejectFriendShip", dog: sentUser });
+    },
+    removeUser(dogId) {
+      console.log(dogId);
+      this.$store.dispatch({ type: "removeFriend", dogId });
+      this.$toast.open({
+        message: "friend request successfully sent!",
+        type: "is-success"
+      });
     }
   },
   computed: {

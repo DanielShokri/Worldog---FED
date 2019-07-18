@@ -23,9 +23,9 @@
       <p class="subtitle"> Dogs in park({{distanceFromUsering}})</p>
     </section>
     <footer>
-      <a href="#">
-        <span>go to park</span>
-      </a>
+      
+        <span class="goToPark" @click="goParkDetails">go to park</span>
+  
     </footer>
   </main>
 
@@ -153,6 +153,10 @@ $color: #44a3d9; // #2f559e;
 
 .b-icon {
   color: gold;
+}
+
+.goToPark { 
+  cursor: pointer;
 }
 
 body {
