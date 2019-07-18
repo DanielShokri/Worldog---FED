@@ -78,12 +78,9 @@
           </button>
         </div>
       </div>
-  <!-- end clash-card barbarian-->
-  <!-- </div> -->
+  </div> -->
   <!-- end wrapper -->
-  <!-- </div> -->
-
-  <!-- end container -->
+  <!-- </div>
 </template>
 
 <script>
@@ -161,29 +158,6 @@ body {
   margin: 0;
   padding: 0;
 }
-<<<<<<< HEAD
-.admin-action-wrapper {
-  text-align: -webkit-right;
-  padding: 10px;
-  position: relative;
-  color: white;
-  top: -954px;
-  right: 28px;
-}
-.slide-container {
-  margin: auto;
-  width: 350px;
-  text-align: center;
-}
-
-.wrapper {
-  padding-top: 40px;
-  padding-bottom: 40px;
-  width: 350px;
-  // margin-top: 40px;
-  &:focus {
-    outline: 0;
-=======
 .grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -213,7 +187,6 @@ body {
     .read-more {
       color: rgba(0, 0, 0, 0.5);
     }
->>>>>>> fe84c949f777b9299d344564f2a3f09b0380b0ec
   }
   &__thumbnail {
     background-repeat: no-repeat;
@@ -254,29 +227,6 @@ body {
       }
     }
   }
-<<<<<<< HEAD
-}
-
-.clash-card__unit-name {
-  font-size: 20px;
-  color: black;
-  font-weight: 900;
-  margin-bottom: 5px;
-  margin-top: 10px;
-}
-
-.clash-card__unit-description {
-  padding: 10px;
-  margin-bottom: 10px;
-
-  h3 {
-    color: #9e9e9e;
-    margin:5px;
-  }
-  h2{
-    color: #464040;
-    font-size: 17px;
-=======
   &__content {
     font-family: Arial, sans-serif;
     position: relative;
@@ -322,7 +272,6 @@ body {
       border-radius: 50%;
       padding: 10px;
     }
->>>>>>> fe84c949f777b9299d344564f2a3f09b0380b0ec
   }
   &__footer {
     border-top: 1px solid #eaf1f6;

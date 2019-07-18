@@ -46,11 +46,7 @@
         </div>
         <div class="right col-lg-8">
           <!-- This is start -->
-<<<<<<< HEAD
-          <v-tabs centered color="white" light slider-color icons-and-text>
-=======
           <!-- <v-tabs  centered color="white" light slider-color icons-and-text>
->>>>>>> fe84c949f777b9299d344564f2a3f09b0380b0ec
             <v-tabs-slider color="yellow"></v-tabs-slider>
 
             <v-tab @click="openCopm('Gallery')">
@@ -128,12 +124,9 @@ export default {
       type: "loadDogById",
       dogId
     });
-<<<<<<< HEAD
     this.$store.dispatch({ type: "loggedInUser" });
-=======
 
     this.user = this.$store.getters.getDog;
->>>>>>> fe84c949f777b9299d344564f2a3f09b0380b0ec
   },
   methods: {
     addFriend(dogId) {
@@ -170,10 +163,6 @@ export default {
       console.log('open comp', cmp)
       this.comp = cmp;
     },
-<<<<<<< HEAD
-    makeFriendship(sentUser) {
-      this.$store.dispatch({ type: "makeFriendShip", dog: sentUser });
-=======
     onGoTo(dogId) {
         this.$store.dispatch({
       type: "loadDogById",
@@ -187,7 +176,6 @@ export default {
     },
     rejectFriendReq(sentUser) { 
        this.$store.dispatch({ type: "rejectFriendShip", dog: sentUser });
->>>>>>> fe84c949f777b9299d344564f2a3f09b0380b0ec
     }
   },
   computed: {
