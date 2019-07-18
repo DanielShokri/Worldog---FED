@@ -6,7 +6,13 @@
       </header>
       <section class="modal-card-body">
         <b-field label="Username">
-          <b-input ref="username" v-model="user.name" type="text" placeholder="Your username" required></b-input>
+          <b-input
+            ref="username"
+            v-model="user.name"
+            type="text"
+            placeholder="Your username"
+            required
+          ></b-input>
         </b-field>
 
         <b-field label="Password">
@@ -27,6 +33,8 @@
 </template>
 
 <script>
+import io from "socket.io-client";
+const socket = io("http://localhost:3000");
 export default {
   data() {
     return {
@@ -37,19 +45,31 @@ export default {
     };
   },
   mounted() {
-    this.$refs.username.focus()
+    this.$refs.username.focus();
   },
+  created() {},
   methods: {
     loginUser() {
-      this.$store.dispatch({ type: "userLogin", currUser: this.user })
-      .then(()=>{
-        this.$toast.open({message: "Login Successfully!",type: "is-success"});
-        this.$emit('close')
-      })
-      .catch((err)=>{
-        this.$toast.open({message: "Login Failed!",type: "is-danger"});     
-        this.$emit('close');   
-      })
+      this.$store
+        .dispatch({ type: "userLogin", currUser: this.user })
+        .then(() => {
+          socket.on("friend req sent", user => {
+            console.log("Listen to emit");
+            this.$toast.open({
+              message: `You have got freind request from ${user.owner.fullName}`,
+              type: "is-success"
+            });
+          });
+          this.$toast.open({
+            message: "Login Successfully!",
+            type: "is-success"
+          });
+          this.$emit("close");
+        })
+        .catch(err => {
+          this.$toast.open({ message: "Login Failed!", type: "is-danger" });
+          this.$emit("close");
+        });
     }
   }
 };

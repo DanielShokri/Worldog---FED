@@ -1,31 +1,41 @@
 <template>
   <div class="grid">
     <div class="card">
-      <img :src="imgToLoad" class="card__thumbnail" />
+      <div
+        @click="openProfile(dog._id)"
+        class="card__thumbnail"
+        :style="{ 'background-image': 'url(' + imgToLoad + ')' }"
+      ></div>
 
-      <div class="card__content">
-        <img
-          src="https://www.crearlogogratisonline.com/images/crearlogogratis_1024x1024_01.png"
-          class="author"
-        />
-        <h4>Lorem ipsum dolor</h4>
-        <span class="ago">Two days ago</span>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla nec neque quis velit bibendum efficitur sed non tortor. Nullam vestibulum tortor quis ligula auctor, quis viverra mauris viverra. Proin vulputate pellentesque efficitur.</p>
-        <span class="read-more">Read more</span>
-      </div>
+      <span class="card__content">
+        <h3>{{dog.owner.fullName}} and {{dog.preference.name}}</h3>
+        <span class="ago">{{dog.preference.name}} is {{dog.preference.type}}</span>
+        <p>
+          {{dog.preference.name}} is a {{dog.preference.gender}},
+          {{gender}} likes to:
+          <span
+            v-for="hobby in dog.preference.hobbies"
+            :key="hobby._id"
+          >{{hobby}},</span>
+        </p>
+      </span>
       <div class="card__footer">
         <div class="card__footer__meta">
           <span class="meta" tooltip="Like">
-            <i class="fa fa-heart favorite"></i>
+            <button @click="addLike(dog._id)">
+              <b-icon icon="thumb-up"></b-icon>
+            </button>
           </span>
-          <span class="meta more" tooltip="Options">
-            <i class="fa fa-ellipsis-h"></i>
+          <span class="meta more" tooltip="Friendog">
+            <button @click="addFriend(dog._id)">
+              <b-icon icon="account-plus"></b-icon>
+            </button>
           </span>
-          <span class="more stats" tooltip="Shares">
-            12
+          <span class="more stats" tooltip="Friends">
+            {{dog.friends.length}}
             <i class="fa fa-share"></i>
           </span>
-          <span class="more stats" tooltip="Views">
+          <span class="more stats" tooltip="Likes">
             256
             <i class="fa fa-eye"></i>
           </span>
@@ -78,14 +88,13 @@
           </button>
         </div>
       </div>
-  </div> -->
+  </div>-->
   <!-- end wrapper -->
-  <!-- </div>
 </template>
 
 <script>
-// import io from "socket.io-client";
-// const socket = io("http://localhost:3000");
+import io from "socket.io-client";
+const socket = io("http://localhost:3000");
 
 export default {
   props: ["dog", "loggedinUser"],
@@ -98,30 +107,39 @@ export default {
       if (!this.loggedinUser) {
         // console.log("cant adding friend you need to login");
         this.$toast.open({ message: "You need to login", type: "is-danger" });
-      } else {
-        const userFriends = this.loggedinUser.friends;
-        const userSentFriendReq = this.loggedinUser.sentFriendsReq;
-        if (userFriends.find(friend => friend.userId === this.dog._id)) {
-          // console.log(" you are alredy friend");
-          this.$toast.open({
-            message: "You are alredy friend",
-            type: "is-danger"
-          });
-        } else if (userSentFriendReq.find(id => id === this.dog._id)) {
-          // console.log("You have already sent friend request");
-          this.$toast.open({
-            message: "You have already sent friend request",
-            type: "is-danger"
-          });
-        } else {
+      }
+      //  else {
+      //   const userFriends = this.loggedinUser.friends;
+      //   const userSentFriendReq = this.loggedinUser.sentFriendsReq;
+        // if (userFriends.find(friend => friend.userId === this.dog._id)) {
+        //   // console.log(" you are alredy friend");
+        //   this.$toast.open({
+        //     message: "You are already friends",
+        //     type: "is-danger"
+        //   });
+        // } else if (userSentFriendReq.find(id => id === this.dog._id)) {
+        //   // console.log("You have already sent friend request");
+        //   this.$toast.open({
+        //     message: "You have already sent friend request",
+        //     type: "is-danger"
+        //   });
+        // }
+         else {
           // console.log("adding friend", this.loggedinUser);
           this.$store.dispatch({ type: "updateFriendReq", dogId }).then(() => {
+            socket.emit("friend req", this.dog)
             this.$toast.open({
               message: "friend request successfully sent!",
               type: "is-success"
             });
           });
         }
+      // }
+    },
+    addLike(dogId) {
+      if (!this.loggedinUser) {
+        // console.log("cant adding friend you need to login");
+        this.$toast.open({ message: "You need to login", type: "is-danger" });
       }
     },
     goToEdit(dogId) {
@@ -131,6 +149,10 @@ export default {
     emitDeleteDog(dogId) {
       // console.log('deleted')
       this.$emit("delete", dogId);
+    },
+    openProfile(dogId) {
+      this.$store.dispatch({ type: "loadCompInProfile", comp: "Gallery" });
+      this.$router.push(`/user/${dogId}`);
     }
   },
   computed: {
@@ -153,48 +175,30 @@ export default {
 </script>
 <style scoped lang="scss">
 // @import url('https://fonts.googleapis.com/css?family=Lato:400');
-body {
-  background-color: #f8f8f8;
-  margin: 0;
-  padding: 0;
-}
+
 .grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   grid-auto-flow: row dense;
   grid-gap: 1.9vw;
-  padding-top: 50px;
-  padding-bottom: 50px;
+  margin: 20px;
 }
 .card {
-  transition-delay: 0.1s;
-  border-radius: 4px;
-  transform: translate(0, 0);
+  // background-color: white;
+  // box-shadow: 0 2px 3px rgba(10, 10, 10, 0.1), 0 0 0 1px rgba(10, 10, 10, 0.1);
+  // color: #4a4a4a;
+  // max-width: 100%;
+  // position: relative;
+  border-radius: 0;
   will-change: transform, box-shadow;
   background-color: #fff;
-  box-shadow: 0 2px 20px 0 rgba(0, 0, 0, 0.05);
-  transition: box-shadow 0.3s ease-out, transform 0.3s ease-out;
-  &:hover {
-    box-shadow: rgba(45, 45, 45, 0.05) 0px 2px 2px,
-      rgba(49, 49, 49, 0.05) 0px 4px 4px, rgba(42, 42, 42, 0.05) 0px 8px 8px,
-      rgba(32, 32, 32, 0.05) 0px 16px 16px, rgba(49, 49, 49, 0.05) 0px 32px 32px,
-      rgba(35, 35, 35, 0.05) 0px 64px 64px;
-    transform: translate(0, -4px);
-    .card__thumbnail__share {
-      opacity: 1;
-      pointer-events: all;
-    }
-    .read-more {
-      color: rgba(0, 0, 0, 0.5);
-    }
-  }
   &__thumbnail {
     background-repeat: no-repeat;
     background-position: center center;
     background-size: cover;
     background-color: transparent;
     position: relative;
-    height: 350px;
+    height: 205px;
     &__share {
       width: 80px;
       position: absolute;
@@ -208,7 +212,7 @@ body {
         list-style-type: none;
         li {
           background-color: #fff;
-          border-radius: 50%;
+          // border-radius: 50%;
           width: 25px;
           height: 25px;
           line-height: 25px;
@@ -244,7 +248,7 @@ body {
       margin-top: 5px;
       margin-bottom: 5px;
       &:before {
-        content: "";
+        // content: "";
         position: absolute;
         bottom: 0;
         left: 0;
@@ -287,12 +291,11 @@ body {
         width: 26px;
         height: 26px;
         float: left;
-        background-color: #edf2f6;
         color: #b2c0c8;
         line-height: 26px;
         text-align: center;
-        font-size: 12px;
-        border-radius: 50%;
+        // font-size: 12px;
+        // border-radius: 50%;
         transition: color 0.35s, border 0.35s;
         box-sizing: border-box;
         &:hover {

@@ -119,7 +119,10 @@ export default {
       });
     },
     userLogout() {
-      this.$store.dispatch({ type: "userLogout" });
+      this.$store.dispatch({ type: "userLogout" })
+      .then(()=>{
+        socket.removeListener("friend req");
+      })
     }
   },
   computed: {

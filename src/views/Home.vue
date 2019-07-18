@@ -34,7 +34,6 @@ import UserLiList from "../components/UserLiList.cmp";
 import ParkList from "../components/ParksList.cmp.vue";
 import DogList from "../components/DogList.cmp.vue";
 import UsersFilter from "../components/UsersFilter.cmp";
-import bla2 from "../components/bla2";
 export default {
   name: "home",
 
@@ -76,7 +75,7 @@ export default {
       });
     }
   },
-  components: { UserListMap, ParkList, UserLiList, UsersFilter, DogList, bla2 }
+  components: { UserListMap, ParkList, UserLiList, UsersFilter, DogList }
 };
 </script>
 <style scoped lang="scss">
