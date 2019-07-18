@@ -32,6 +32,13 @@
               <b-icon icon="account-plus"></b-icon>
             </button>
           </span>
+          <span class="meta more" tooltip="chat">
+            <button @click="openChat(dog._id)">
+              <b-icon icon="chat-processing"></b-icon>
+            </button>
+          </span>
+
+
           <span class="more stats" tooltip="Friends">
             {{dog.friends.length}}
             <i class="fa fa-share"></i>
@@ -101,11 +108,15 @@ export default {
   props: ["dog", "loggedinUser"],
   data() {
     return {
-      
     };
   },
 
   methods: {
+    openChat() {
+      this.$store.dispatch({ type: "isChatOpen" })
+      console.log('chat is open' )
+    },
+
     addFriend(dogId) {
       if (!this.loggedinUser) {
         this.$toast.open({ message: "You need to login", type: "is-danger" });
@@ -113,29 +124,29 @@ export default {
       //  else {
       //   const userFriends = this.loggedinUser.friends;
       //   const userSentFriendReq = this.loggedinUser.sentFriendsReq;
-        // if (userFriends.find(friend => friend.userId === this.dog._id)) {
-        //   this.$toast.open({
-        //     message: "You are already friends",
-        //     type: "is-danger"
-        //   });
-        // } else if (userSentFriendReq.find(id => id === this.dog._id)) {
-        //   this.$toast.open({
-        //     message: "You have already sent friend request",
-        //     type: "is-danger"
-        //   });
-        // }
-         else {
-          this.$store.dispatch({ type: "updateFriendReq", dogId }).then(() => {
-            socket.emit("friend req", this.dog)
-            this.$toast.open({
-              message: "friend request successfully sent!",
-              type: "is-success"
-            });
+      // if (userFriends.find(friend => friend.userId === this.dog._id)) {
+      //   this.$toast.open({
+      //     message: "You are already friends",
+      //     type: "is-danger"
+      //   });
+      // } else if (userSentFriendReq.find(id => id === this.dog._id)) {
+      //   this.$toast.open({
+      //     message: "You have already sent friend request",
+      //     type: "is-danger"
+      //   });
+      // }
+      else {
+        this.$store.dispatch({ type: "updateFriendReq", dogId }).then(() => {
+          socket.emit("friend req", this.dog);
+          this.$toast.open({
+            message: "friend request successfully sent!",
+            type: "is-success"
           });
-        }
+        });
+      }
       // }
     },
-     addLike(dogId) {
+    addLike(dogId) {
       if (!this.loggedinUser) {
         this.$toast.open({ message: "You need to login", type: "is-danger" });
       } else {
@@ -181,6 +192,8 @@ export default {
         return "https://cdn1.medicalnewstoday.com/content/images/articles/322/322868/golden-retriever-puppy.jpg";
       }
     }
+  },
+  components: {
   }
 };
 </script>

@@ -109,6 +109,7 @@
               ></user-notfication>
             </div>
           </div>
+           
         </div>
       </div>
     </main>
@@ -120,13 +121,12 @@ import UserGallery from "../components/UserGallery.cmp.vue";
 import UserFriends from "../components/UserFriends.cmp.vue";
 import UserMessages from "../components/UserMessages.cmp.vue";
 import UserNotfication from "../components/UserNotfication.cmp.vue";
-import eventBus from "../services/eventBus.js";
 
 export default {
   name: "profile",
   data() {
     return {
-      comp: ""
+      comp: "",
     };
   },
   mounted() {},
@@ -140,9 +140,9 @@ export default {
     });
     this.$store.dispatch({ type: "loggedInUser" });
 
-    // this.user = this.$store.getters.getDog;
   },
   methods: {
+   
     addLike(dogId) {
       if (!this.loggedinUser) {
         this.$toast.open({ message: "You need to login", type: "is-danger" });
@@ -170,13 +170,12 @@ export default {
         const userFriends = this.loggedinUser.friends;
         const userSentFriendReq = this.loggedinUser.sentFriendsReq;
         if (userFriends.find(friend => friend.userId === this.dog._id)) {
-          // console.log(" you are alredy friend");
           this.$toast.open({
             message: "You are alredy friend",
             type: "is-danger"
           });
         } else if (userSentFriendReq.find(id => id === this.dog._id)) {
-=          this.$toast.open({
+         this.$toast.open({
             message: "You have already sent friend request",
             type: "is-danger"
           });
@@ -240,7 +239,8 @@ export default {
     UserGallery,
     UserFriends,
     UserMessages,
-    UserNotfication
+    UserNotfication,
+    
   }
 };
 </script>

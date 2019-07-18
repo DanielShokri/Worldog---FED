@@ -84,7 +84,6 @@
 
 <script>
 import Login from "./Login";
-import eventBus from "../services/eventBus.js"
 export default {
   data() {
     return {
@@ -101,8 +100,6 @@ export default {
     },
     goToMyNotfication(){
          this.$store.dispatch({ type: "loadCompInProfile", comp: 'Notfication' })
-
-    //  eventBus.$emit('openWithNotfication')
        this.$router.push(`/user/${this.getUser[0]._id}`);
     },
     goToMyProfile() {

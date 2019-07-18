@@ -6,7 +6,6 @@ import './filters'
 
 import './registerServiceWorker'
 import * as VueGoogleMaps from 'vue2-google-maps';
-import './services/eventBus'
 import Buefy from 'buefy'
 import 'buefy/dist/buefy.css'
 Vue.use(Buefy)
