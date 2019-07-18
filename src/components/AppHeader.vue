@@ -2,7 +2,7 @@
 <template>
   <nav class="navbar" role="navigation" aria-label="main navigation">
     <div class="navbar-brand">
-      <img src="https://i.ibb.co/n8DtFs5/logo.png" width="160" height="28" />
+      <img v-on:click="goHome" src="https://i.ibb.co/n8DtFs5/logo.png" width="160" height="28" />
 
       <a
         role="button"
@@ -47,8 +47,7 @@
         </div>
       </div>
 
-      
-
+  
       <div v-if="getUser" class="navbar-menu">
         <div class="navbar-end">
           <b-dropdown position="is-bottom-left"  aria-role="menu">
@@ -66,7 +65,7 @@
               Logged as
               <b>{{getUser[0].owner.fullName}}</b>
             </b-dropdown-item>
-            <b-dropdown-item @click="goToMyProfile"  aria-role="menuitem">
+            <b-dropdown-item @click="goToMyNotfication"  aria-role="menuitem">
               <b-icon icon="bell"></b-icon>Notification's
             </b-dropdown-item>
             <b-dropdown-item @click="goToMyProfile" value="settings">
@@ -85,6 +84,7 @@
 
 <script>
 import Login from "./Login";
+import eventBus from "../services/eventBus.js"
 export default {
   data() {
     return {
@@ -95,7 +95,19 @@ export default {
     };
   },
   methods: {
+    goHome(){
+      this.$router.push('/');
+
+    },
+    goToMyNotfication(){
+      console.log('go to notfication')
+     eventBus.$emit('openWithNotfication')
+       this.$router.push(`/user/${this.getUser[0]._id}`);
+
+
+    },
     goToMyProfile() {
+      console.log('go to profile')
       this.$router.push(`/user/${this.getUser[0]._id}`);
     },
     cardModal() {
@@ -120,3 +132,12 @@ export default {
   }
 };
 </script>
+
+
+<style scope>
+img:hover{
+  cursor: pointer;
+}
+
+
+</style>

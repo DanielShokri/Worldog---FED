@@ -1,5 +1,5 @@
 <template>
-  <div v-if="dog" class="container">
+  <div v-if="dog && comp" class="container">
     <header>
       <img :src="backImgToLoad" />
       <i>
@@ -13,7 +13,7 @@
             <img class="photo" :src="imgToLoad" />
             <div class="active"></div>
           </div>
-          <h4 class="name">{{dog.owner.fullName}}</h4>
+          <h4 class="name">{{dog.owner.fullName}} and {{dog.preference.name}}</h4>
 
           <p class="desc">
             Hi ! My name is {{dog.owner.fullName}}
@@ -28,6 +28,7 @@
             and so.
             We are living in {{dog.address}}
           </p>
+          <span v-if="notMyProfile" @click="addFriend(dog._id)" class="add-friend">Add Friend</span>
           <div class="social">
             <i>
               <b-icon icon="facebook-box"></b-icon>
@@ -43,19 +44,18 @@
             </i>
           </div>
         </div>
-        <span class="follow">Follow</span>
         <div class="right col-lg-8">
           <!-- This is start -->
-          <v-tabs  centered color="white" light slider-color icons-and-text>
+          <v-tabs centered color="white" light slider-color icons-and-text>
             <v-tabs-slider color="yellow"></v-tabs-slider>
 
             <v-tab @click="openCopm('Gallery')">
-              Gallery
+              Gallery 
               <b-icon icon="image"></b-icon>
             </v-tab>
 
             <v-tab @click="openCopm('Friends')">
-              Friends
+              Friends ({{dog.friends.length}})
               <b-icon icon="account-group"></b-icon>
             </v-tab>
 
@@ -65,7 +65,7 @@
             </v-tab>
 
             <v-tab @click="openCopm('Notfication')">
-              Notification's
+              Notification's({{dog.gotFriendsReq.length}})
               <b-icon icon="bell-ring"></b-icon>
             </v-tab>
           </v-tabs>
@@ -100,35 +100,82 @@ import UserGallery from "../components/UserGallery.cmp.vue";
 import UserFriends from "../components/UserFriends.cmp.vue";
 import UserMessages from "../components/UserMessages.cmp.vue";
 import UserNotfication from "../components/UserNotfication.cmp.vue";
+import eventBus from "../services/eventBus.js";
 
 export default {
   name: "profile",
   data() {
     return {
-      user: null,
-      //   dog:null
-      comp: "Gallery"
+      comp: "Gallery",
     };
   },
-  created() {
-    var dogId = this.$route.params.id;
+  mounted(){
+    eventBus.$on("openWithNotfication", () => {
+      console.log("eveeeeeeent buuuuuuus");
+      this.comp = "Notfication"
+      console.log('eventttt',this.comp)
+    });
 
+  },
+  created() {
+
+    var dogId = this.$route.params.id;
     this.$store.dispatch({
       type: "loadDogById",
       dogId
     });
-
-    this.user = this.$store.getters.getLoggedinUser;
+    this.$store.dispatch({ type: "loggedInUser" });
   },
   methods: {
+    addFriend(dogId) {
+      if (!this.loggedinUser) {
+        // console.log("cant adding friend you need to login");
+        this.$toast.open({ message: "You need to login", type: "is-danger" });
+      } else {
+        const userFriends = this.loggedinUser.friends;
+        const userSentFriendReq = this.loggedinUser.sentFriendsReq;
+        if (userFriends.find(friend => friend.userId === this.dog._id)) {
+          // console.log(" you are alredy friend");
+          this.$toast.open({
+            message: "You are alredy friend",
+            type: "is-danger"
+          });
+        } else if (userSentFriendReq.find(id => id === this.dog._id)) {
+          // console.log("You have already sent friend request");
+          this.$toast.open({
+            message: "You have already sent friend request",
+            type: "is-danger"
+          });
+        } else {
+          // console.log("adding friend", this.loggedinUser);
+          this.$store.dispatch({ type: "updateFriendReq", dogId }).then(() => {
+            this.$toast.open({
+              message: "friend request successfully sent!",
+              type: "is-success"
+            });
+          });
+        }
+      }
+    },
     openCopm(cmp) {
+      console.log('open comp', cmp)
       this.comp = cmp;
-    }, 
-    makeFriendship(sentUser){ 
-            this.$store.dispatch({ type: "makeFriendShip" , dog: sentUser })
+    },
+    makeFriendship(sentUser) {
+      this.$store.dispatch({ type: "makeFriendShip", dog: sentUser });
     }
   },
   computed: {
+    notMyProfile() {
+      if (this.loggedinUser._id === this.dog._id) return false;
+      else return true;
+    },
+    loggedinUser() {
+      if (!this.$store.getters.getcurrLoggedinUser) return;
+      console.log("loggedinUser", this.$store.getters.getcurrLoggedinUser[0]);
+      return this.$store.getters.getcurrLoggedinUser[0];
+    },
+
     dog() {
       return this.$store.getters.getDog;
     },
@@ -137,15 +184,14 @@ export default {
       else return "he";
     },
     who() {
-      //     if (this.user.name === this.dog.userName && this.user.password === this.dog.password ) return "my"
-      // else
+      
       return this.dog.owner.fullName;
     },
     imgToLoad() {
       if (this.dog.profileImg) return this.dog.profileImg;
       else return "https://www.sunnyskyz.com/uploads/2016/12/nlf37-dog.jpg";
     },
-    backImgToLoad(){
+    backImgToLoad() {
       if (this.dog.profileImg) return this.dog.backImg;
       else return "https://www.sunnyskyz.com/uploads/2016/12/nlf37-dog.jpg";
     }
@@ -197,16 +243,6 @@ header img {
   width: 100%;
 }
 
-@media (max-width: 800px) {
-  header {
-    height: 150px;
-  }
-
-  header img {
-    height: 150px;
-  }
-}
-
 main {
   padding: 20px 20px 0px 20px;
 }
@@ -226,6 +262,18 @@ main {
   border: 4px solid #fff;
 }
 
+@media (max-width: 800px) {
+  header {
+    height: 150px;
+  }
+
+  header img {
+    height: 200px;
+  }
+  .photo {
+    margin-top: -70px;
+  }
+}
 .active {
   width: 20px;
   height: 20px;
@@ -367,10 +415,10 @@ main {
   border-bottom: 2px solid #999;
 }
 
-.follow {
-  position: absolute;
-  right: 8%;
-  top: 35px;
+.add-friend {
+  /* position: absolute;
+  right: 8%; */
+  /* top: 35px; */
   font-size: 11pt;
   background-color: #42b1fa;
   color: #fff;
@@ -379,25 +427,16 @@ main {
   transition: all 0.4s;
   font-family: "Montserrat", sans-serif;
   font-weight: 400;
+  width: 250px;
 }
 
-.follow:hover {
+.add-friend:hover {
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.2), 0 0 15px rgba(0, 0, 0, 0.2);
 }
 
 @media (max-width: 990px) {
   .nav {
     display: none;
-  }
-
-  .follow {
-    width: 300px;
-    /* margin-left: 25%; */
-    display: block;
-    position: unset;
-    text-align: center;
-    height: 40px;
-    margin: 0 auto;
   }
 }
 </style>

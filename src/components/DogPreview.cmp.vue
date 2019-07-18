@@ -7,12 +7,14 @@
         </div>
         <div class="clash-card__unit-name">{{dog.owner.fullName}} and {{dog.preference.name}}</div>
         <div class="clash-card__unit-description">
+          <h2> {{dog.preference.name}} is a {{dog.preference.type}},</h2>
+           <h2> {{gender}} is {{dog.preference.age}} years old </h2>
           <h3 v-if="dog.distanceTextFromUser">{{dog.distanceTextFromUser}} from you</h3>
           <h3 v-else>2.3 mi from you</h3>
         </div>
         <div class="clash-card__unit-stats clash-card__unit-stats--barbarian clearfix">
           <div class="one-third">
-            <div class="stat">24</div>
+            <div class="stat">({{dog.friends.length}})</div>
             <div class="stat-value">Friend's</div>
           </div>
           <div class="one-third">
@@ -29,8 +31,6 @@
               </router-link>
             </div>
           </div>
-
-
         </div>
       </div>
       <div class="admin-action-wrapper" v-if="loggedinUser">
@@ -64,24 +64,25 @@ export default {
   methods: {
     addFriend(dogId) {
       if (!this.loggedinUser) {
-        console.log("cant adding friend you need to login");
+        // console.log("cant adding friend you need to login");
         this.$toast.open({ message: "You need to login", type: "is-danger" });
       } else {
         const userFriends = this.loggedinUser.friends;
-        console.log(
-          "user friend",
-          this.loggedinUser.friends,
-          "dog id is",
-          this.dog._id
-        );
+        const userSentFriendReq = this.loggedinUser.sentFriendsReq;
         if (userFriends.find(friend => friend.userId === this.dog._id)) {
-          console.log(" you are alredy friend");
+          // console.log(" you are alredy friend");
           this.$toast.open({
             message: "You are alredy friend",
             type: "is-danger"
           });
+        } else if (userSentFriendReq.find(id => id === this.dog._id)) {
+          // console.log("You have already sent friend request");
+          this.$toast.open({
+            message: "You have already sent friend request",
+            type: "is-danger"
+          });
         } else {
-          console.log("adding friend", this.loggedinUser);
+          // console.log("adding friend", this.loggedinUser);
           this.$store.dispatch({ type: "updateFriendReq", dogId }).then(() => {
             this.$toast.open({
               message: "friend request successfully sent!",
@@ -101,6 +102,10 @@ export default {
     }
   },
   computed: {
+    gender() {
+      if (this.dog.preference.gender === "female") return "she";
+      else return "he";
+    },
     getLocation() {
       var location = this.dog.location;
     },
@@ -145,13 +150,13 @@ body {
   color: #9e9e9e;
   margin-top: 30px;
 }
-.admin-action-wrapper{
+.admin-action-wrapper {
   text-align: -webkit-right;
-    padding: 10px;
-    position: relative;
-    color: white;
-        top: -954px;
-    right: 28px;
+  padding: 10px;
+  position: relative;
+  color: white;
+  top: -954px;
+  right: 28px;
 }
 .slide-container {
   margin: auto;
@@ -163,7 +168,7 @@ body {
   padding-top: 40px;
   padding-bottom: 40px;
   width: 350px;
-  margin-top: 40px;
+  // margin-top: 40px;
   &:focus {
     outline: 0;
   }
@@ -204,11 +209,16 @@ body {
 }
 
 .clash-card__unit-description {
-  padding: 20px;
+  padding: 10px;
   margin-bottom: 10px;
 
   h3 {
     color: #9e9e9e;
+    margin:5px;
+  }
+  h2{
+    color: #464040;
+    font-size: 17px;
   }
 }
 

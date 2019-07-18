@@ -10,14 +10,14 @@
       <div class="hero-body">
         <h1 class="parks-title">Nearby Parks</h1>
         <park-list></park-list>
-        <div class="container"></div>
       </div>
     </section>
     <section v-if="dogs" class="hero is-danger is-bold">
       <div class="hero-body">
         <h1 class="parks-title">Nearby Dogs</h1>
         <dog-list :dogs="dogsToShow" @delete="deleteDog"></dog-list>
-        <div class="container"></div>
+        <h1 v-on:click="seeMore" class="see-more">See More <b-icon class="icon" icon="chevron-right"></b-icon></h1>
+        
       </div>
     </section>
 
@@ -61,6 +61,11 @@ export default {
     }
   },
   methods: {
+  seeMore(){
+    console.log('push')
+     this.$router.push('/user')
+
+  },
     setFilter(filterBy) {
       this.$store.dispatch({ type: "loadDogs", filterBy });
     },
@@ -75,11 +80,16 @@ export default {
   components: { UserListMap, ParkList, UserLiList, UsersFilter, DogList }
 };
 </script>
-<style scoped>
+<style scoped lang="scss">
 h1 {
-  font-size: 20px;
-  text-align: left;
-  padding-left: 28px;
+     font-size: 24px;
+    text-align: left;
+    padding-left: 28px;
+    display: flex;
+    align-items: center;
+.icon{
+  font-size: 30px;
+}
 }
 .hero-body {
   margin: 0 30px;
@@ -92,5 +102,8 @@ h1 {
 }
 .home-header {
   background-image: url("../../public/img/home.svg");
+}
+h1:hover{
+cursor: pointer;
 }
 </style>
