@@ -14,7 +14,7 @@
           <v-list subheader>
             <v-subheader>Dogs in the park</v-subheader>
             <v-list-tile
-              v-for="dog in dogs"
+              v-for="dog in dogsToShow"
               :key="dog._id"
               avatar
               @click="goToUserProfile(dog._id)"
@@ -57,7 +57,7 @@ export default {
     return {
       userLoc: null,
       dogs: null,
-      dogsList: null
+      dogsList: []
     };
   },
   props: ["currPark"],
@@ -65,7 +65,38 @@ export default {
   computed: {
     distanceInKm(dog){
       return dog.distanceValueFromUser / 1000;
+    },
+    dogsToShow(){ 
+      var dogsInPark=[];
+      for (var i = 0; i < this.dogs.length; i++) {
+        var lat1 = this.dogs[i].location.lat;
+        var lon1 = this.dogs[i].location.lng;
+        var lat2 = this.currPark.geometry.location.lat;
+        var lon2 = this.currPark.geometry.location.lng;
+        var R = 6371; // km
+        var dLat = toRad(lat2 - lat1);
+        var dLon = toRad(lon2 - lon1);
+        lat1 = toRad(lat1);
+        lat2 = toRad(lat2);
+
+        var a =
+          Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+          Math.sin(dLon / 2) *
+            Math.sin(dLon / 2) *
+            Math.cos(lat1) *
+            Math.cos(lat2);
+        var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        var distance = R * c;
+        if(distance<=1) dogsInPark.push(this.dogs[i]);
+        function toRad(Value) {
+          return (Value * Math.PI) / 180;
+        }
+      }
+      return dogsInPark;
+
+      // Converts numeric degrees to radians
     }
+    
   },
   methods: {
     goToUserProfile(dogId) {

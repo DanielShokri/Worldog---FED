@@ -125,8 +125,6 @@ export default {
       dogId
     });
     this.$store.dispatch({ type: "loggedInUser" });
-
-    this.user = this.$store.getters.getDog;
   },
   methods: {
     addFriend(dogId) {
