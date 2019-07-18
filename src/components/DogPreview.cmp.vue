@@ -1,14 +1,11 @@
 <template>
   <div class="grid">
     <div class="card">
-<<<<<<< HEAD
-=======
       <div
         @click="openProfile(dog._id)"
         class="card__thumbnail"
         :style="{ 'background-image': 'url(' + imgToLoad + ')' }"
       ></div>
->>>>>>> f3bedbe80502b9797b1db1cbf8b26a7c7368bbd1
       <!-- <img :src="imgToLoad" class="card__thumbnail" /> -->
 
       <span class="card__content">
