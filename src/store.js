@@ -19,9 +19,14 @@ export default new Vuex.Store({
         userLoc: null,
         currPark: null,
         parks: null,
-        compInProfile: "Gallery"
+        compInProfile: "Gallery",
+        isChatOpen: false
     },
     mutations: {
+        setIsOpenChat(state) {
+            console.log('in store', state.isChatOpen)
+            state.isChatOpen = !state.isChatOpen
+        },
         updateCompInProfile(state, {
             comp
         }) {
@@ -53,29 +58,35 @@ export default new Vuex.Store({
         setLoggedOutUser(state) {
             state.currUser = '';
         },
-        setSortDogs(state, { res }) {
+        setSortDogs(state, {
+            res
+        }) {
             for (var i = 0; i < state.dogs.length; i++) {
                 state.dogs[i].distanceTextFromUser = res.elements[i].distance.text;
                 state.dogs[i].distanceValueFromUser = res.elements[i].distance.value;
             }
             if (!state.currPark) {
-                state.dogs.sort(function(a, b) {
+                state.dogs.sort(function (a, b) {
                     return a.distanceValueFromUser - b.distanceValueFromUser;
                 });
             }
         },
-        setSortParksNearUser(state, { res }) {
+        setSortParksNearUser(state, {
+            res
+        }) {
             for (var i = 0; i < state.parks.length; i++) {
                 state.parks[i].distanceTextFromUser = res.elements[i].distance.text;
                 state.parks[i].distanceValueFromUser = res.elements[i].distance.value;
             }
         },
-        setSortDogsByMap(state, { res }) {
+        setSortDogsByMap(state, {
+            res
+        }) {
             for (var i = 0; i < state.dogs.length; i++) {
                 state.dogs[i].distanceTextFromMap = res.elements[i].distance.text;
                 state.dogs[i].distanceValueFromMap = res.elements[i].distance.value;
             }
-            state.dogs.sort(function(a, b) {
+            state.dogs.sort(function (a, b) {
                 return a.distanceValueFromUser - b.distanceValueFromUser;
             });
         },
@@ -108,13 +119,14 @@ export default new Vuex.Store({
             state.dogs.splice(idx, 1, dog);
 
         },
-        updateDogLikes(state ,{updatedDogId}){
+        updateDogLikes(state, {
+            updatedDogId
+        }) {
             const dogIdx = state.dogs.findIndex(dog => dog._id === updatedDogId)
             var dog;
             state.dogs.forEach(currDog => {
                 if (currDog._id === updatedDogId) dog = currDog
             })
-
             dog.gotLikes.push({
                 userId: state.currUser[0]._id,
                 userImg: state.currUser[0].profileImg,
@@ -209,12 +221,14 @@ export default new Vuex.Store({
             state.currPark = park;
         },
 
-        setParks(state, { gardens }) {
+        setParks(state, {
+            gardens
+        }) {
             state.parks = gardens;
         }
     },
     getters: {
-        compToShoe(state){
+        compToShoe(state) {
             return state.compInProfile
         },
         dogsToShow(state) {
@@ -235,15 +249,23 @@ export default new Vuex.Store({
         getNotfications(state) {
             return state.currUser[0].gotFriendsReq
         },
-        gotLikes(state){
+        gotLikes(state) {
             return state.currUser[0].gotLikes
         },
         getParks(state) {
             return state.parks;
+        },
+        isChatOpen(state){
+            return state.isChatOpen
         }
     },
 
     actions: {
+        isChatOpen(context){
+            context.commit({
+                type: 'setIsOpenChat',
+            })
+        },
 
         loadSortDogs(context) {
 
@@ -283,7 +305,7 @@ export default new Vuex.Store({
             }
 
         },
-        loadCompImProfile(context, {
+        loadCompInProfile(context, {
             comp
         }) {
             context.commit({
@@ -292,7 +314,9 @@ export default new Vuex.Store({
             })
             return comp
         },
-        loadParks(context, { gardens }) {
+        loadParks(context, {
+            gardens
+        }) {
             context.commit({
                 type: 'setParks',
                 gardens
@@ -319,7 +343,9 @@ export default new Vuex.Store({
                 });
         },
 
-        updateFriendReq(context, { dogId }) {
+        updateFriendReq(context, {
+            dogId
+        }) {
             return dogsService.sendFriendReq(dogId)
                 .then(updatedDogId => {
                     context.commit({
@@ -328,172 +354,172 @@ export default new Vuex.Store({
                     })
                     return updatedDogId
                 })
-            
-    },
 
-    updateFriendLike(context ,{dogId}){
-        return dogsService.addLike(dogId)
-            .then(updatedDogId => {
-                context.commit({
-                    type: 'updateDogLikes',
-                    updatedDogId
-                })
-                return updatedDogId
-            })
-    },
+        },
 
-    makeFriendShip(context, {
-        dog
-    }) {
-        return dogsService.makeFriendshipOn(dog)
-            .then(updatedDog => {
-                console.log(updatedDog)
-                context.commit({
-                    type: 'updateDogFriendShip',
-                    updatedDog
+        updateFriendLike(context, {
+            dogId
+        }) {
+            return dogsService.addLike(dogId)
+                .then(updatedDogId => {
+                    context.commit({
+                        type: 'updateDogLikes',
+                        updatedDogId
+                    })
+                    return updatedDogId
                 })
-                return updatedDog
-            })
-    },
-    rejectFriendShip(context, {
-        dog
-    }) {
-        return dogsService.rejectFriendshipOn(dog)
-            .then(updatedDog => {
-                console.log(updatedDog)
-                context.commit({
-                    type: 'rejectDogFriendShip',
-                    updatedDog
-                })
-                return updatedDog
-            })
-    },
+        },
 
-    loadDogs(context, {
-        filterBy
-    }) {
-        console.log('LoadDogs dispach happend!')
-        return dogsService.query(filterBy)
-            .then(dogs => {
-                context.commit({
-                    type: 'setDogs',
-                    dogs
+        makeFriendShip(context, {
+            dog
+        }) {
+            return dogsService.makeFriendshipOn(dog)
+                .then(updatedDog => {
+                    console.log(updatedDog)
+                    context.commit({
+                        type: 'updateDogFriendShip',
+                        updatedDog
+                    })
+                    return updatedDog
                 })
-                return dogs
-            })
-    },
-    loadUserLoc(context) {
-        return dogsService.getPosition()
-            .then(pos => {
-                context.commit({
-                    type: 'setLoc',
-                    pos
+        },
+        rejectFriendShip(context, {
+            dog
+        }) {
+            return dogsService.rejectFriendshipOn(dog)
+                .then(updatedDog => {
+                    context.commit({
+                        type: 'rejectDogFriendShip',
+                        updatedDog
+                    })
+                    return updatedDog
                 })
-                return pos
+        },
 
-            });
-
-    },
-    loadDogById(context, {
-        dogId
-    }) {
-        return dogsService.getById(dogId)
-            .then(dog => {
-                context.commit({
-                    type: 'setDog',
-                    dog
+        loadDogs(context, {
+            filterBy
+        }) {
+            return dogsService.query(filterBy)
+                .then(dogs => {
+                    context.commit({
+                        type: 'setDogs',
+                        dogs
+                    })
+                    return dogs
                 })
-                return dog
-            })
-    },
-    deleteDog(context, payload) {
-        dogsService.remove(payload.dogId)
-            .then(() => {
-                context.commit({
-                    type: 'deleteDog',
-                    dogId: payload.dogId
+        },
+        loadUserLoc(context) {
+            return dogsService.getPosition()
+                .then(pos => {
+                    context.commit({
+                        type: 'setLoc',
+                        pos
+                    })
+                    return pos
+
+                });
+
+        },
+        loadDogById(context, {
+            dogId
+        }) {
+            return dogsService.getById(dogId)
+                .then(dog => {
+                    context.commit({
+                        type: 'setDog',
+                        dog
+                    })
+                    return dog
                 })
-            })
-    },
-
-    addDog(context, {
-        dog
-    }) {
-        return dogsService.add(dog)
-            .then(addedDog => {
-                context.commit({
-                    type: 'addDog',
-                    dog: addedDog
+        },
+        deleteDog(context, payload) {
+            dogsService.remove(payload.dogId)
+                .then(() => {
+                    context.commit({
+                        type: 'deleteDog',
+                        dogId: payload.dogId
+                    })
                 })
-                return addedDog
-            })
-    },
+        },
 
-    updateDog(context, {
-        dog
-    }) {
-        return dogsService.update(dog)
-            .then(updatedDog => {
-                context.commit({
-                    type: 'updateDog',
-                    dog: updatedDog
+        addDog(context, {
+            dog
+        }) {
+            return dogsService.add(dog)
+                .then(addedDog => {
+                    context.commit({
+                        type: 'addDog',
+                        dog: addedDog
+                    })
+                    return addedDog
                 })
-                return updatedDog
-            })
-    },
+        },
 
-    userLogin(context, {
-        currUser
-    }) {
-        return dogsService.logIn(currUser)
-            .then(currUserLoggedIn => {
-                context.commit({
-                    type: 'setLoginUser',
-                    currUserLoggedIn
+        updateDog(context, {
+            dog
+        }) {
+            return dogsService.update(dog)
+                .then(updatedDog => {
+                    context.commit({
+                        type: 'updateDog',
+                        dog: updatedDog
+                    })
+                    return updatedDog
                 })
-            }).catch((err) => {
-                console.log(err, 'This err store')
-                return Promise.reject('cant find user')
-            })
-    },
+        },
 
-    userSignup(context, {
-        user
-    }) {
-        return dogsService.signUp(user)
-            .then(userSignedUp => {
-                console.log('This is Great signup!', userSignedUp)
-            })
-    },
-
-    loggedInUser(context) {
-        return dogsService.getLoggedinUser()
-            .then((userLoggedNow) => {
-                context.commit({
-                    type: 'setLoggedUser',
-                    userLoggedNow
+        userLogin(context, {
+            currUser
+        }) {
+            return dogsService.logIn(currUser)
+                .then(currUserLoggedIn => {
+                    context.commit({
+                        type: 'setLoginUser',
+                        currUserLoggedIn
+                    })
+                }).catch((err) => {
+                    console.log(err, 'This err store')
+                    return Promise.reject('cant find user')
                 })
-            })
-    },
+        },
 
-    userLogout(context) {
-        dogsService.logOut()
-            .then(() => {
-                context.commit({
-                    type: 'setLoggedOutUser'
+        userSignup(context, {
+            user
+        }) {
+            return dogsService.signUp(user)
+                .then(userSignedUp => {
+                    console.log('This is Great signup!', userSignedUp)
                 })
-        })
-    },
+        },
 
-    goToPark(context, {
-        park
-    }) {
-        context.commit({
-            type: 'setCurrPark',
+        loggedInUser(context) {
+            return dogsService.getLoggedinUser()
+                .then((userLoggedNow) => {
+                    context.commit({
+                        type: 'setLoggedUser',
+                        userLoggedNow
+                    })
+                })
+        },
+
+        userLogout(context) {
+            dogsService.logOut()
+                .then(() => {
+                    context.commit({
+                        type: 'setLoggedOutUser'
+                    })
+                })
+        },
+
+        goToPark(context, {
             park
-        })
-    }
+        }) {
+            context.commit({
+                type: 'setCurrPark',
+                park
+            })
+        }
 
-}
+    }
 
 })

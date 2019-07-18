@@ -85,7 +85,6 @@
 <script>
 
 import Login from "./Login";
-import eventBus from "../services/eventBus.js"
 export default {
   data() {
     return {
@@ -101,15 +100,11 @@ export default {
 
     },
     goToMyNotfication(){
-      console.log('go to notfication')
-         this.$store.dispatch({ type: "loadCompImProfile", comp: 'Notfication' })
-
-    //  eventBus.$emit('openWithNotfication')
+         this.$store.dispatch({ type: "loadCompInProfile", comp: 'Notfication' })
        this.$router.push(`/user/${this.getUser[0]._id}`);
     },
     goToMyProfile() {
-      console.log('go to profile')
-               this.$store.dispatch({ type: "loadCompImProfile", comp: 'Gallery' })
+               this.$store.dispatch({ type: "loadCompInProfile", comp: 'Gallery' })
 
       this.$router.push(`/user/${this.getUser[0]._id}`);
     },

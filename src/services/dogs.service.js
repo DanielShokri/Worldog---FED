@@ -45,20 +45,17 @@ function sendFriendReq(dogId) {
 }
 
 function addLike(dogId){
-    console.log('in front service add like')
     const user = JSON.parse(sessionStorage.getItem('LoggedUser'));
     return httpService.put(_getUrl('addLike'), { dogId, user })
 
 }
 
 function makeFriendshipOn(dog) {
-    console.log(dog)
     const user = JSON.parse(sessionStorage.getItem('LoggedUser'));
     return httpService.put(_getUrl('makeFriendship'), { dog, user })
 }
 
 function rejectFriendshipOn(dog) {
-    console.log(dog)
     const user = JSON.parse(sessionStorage.getItem('LoggedUser'));
     return httpService.put(_getUrl('rejectFriendship'), { dog, user })
 }

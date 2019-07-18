@@ -2,6 +2,7 @@
   <v-app>
     <v-content>
       <app-header></app-header>
+      <chat v-if="isChatOpen"></chat>
       <router-view />
     </v-content>
   </v-app>
@@ -10,9 +11,12 @@
 <script>
 import AppHeader from "./components/AppHeader.vue";
 import socket from "./services/socket.service.js";
+import chat from "./components/chat.cmp.vue";
+
 export default {
   components: {
-    AppHeader
+    AppHeader,
+    chat
   },
   data() {
     return {
@@ -28,6 +32,11 @@ export default {
       });
     });
     this.$store.dispatch({ type: "loggedInUser" });
+  },
+  computed: {
+    isChatOpen() {
+      return this.$store.getters.isChatOpen;
+    }
   }
 };
 </script>
