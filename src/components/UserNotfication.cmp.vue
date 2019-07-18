@@ -30,7 +30,7 @@
               <v-list-tile-content></v-list-tile-content>
               <v-list-tile-action>
                 <v-btn @click="confirmFriendShip(notfication)" icon ripple>Confirm</v-btn>
-                <v-btn icon ripple>Reject</v-btn>
+                <v-btn @click="rejectFriendReq(notfication)" icon ripple>Reject</v-btn>
               </v-list-tile-action>
             </v-list-tile>
           </v-list>
@@ -47,7 +47,10 @@ export default {
   props: ["user"],
   methods: {
     confirmFriendShip(sentUser) {
-      this.$emit('makeFriends', sentUser)
+      this.$emit("makeFriends", sentUser);
+    },
+    rejectFriendReq(sentUser) {
+      this.$emit("rejectReq", sentUser);
     }
   }
 };

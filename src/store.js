@@ -122,14 +122,33 @@ export default new Vuex.Store({
                     state.currUser[0].gotFriendsReq.splice(idx, 1);
             })
 
-            console.log(state.currUser, 'user!!')
-            console.log(dog, 'dogi');
+            const userIdx = state.dogs.findIndex(dog => dog._id === state.currUser[0]._id)
+            state.dogs.splice(userIdx, 1, state.currUser[0]);
+            state.dogs.splice(dogIdx, 1, dog)
+            state.dog = state.currUser[0];
+        },
+        rejectDogFriendShip(state, { updatedDog }) {
+            console.log(updatedDog)
+            const dogIdx = state.dogs.findIndex(dog => dog._id === updatedDog.userId)
+            var dog;
+            state.dogs.forEach(currDog => {
+                if (currDog._id === updatedDog.userId) dog = currDog
+            })
 
+            dog.sentFriendsReq.forEach((id, idx) => {
+                if (id === state.currUser[0]._id)
+                    dog.sentFriendsReq.splice(idx, 1);
+            })
+            state.currUser[0].gotFriendsReq.forEach((object1, idx) => {
+                if (object1.userId === dog._id)
+                    state.currUser[0].gotFriendsReq.splice(idx, 1);
+            })
 
             const userIdx = state.dogs.findIndex(dog => dog._id === state.currUser[0]._id)
             state.dogs.splice(userIdx, 1, state.currUser[0]);
             state.dogs.splice(dogIdx, 1, dog)
             state.dog = state.currUser[0];
+
         },
 
         setCurrPark(state, { park }) {
@@ -214,6 +233,17 @@ export default new Vuex.Store({
                     console.log(updatedDog)
                     context.commit({
                         type: 'updateDogFriendShip',
+                        updatedDog
+                    })
+                    return updatedDog
+                })
+        },
+        rejectFriendShip(context, { dog }) {
+            return dogsService.rejectFriendshipOn(dog)
+                .then(updatedDog => {
+                    console.log(updatedDog)
+                    context.commit({
+                        type: 'rejectDogFriendShip',
                         updatedDog
                     })
                     return updatedDog

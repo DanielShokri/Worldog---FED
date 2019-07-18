@@ -46,7 +46,7 @@
         <span class="follow">Follow</span>
         <div class="right col-lg-8">
           <!-- This is start -->
-          <v-tabs  centered color="white" light slider-color icons-and-text>
+          <v-tabs centered color="white" light slider-color icons-and-text>
             <v-tabs-slider color="yellow"></v-tabs-slider>
 
             <v-tab @click="openCopm('Gallery')">
@@ -76,17 +76,17 @@
             <li @click="openCopm('Notfication')">Notfication</li>
           </ul>-->
           <div class="row comp">
-            <div v-if="this.comp ==='Gallery'">
+            <div style="width: 100%;" v-if="this.comp ==='Gallery'">
               <user-gallery :user="dog"></user-gallery>
             </div>
-            <div v-if="this.comp==='Friends'">
-              <user-friends :user="dog"></user-friends>
+            <div style="width: 100%;" v-if="this.comp==='Friends'">
+              <user-friends @goTO="onGoTo" :user="dog"></user-friends>
             </div>
-            <div v-if="this.comp==='Messages'">
+            <div style="width: 100%;" v-if="this.comp==='Messages'">
               <user-messages :user="dog"></user-messages>
             </div>
-            <div v-if="this.comp ==='Notfication'">
-              <user-notfication @makeFriends="makeFriendship" :user="dog"></user-notfication>
+            <div style="width: 100%;" v-if="this.comp ==='Notfication'">
+              <user-notfication @rejectReq="rejectFriendReq" @makeFriends="makeFriendship" :user="dog"></user-notfication>
             </div>
           </div>
         </div>
@@ -118,14 +118,25 @@ export default {
       dogId
     });
 
-    this.user = this.$store.getters.getLoggedinUser;
+    this.user = this.$store.getters.getDog;
   },
   methods: {
     openCopm(cmp) {
       this.comp = cmp;
-    }, 
-    makeFriendship(sentUser){ 
-            this.$store.dispatch({ type: "makeFriendShip" , dog: sentUser })
+    },
+    onGoTo(dogId) {
+        this.$store.dispatch({
+      type: "loadDogById",
+      dogId
+    });
+      this.$router.push(`/user/${dogId}`);
+    },
+
+    makeFriendship(sentUser) {
+      this.$store.dispatch({ type: "makeFriendShip", dog: sentUser });
+    },
+    rejectFriendReq(sentUser) { 
+       this.$store.dispatch({ type: "rejectFriendShip", dog: sentUser });
     }
   },
   computed: {
@@ -145,7 +156,7 @@ export default {
       if (this.dog.profileImg) return this.dog.profileImg;
       else return "https://www.sunnyskyz.com/uploads/2016/12/nlf37-dog.jpg";
     },
-    backImgToLoad(){
+    backImgToLoad() {
       if (this.dog.profileImg) return this.dog.backImg;
       else return "https://www.sunnyskyz.com/uploads/2016/12/nlf37-dog.jpg";
     }
