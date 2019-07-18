@@ -42,6 +42,18 @@ export default {
             i
           ].img = `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=${this.gardens[i].photos[0].photo_reference}&key=AIzaSyCrVxVPta_TOsFatlYL7vOx_stAJNlV8ws`;
         }
+        var parking = JSON.parse(JSON.stringify(this.gardens));
+        this.$store
+          .dispatch({ type: "loadParks", gardens: parking })
+          .then(() => {
+            this.$store.dispatch({ type: "loadUserLoc" }).then(() => {
+              this.$store
+                .dispatch({ type: "loadParksLocFromUser" })
+                .then(() => {
+                  this.gardens = this.$store.getters.getParks;
+                });
+            });
+          });
       });
     });
   },

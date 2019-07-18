@@ -7,10 +7,20 @@
       <a href="#">
         <h2 class="title">{{park.name}}</h2>
       </a>
-      <p
-        class="subtitle"
-      > {{new Date() | timeAgo}} &nbsp; &bull; &nbsp; 3 KM</p>
-      <p></p>
+      <br />
+      <p class="subtitle" v-if="park.distanceValueFromUser">
+        {{park.rating}}
+        <b-icon class="b-icon" icon="star-outline"></b-icon>
+        &nbsp; &bull; &nbsp; {{park.distanceValueFromUser/1000}} km
+      </p>
+       <p class="subtitle" v-else>
+        3.5
+        <b-icon class="b-icon" icon="star-outline"></b-icon>
+        &nbsp; &bull; &nbsp;1.4 km
+      </p>
+
+      <br>
+      <p class="subtitle"> Dogs in park({{distanceFromUsering}})</p>
     </section>
     <footer>
       <a href="#">
@@ -68,16 +78,20 @@
 </template>
 
 <script>
+import dogsService from "../services/dogs.service";
+
 export default {
   props: {
     park: Object
   },
   data() {
     return {
-      user: {}
+      user: {},
+      dogs: null
     };
   },
   created() {
+    this.dogs = this.$store.getters.dogsToShow;
     this.user = this.$store.getters.getLoggedinUser;
   },
 
@@ -96,6 +110,36 @@ export default {
       } else {
         return "http://eaawaj.com/wp-content/uploads/2018/06/4241508-park.jpg";
       }
+    },
+    distanceFromUsering() {
+      var dogsInPark=[];
+      for (var i = 0; i < this.dogs.length; i++) {
+        var lat1 = this.dogs[i].location.lat;
+        var lon1 = this.dogs[i].location.lng;
+        var lat2 = this.park.geometry.location.lat;
+        var lon2 = this.park.geometry.location.lng;
+        var R = 6371; // km
+        var dLat = toRad(lat2 - lat1);
+        var dLon = toRad(lon2 - lon1);
+        lat1 = toRad(lat1);
+        lat2 = toRad(lat2);
+
+        var a =
+          Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+          Math.sin(dLon / 2) *
+            Math.sin(dLon / 2) *
+            Math.cos(lat1) *
+            Math.cos(lat2);
+        var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        var distance = R * c;
+        if(distance<=1) dogsInPark.push(this.dogs[i]);
+        function toRad(Value) {
+          return (Value * Math.PI) / 180;
+        }
+      }
+      return dogsInPark.length;
+
+      // Converts numeric degrees to radians
     }
   }
 };
@@ -106,6 +150,10 @@ export default {
 @import url("https://fonts.googleapis.com/css?family=Nunito+Sans");
 
 $color: #44a3d9; // #2f559e;
+
+.b-icon {
+  color: gold;
+}
 
 body {
   height: 100vh;

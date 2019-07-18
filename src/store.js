@@ -42,22 +42,29 @@ export default new Vuex.Store({
             state.currUser = '';
         },
         setSortDogs(state, { res }) {
-            for (var i = 0; i < state.parks; i++) {
+            for (var i = 0; i < state.dogs.length; i++) {
                 state.dogs[i].distanceTextFromUser = res.elements[i].distance.text;
                 state.dogs[i].distanceValueFromUser = res.elements[i].distance.value;
             }
             if (!state.currPark) {
-                state.dogs.sort(function (a, b) {
+                state.dogs.sort(function(a, b) {
                     return a.distanceValueFromUser - b.distanceValueFromUser;
                 });
             }
         },
+        setSortParksNearUser(state, { res }) {
+            for (var i = 0; i < state.parks.length; i++) {
+                state.parks[i].distanceTextFromUser = res.elements[i].distance.text;
+                state.parks[i].distanceValueFromUser = res.elements[i].distance.value;
+            }
+        },
+
         setSortDogsByMap(state, { res }) {
             for (var i = 0; i < state.dogs.length; i++) {
                 state.dogs[i].distanceTextFromMap = res.elements[i].distance.text;
                 state.dogs[i].distanceValueFromMap = res.elements[i].distance.value;
             }
-            state.dogs.sort(function (a, b) {
+            state.dogs.sort(function(a, b) {
                 return a.distanceValueFromUser - b.distanceValueFromUser;
             });
         },
@@ -154,6 +161,9 @@ export default new Vuex.Store({
 
         setCurrPark(state, { park }) {
             state.currPark = park;
+        },
+        setParks(state, { gardens }) {
+            state.parks = gardens;
         }
     },
     getters: {
@@ -176,6 +186,9 @@ export default new Vuex.Store({
         },
         getNotfications(state) {
             return state.currUser[0].gotFriendsReq
+        },
+        getParks(state) {
+            return state.parks;
         }
     },
 
@@ -218,6 +231,33 @@ export default new Vuex.Store({
             }
 
         },
+        loadParks(context, { gardens }) {
+            context.commit({
+                type: 'setParks',
+                gardens
+            })
+        },
+        loadParksLocFromUser(context) {
+            var x = [];
+            for (var i = 0; i < context.state.parks.length; i++) {
+                x.push(context.state.parks[i].geometry.location.lat + "," + context.state.parks[i].geometry.location.lng);
+            }
+            x = x.join("|");
+            googleMapsService
+                .getDist({
+
+                    userLoc: context.state.userLoc.position.lat + "," + context.state.userLoc.position.lng,
+                    usersLoc: x
+                })
+                .then(res => {
+                    context.commit({
+                        type: 'setSortParksNearUser',
+                        res
+                    })
+                    return res
+                });
+        },
+
         updateFriendReq(context, { dogId }) {
             return dogsService.sendFriendReq(dogId)
                 .then(updatedDogId => {
@@ -354,7 +394,7 @@ export default new Vuex.Store({
         goToPark(context, { park }) {
             context.commit({ type: 'setCurrPark', park })
         },
-       
+
     },
     modules: {
 
