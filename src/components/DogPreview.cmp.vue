@@ -147,6 +147,7 @@ export default {
           });
         }
       }
+      
     },
     addLike(dogId) {
       if (!this.loggedinUser) {
