@@ -1,6 +1,12 @@
 <template>
-  <div class="search-box">
+  <!-- <div class="search-box">
     <input type="text" v-model="filterBy.txt" placeholder="Search user..."><input @click.enter="searchUser" type="button" value="Search">
+  </div>-->
+  <div class="wrapper">
+    <input type="text" class="users-search input" placeholder="Who are you looking for?" />
+    <a @click.enter="searchUser" class="button is-dark search-btn">
+      <b-icon icon="magnify"></b-icon>
+    </a>
   </div>
 </template>
 
@@ -24,29 +30,11 @@ export default {
 </script>
 
 <style scoped>
-.search-box {
-  position: absolute;
-  top: 350px;
-  right: 250px;
-  width: 100%;
+.users-search {
+  max-width: 500px;
+  margin: 14px 4px 0px 4px;
 }
-input[type="text"] {
-  width: 230px;
-  height: 25px;
-  padding-right: 50px;
-  padding: 15px;
-  background-color: #EEE;
-  border-radius: 7px;
-}
-
-input[type="button"] {
-  margin-left: -50px;
-  height: 25px;
-  width: 50px;
-  background: blue;
-  color: white;
-  border: 0;
-  -webkit-appearance: none;
-  border-radius: 7px;
+.search-btn {
+  margin-top: 14px;
 }
 </style>

@@ -28,7 +28,15 @@ export default {
       console.log("Listen to emit");
       this.$toast.open({
         message: `You have got freind request from ${user}`,
-        type: "is-success"
+        type: "is-success",
+        duration: 2000
+      });
+    });
+    socket.on("friend like sent", user => {
+      this.$toast.open({
+        message: `You have got like from ${user}`,
+        type: "is-success",
+        duration: 2000
       });
     });
     this.$store.dispatch({ type: "loggedInUser" });

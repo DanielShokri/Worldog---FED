@@ -56,12 +56,13 @@ export default {
           socket.emit("user login", this.$store.getters.getcurrLoggedinUser[0]._id);
           this.$toast.open({
             message: "Login Successfully!",
-            type: "is-success"
+            type: "is-success",
+            duration: 2000
           });
           this.$emit("close");
         })
         .catch(err => {
-          this.$toast.open({ message: "Login Failed!", type: "is-danger" });
+          this.$toast.open({ message: "Login Failed!", type: "is-danger",duration: 2000 });
           this.$emit("close");
         });
     }

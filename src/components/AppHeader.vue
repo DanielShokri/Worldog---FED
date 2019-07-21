@@ -2,8 +2,8 @@
 <template>
   <nav class="navbar" role="navigation" aria-label="main navigation">
     <div class="navbar-brand">
-      <img v-on:click="goHome" src="https://i.ibb.co/n8DtFs5/logo.png" width="160" height="28" />
-
+      <img class="logo" @click="goHome" src="https://i.imgur.com/d7kCfoE.png" width="170" height="100" />
+      <!-- https://i.ibb.co/n8DtFs5/logo.png -->
       <a
         role="button"
         class="navbar-burger burger"
@@ -22,18 +22,6 @@
         <router-link class="navbar-item" to="/">Home</router-link>
 
         <router-link class="navbar-item" to="/user">Users</router-link>
-
-        <div class="navbar-item has-dropdown is-hoverable">
-          <a class="navbar-link">More</a>
-
-          <div class="navbar-dropdown">
-            <a class="navbar-item">About</a>
-            <a class="navbar-item">Jobs</a>
-            <a class="navbar-item">Contact</a>
-            <hr class="navbar-divider" />
-            <a class="navbar-item">Report an issue</a>
-          </div>
-        </div>
       </div>
 
       <div v-if="!getUser" class="navbar-end">
@@ -47,11 +35,10 @@
         </div>
       </div>
 
-  
       <div v-if="getUser" class="navbar-menu">
         <div class="navbar-end">
-          <b-dropdown position="is-bottom-left"  aria-role="menu">
-            <a class="navbar-item" slot="trigger"  role="button">
+          <b-dropdown position="is-bottom-left" aria-role="menu">
+            <a class="navbar-item" slot="trigger" role="button">
               <v-badge left>
                 <template v-slot:badge>
                   <span v-if="getNotfications">{{getNotfications.length}}</span>
@@ -65,7 +52,7 @@
               Logged as
               <b>{{getUser[0].owner.fullName}}</b>
             </b-dropdown-item>
-            <b-dropdown-item @click="goToMyNotfication"  aria-role="menuitem">
+            <b-dropdown-item @click="goToMyNotfication" aria-role="menuitem">
               <b-icon icon="bell"></b-icon>Notification's
             </b-dropdown-item>
             <b-dropdown-item @click="goToMyProfile" value="settings">
@@ -83,7 +70,6 @@
 </template>
 
 <script>
-
 import Login from "./Login";
 export default {
   data() {
@@ -95,16 +81,15 @@ export default {
     };
   },
   methods: {
-    goHome(){
-      this.$router.push('/');
-
+    goHome() {
+      this.$router.push("/");
     },
-    goToMyNotfication(){
-         this.$store.dispatch({ type: "loadCompInProfile", comp: 'Notfication' })
-       this.$router.push(`/user/${this.getUser[0]._id}`);
+    goToMyNotfication() {
+      this.$store.dispatch({ type: "loadCompInProfile", comp: "Notfication" });
+      this.$router.push(`/user/${this.getUser[0]._id}`);
     },
     goToMyProfile() {
-               this.$store.dispatch({ type: "loadCompInProfile", comp: 'Gallery' })
+      this.$store.dispatch({ type: "loadCompInProfile", comp: "Gallery" });
 
       this.$router.push(`/user/${this.getUser[0]._id}`);
     },
@@ -117,17 +102,20 @@ export default {
       });
     },
     userLogout() {
-      this.$store.dispatch({ type: "userLogout" })
-      .then(()=>{
-        socket.removeListener("friend req");
-      })
+      this.$store.dispatch({ type: "userLogout" }).then(() => {
+        this.$toast.open({
+          message: "You have logout",
+          type: "is-danger",
+          duration: 2000
+        });
+      });
     }
   },
   computed: {
     getUser() {
       return this.$store.getters.getcurrLoggedinUser;
     },
-    getNotfications(){
+    getNotfications() {
       return this.$store.getters.getNotfications;
     }
   }
@@ -136,9 +124,7 @@ export default {
 
 
 <style scope>
-img:hover{
+.logo:hover {
   cursor: pointer;
 }
-
-
 </style>

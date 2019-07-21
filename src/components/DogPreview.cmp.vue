@@ -50,53 +50,6 @@
       </div>
     </div>
   </div>
-
-  <!-- <div class="slide-container" v-if="dog">
-    <div class="wrapper">
-      <div class="clash-card barbarian">
-        <div class="clash-card__image clash-card__image--barbarian">
-          <img :src="imgToLoad" alt="barbarian" />
-        </div>
-        <div class="clash-card__unit-name">{{dog.owner.fullName}} and {{dog.preference.name}}</div>
-        <div class="clash-card__unit-description">
-          <h2> {{dog.preference.name}} is a {{dog.preference.type}},</h2>
-           <h2> {{gender}} is {{dog.preference.age}} years old </h2>
-          <h3 v-if="dog.distanceTextFromUser">{{dog.distanceTextFromUser}} from you</h3>
-          <h3 v-else>2.3 mi from you</h3>
-        </div>
-        <div class="clash-card__unit-stats clash-card__unit-stats--barbarian clearfix">
-          <div class="one-third">
-            <div class="stat">({{dog.friends.length}})</div>
-            <div class="stat-value">Friend's</div>
-          </div>
-          <div class="one-third">
-            <div class="stat-value">
-              <button @click="addFriend(dog._id)">
-                <b-icon icon="account-plus"></b-icon>FrienDog
-              </button>
-            </div>
-          </div>
-          <div class="one-third no-border">
-            <div class="stat-value">
-              <router-link :to="'/user/'+dog._id">
-                <b-icon icon="account"></b-icon>Profile
-              </router-link>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="admin-action-wrapper" v-if="loggedinUser">
-        <div v-if="loggedinUser.isAdmin">
-          <button @click="goToEdit(dog._id)">
-            <b-icon icon="square-edit-outline"></b-icon>
-          </button>
-          <button @click="emitDeleteDog(dog._id)">
-            <b-icon icon="trash-can-outline"></b-icon>
-          </button>
-        </div>
-      </div>
-  </div>-->
-  <!-- end wrapper -->
 </template>
 
 <script>
@@ -116,7 +69,11 @@ export default {
 
     addFriend(dogId) {
       if (!this.loggedinUser) {
-        this.$toast.open({ message: "You need to login", type: "is-danger" });
+        this.$toast.open({
+          message: "You need to login",
+          type: "is-danger",
+          duration: 2000
+        });
       } else {
         const userFriends = this.loggedinUser.friends;
         const userSentFriendReq = this.loggedinUser.sentFriendsReq;
@@ -124,13 +81,15 @@ export default {
           // console.log(" you are alredy friend");
           this.$toast.open({
             message: "You are already friends",
-            type: "is-danger"
+            type: "is-danger",
+            duration: 2000
           });
         } else if (userSentFriendReq.find(id => id === this.dog._id)) {
           // console.log("You have already sent friend request");
           this.$toast.open({
             message: "You have already sent friend request",
-            type: "is-danger"
+            type: "is-danger",
+            duration: 2000
           });
         } else {
           // console.log("adding friend", this.loggedinUser);
@@ -142,7 +101,8 @@ export default {
             );
             this.$toast.open({
               message: "friend request successfully sent!",
-              type: "is-success"
+              type: "is-success",
+              duration: 2000
             });
           });
         }
@@ -150,19 +110,30 @@ export default {
     },
     addLike(dogId) {
       if (!this.loggedinUser) {
-        this.$toast.open({ message: "You need to login", type: "is-danger" });
+        this.$toast.open({
+          message: "You need to login",
+          type: "is-danger",
+          duration: 2000
+        });
       } else {
         const userSentLikes = this.loggedinUser.sentLikes;
         if (userSentLikes.find(id => id === this.dog._id)) {
           this.$toast.open({
             message: "You are already Liked",
-            type: "is-danger"
+            type: "is-danger",
+            duration: 2000
           });
         } else {
           this.$store.dispatch({ type: "updateFriendLike", dogId }).then(() => {
+            socket.emit(
+              "friend like",
+              this.dog,
+              this.$store.getters.getcurrLoggedinUser[0]
+            );
             this.$toast.open({
               message: "Like successfully!",
-              type: "is-success"
+              type: "is-success",
+              duration: 2000
             });
           });
         }

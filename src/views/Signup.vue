@@ -44,7 +44,7 @@ export default {
       let user = this.user;
       try {
         const signupUser = await this.$store.dispatch({type: "userSignup", user});
-        this.$toast.open({message: "Register Successfully!",type: "is-success"});
+        this.$toast.open({message: "Register Successfully!",type: "is-success", duration: 2000});
         this.$router.push('/')
         return signupUser;
       } catch (err) {

@@ -15,12 +15,12 @@
           </div>
           <h4 class="name">{{dog.owner.fullName}} and {{dog.preference.name}}</h4>
 
-          <div class="btn-wrapper" v-if="notMyProfile">
+          <div class="btn-wrapper" v-if="notMyProfile || !dog">
             <span @click="addFriend(dog._id)" class="add-friend">Add Friend</span>
             <span @click="addLike(dog._id)" class="like-friend">Like ({{dog.gotLikes.length}})</span>
             <!-- <b-icon icon="thumb-up"></b-icon> -->
           </div>
-          <div class="btn-wrapper" v-if="!notMyProfile">
+          <div class="btn-wrapper" v-if="!notMyProfile || !dog">
             <span class="like-friend">{{dog.gotLikes.length}} Likes</span>
           </div>
           <p class="desc">
@@ -84,10 +84,10 @@
             <li @click="openCopm('Friends')">
               <b-icon icon="account-group"></b-icon>Friends
             </li>
-            <li v-if="!notMyProfile" @click="openCopm('Messages')">
+            <li v-if="!notMyProfile || !dog" @click="openCopm('Messages')">
               <b-icon icon="message-bulleted"></b-icon>Messages
             </li>
-            <li v-if="!notMyProfile" @click="openCopm('Notfication')">
+            <li v-if="!notMyProfile || !dog" @click="openCopm('Notfication')">
               <b-icon icon="bell-ring"></b-icon>Notfication
             </li>
           </ul>
@@ -145,19 +145,21 @@ export default {
    
     addLike(dogId) {
       if (!this.loggedinUser) {
-        this.$toast.open({ message: "You need to login", type: "is-danger" });
+        this.$toast.open({ message: "You need to login", type: "is-danger" ,duration: 2000});
       } else {
         const userSentLikes = this.loggedinUser.sentLikes;
         if (userSentLikes.find(id => id === this.dog._id)) {
           this.$toast.open({
             message: "You are already Liked",
-            type: "is-danger"
+            type: "is-danger",
+            duration: 2000
           });
         } else {
           this.$store.dispatch({ type: "updateFriendLike", dogId }).then(() => {
             this.$toast.open({
               message: "Like successfully!",
-              type: "is-success"
+              type: "is-success",
+              duration: 2000
             });
           });
         }
@@ -165,25 +167,28 @@ export default {
     },
     addFriend(dogId) {
       if (!this.loggedinUser) {
-        this.$toast.open({ message: "You need to login", type: "is-danger" });
+        this.$toast.open({ message: "You need to login", type: "is-danger",duration: 2000 });
       } else {
         const userFriends = this.loggedinUser.friends;
         const userSentFriendReq = this.loggedinUser.sentFriendsReq;
         if (userFriends.find(friend => friend.userId === this.dog._id)) {
           this.$toast.open({
             message: "You are alredy friend",
-            type: "is-danger"
+            type: "is-danger",
+            duration: 2000
           });
         } else if (userSentFriendReq.find(id => id === this.dog._id)) {
          this.$toast.open({
             message: "You have already sent friend request",
-            type: "is-danger"
+            type: "is-danger",
+            duration: 2000
           });
         } else {
           this.$store.dispatch({ type: "updateFriendReq", dogId }).then(() => {
             this.$toast.open({
               message: "friend request successfully sent!",
-              type: "is-success"
+              type: "is-success",
+              duration: 2000
             });
           });
         }
@@ -211,7 +216,8 @@ export default {
       this.$store.dispatch({ type: "removeFriend", dogId });
       this.$toast.open({
         message: "friend request successfully sent!",
-        type: "is-success"
+        type: "is-success",
+        duration: 2000
       });
     }
   },
