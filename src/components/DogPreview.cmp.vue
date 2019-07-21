@@ -121,20 +121,20 @@ export default {
       if (!this.loggedinUser) {
         this.$toast.open({ message: "You need to login", type: "is-danger" });
       }
-      //  else {
-      //   const userFriends = this.loggedinUser.friends;
-      //   const userSentFriendReq = this.loggedinUser.sentFriendsReq;
-      // if (userFriends.find(friend => friend.userId === this.dog._id)) {
-      //   this.$toast.open({
-      //     message: "You are already friends",
-      //     type: "is-danger"
-      //   });
-      // } else if (userSentFriendReq.find(id => id === this.dog._id)) {
-      //   this.$toast.open({
-      //     message: "You have already sent friend request",
-      //     type: "is-danger"
-      //   });
-      // }
+       else {
+        const userFriends = this.loggedinUser.friends;
+        const userSentFriendReq = this.loggedinUser.sentFriendsReq;
+      if (userFriends.find(friend => friend.userId === this.dog._id)) {
+        this.$toast.open({
+          message: "You are already friends",
+          type: "is-danger"
+        });
+      } else if (userSentFriendReq.find(id => id === this.dog._id)) {
+        this.$toast.open({
+          message: "You have already sent friend request",
+          type: "is-danger"
+        });
+      }
       else {
         this.$store.dispatch({ type: "updateFriendReq", dogId }).then(() => {
           socket.emit("friend req", this.dog);
@@ -144,7 +144,7 @@ export default {
           });
         });
       }
-      // }
+      }
     },
     addLike(dogId) {
       if (!this.loggedinUser) {
