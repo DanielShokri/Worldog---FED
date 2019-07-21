@@ -30,8 +30,17 @@ export default {
         message: `You have got freind request from ${user}`,
         type: "is-success"
       });
+      
     });
+     socket.on("you got liked", user => {
+      console.log("Listen to emit");
+      this.$toast.open({
+        message: `You have got liked by ${user}`,
+        type: "is-success"
+      });
+     })
     this.$store.dispatch({ type: "loggedInUser" });
+
   },
   computed: {
     isChatOpen() {
