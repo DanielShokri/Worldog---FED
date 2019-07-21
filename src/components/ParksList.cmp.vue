@@ -2,7 +2,7 @@
   <section class="parksList" v-if="userLoc" style="mar">
     <v-layout row wrap>
       <v-flex xs12 sm6 mb4 lg3 v-for="nearestGarden in gardens" :key="nearestGarden.id">
-        <parkPrev :park="nearestGarden"></parkPrev>
+        <parkPrev style="margin-bottom: 20px;" :park="nearestGarden"></parkPrev>
       </v-flex>
     </v-layout>
   </section>

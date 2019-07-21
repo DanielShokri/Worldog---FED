@@ -1,6 +1,7 @@
 <template>
- <div id="mapTo">
-    <GmapMap  v-if="dogs && userLoc" 
+  <div id="mapTo">
+    <GmapMap
+      v-if="dogs && userLoc"
       ref="mapRef"
       :center="{lat:currPark.geometry.location.lat, lng:currPark.geometry.location.lng}"
       :zoom="zoomIn"
@@ -13,8 +14,8 @@
         @closeclick="infoWinOpen=false"
       ></gmap-info-window>
       <GmapMarker
-        v-for="(m, index) in dogsToShow"
-        :key="index"
+        v-for="(m, index) in dogsToShowNotFriends"
+        :key="m._id"
         :position="m.position"
         :clickable="true"
         :draggable="true"
@@ -23,6 +24,16 @@
       />
 
        <GmapMarker
+        v-for="(m, index) in dogsToShowFriends"
+        :key="index"
+        :position="m.position"
+        :clickable="true"
+        :draggable="true"
+        :icon="friendsIcon"
+        @click="setCenter(m.position,15,$event) & toggleInfoWindow(m, index)"
+      />
+
+      <GmapMarker
         userLocation
         :position="userLoc.position"
         :clickable="true"
@@ -39,19 +50,20 @@
         @click="setCenter(currPark.geometry.location,15,$event) & toggleInfoWindow(currPark.geometry, 0)"
       />
     </GmapMap>
-     </div>
-
+  </div>
 </template>
+
+
 
 <script>
 import dogsService from "../services/dogs.service";
-import userLiList from '../components/UserLiList.cmp'
+import userLiList from "../components/UserLiList.cmp";
 export default {
   name: "usersMap",
   data() {
     return {
       userLoc: null,
-      currUser:null,
+      currUser: null,
       dogs: null,
       langs: ["he", "en"],
       times: [1552552892953, 1552552891953, 1552522892953],
@@ -60,6 +72,8 @@ export default {
       infoWindowPos: null,
       infoWinOpen: false,
       currentMidx: null,
+      notFriends: [],
+      friends: [],
 
       infoOptions: {
         content: "",
@@ -72,16 +86,30 @@ export default {
     };
   },
   props: ["currPark"],
+
   computed: {
-    dogsToShow() {
+    dogsToShowNotFriends() {
       var marker = [];
-      for (var i = 0; i < this.dogs.length; i++) {
+      for (var i = 0; i < this.notFriends.length; i++) {
         marker.push({
           position: {
-            lat: this.dogs[i].location.lat,
-            lng: this.dogs[i].location.lng
+            lat: this.notFriends[i].location.lat,
+            lng: this.notFriends[i].location.lng
           },
-          infoText: `<p>${this.dogs[i].owner.fullName}</p>`
+          infoText: `<p>${this.notFriends[i].owner.fullName}</p>`
+        });
+      }
+      return marker;
+    },
+    dogsToShowFriends() {
+      var marker = [];
+      for (var i = 0; i < this.friends.length; i++) {
+        marker.push({
+          position: {
+            lat: this.friends[i].location.lat,
+            lng: this.friends[i].location.lng
+          },
+          infoText: `<p>${this.friends[i].owner.fullName}</p>`
         });
       }
       return marker;
@@ -90,10 +118,14 @@ export default {
       return this.userLoc;
     },
     usersIcons() {
-      return "https://img.icons8.com/color/48/000000/dog.png";
+      return "https://img.icons8.com/carbon-copy/40/000000/dog.png";
+     
     },
     myIcon() {
       return "https://img.icons8.com/ultraviolet/40/000000/dog.png";
+    },
+    friendsIcon() {
+      return " https://img.icons8.com/color/40/000000/dog.png";
     }
   },
   methods: {
@@ -104,9 +136,9 @@ export default {
       });
     },
     toggleInfoWindow(marker, idx) {
-if(!marker.position) marker.position = marker.location
+      if (!marker.position) marker.position = marker.location;
       this.infoWindowPos = marker.position;
-      if(!marker.infoText) marker.infoText = this.currPark.name
+      if (!marker.infoText) marker.infoText = this.currPark.name;
       this.infoOptions.content = marker.infoText;
 
       //check if its the same marker that was selected if yes toggle
@@ -120,37 +152,47 @@ if(!marker.position) marker.position = marker.location
       }
     }
   },
-  components: {
-   
-  },
+  components: {},
   created() {
-
     this.$store.dispatch({ type: "loadDogs" }).then(() => {
-      this.dogs = this.$store.getters.dogsToShow;
-    });
-    this.$store.dispatch({ type: "loggedInUser" }).then(() => {
-      this.currUser = this.$store.getters.getLoggedinUser;
-    });
-    dogsService.getPosition().then(pos => {
-      if(this.currUser[0]) var toShow = `<p>${this.currUser[0].owner.fullName}</p>`; 
-      else var toShow = `<p>Guest</p>`
-      this.userLoc = {
-        position: {
-          lat: pos.coords.latitude,
-          lng: pos.coords.longitude
-        },
-        infoText: toShow
-      };
+      this.$store.dispatch({ type: "loggedInUser" }).then(() => {
+        this.dogs = this.$store.getters.dogsToShow;
+        this.currUser = this.$store.getters.getLoggedinUser;
+        if (this.currUser[0].friends.length > 0) {
+          for (var i = 0; i < this.currUser[0].friends.length; i++) {
+            for (var j = 0; j < this.dogs.length; j++) {
+              if (this.currUser[0].friends[i].userId === this.dogs[j]._id)
+                this.friends.push(this.dogs[j]);
+              else this.notFriends.push(this.dogs[j]);
+            }
+          }
+        } else
+        this.notFriends = this.dogs.map(dog=> { 
+          return dog
+        })
+        dogsService.getPosition().then(pos => {
+          if (this.currUser[0])
+            var toShow = `<p>${this.currUser[0].owner.fullName}</p>`;
+          else var toShow = `<p>Guest</p>`;
+          this.userLoc = {
+            position: {
+              lat: pos.coords.latitude,
+              lng: pos.coords.longitude
+            },
+            infoText: toShow
+          };
+        });
+      });
     });
   }
 };
 </script>
 
 <style scoped>
-.mapTo{
-  max-width:500px !important; 
+.mapTo {
+  max-width: 500px !important;
 }
-.vue-map-container{
-    height: 90vh;
+.vue-map-container {
+  height: 90vh;
 }
 </style>

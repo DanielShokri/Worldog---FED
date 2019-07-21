@@ -29,6 +29,7 @@
           See More
           <b-icon class="icon" icon="chevron-right"></b-icon>
         </h1>
+            <br>
       </div>
     </section>
     <div class="sandbox">
@@ -42,6 +43,7 @@
             See More
             <b-icon class="icon" icon="chevron-right"></b-icon>
           </h1>
+              <br>
         </div>
       </section>
     </div>
@@ -153,6 +155,7 @@ export default {
 }
 .footer {
   // background-color: #ff2e63 !important;
+  
 }
 .home-logo {
   min-width: 100%;
