@@ -16,6 +16,7 @@ export default {
     getFriendReq,
     makeFriendshipOn,
     rejectFriendshipOn,
+    removeFriendship,
     addLike,
 }
 
@@ -44,7 +45,7 @@ function sendFriendReq(dogId) {
     return httpService.put(_getUrl('sendFriendReq'), { dogId, user })
 }
 
-function addLike(dogId){
+function addLike(dogId) {
     const user = JSON.parse(sessionStorage.getItem('LoggedUser'));
     return httpService.put(_getUrl('addLike'), { dogId, user })
 
@@ -58,6 +59,11 @@ function makeFriendshipOn(dog) {
 function rejectFriendshipOn(dog) {
     const user = JSON.parse(sessionStorage.getItem('LoggedUser'));
     return httpService.put(_getUrl('rejectFriendship'), { dog, user })
+}
+
+function removeFriendship(dogId) {
+    const user = JSON.parse(sessionStorage.getItem('LoggedUser'));
+    return httpService.put(_getUrl('removeFriendship'), { dogId, user })
 }
 
 function getFriendReq(dogId, dogImg, dogName) {

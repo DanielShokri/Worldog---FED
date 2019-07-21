@@ -66,7 +66,7 @@ export default new Vuex.Store({
                 state.dogs[i].distanceValueFromUser = res.elements[i].distance.value;
             }
             if (!state.currPark) {
-                state.dogs.sort(function (a, b) {
+                state.dogs.sort(function(a, b) {
                     return a.distanceValueFromUser - b.distanceValueFromUser;
                 });
             }
@@ -86,7 +86,7 @@ export default new Vuex.Store({
                 state.dogs[i].distanceTextFromMap = res.elements[i].distance.text;
                 state.dogs[i].distanceValueFromMap = res.elements[i].distance.value;
             }
-            state.dogs.sort(function (a, b) {
+            state.dogs.sort(function(a, b) {
                 return a.distanceValueFromUser - b.distanceValueFromUser;
             });
         },
@@ -215,9 +215,30 @@ export default new Vuex.Store({
 
         },
 
-        setCurrPark(state, {
-            park
-        }) {
+        removeDogFriendShip(state, { updatedDog }) {
+            console.log(updatedDog)
+            const dogIdx = state.dogs.findIndex(dog => dog._id === updatedDog)
+            var dog;
+            state.dogs.forEach(currDog => {
+                if (currDog._id === updatedDog) dog = currDog
+            })
+
+            dog.friends.forEach((dogFriend, idx) => {
+                if (dogFriend.userId === state.currUser[0]._id)
+                    dog.friends.splice(idx, 1);
+            })
+            state.currUser[0].friends.forEach((dogFriend, idx) => {
+                if (dogFriend.userId === dog._id)
+                    state.currUser[0].friends.splice(idx, 1);
+            })
+
+            const userIdx = state.dogs.findIndex(dog => dog._id === state.currUser[0]._id)
+            state.dogs.splice(userIdx, 1, state.currUser[0]);
+            state.dogs.splice(dogIdx, 1, dog)
+            state.dog = state.currUser[0];
+        },
+
+        setCurrPark(state, { park }) {
             state.currPark = park;
         },
 
@@ -255,13 +276,13 @@ export default new Vuex.Store({
         getParks(state) {
             return state.parks;
         },
-        isChatOpen(state){
+        isChatOpen(state) {
             return state.isChatOpen
         }
     },
 
     actions: {
-        isChatOpen(context){
+        isChatOpen(context) {
             context.commit({
                 type: 'setIsOpenChat',
             })
@@ -395,6 +416,19 @@ export default new Vuex.Store({
                     return updatedDog
                 })
         },
+        removeFriend(context, { dogId }) {
+            return dogsService.removeFriendship(dogId)
+                .then(updatedDog => {
+                    console.log(updatedDog)
+                    context.commit({
+                        type: 'removeDogFriendShip',
+                        updatedDog
+                    })
+                    return updatedDog
+                })
+        },
+
+
 
         loadDogs(context, {
             filterBy

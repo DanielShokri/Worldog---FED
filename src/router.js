@@ -7,6 +7,7 @@ import UserProfile from './views/UserProfile.vue'
 import ParkDetails from './views/ParkDetails.vue'
 import parksList from './components/ParksList.cmp.vue'
 import EditUser from './views/EditUser.vue'
+import parksFeed from './views/parksFeed.cmp.vue'
 
 
 Vue.use(Router)
@@ -21,5 +22,6 @@ export default new Router({
         { path: '/user/edit', component: EditUser },
         { path: '/park-details', component: ParkDetails },
         { path: '/park', component: parksList },
+        { path: '/parks', component: parksFeed },
     ]
 })

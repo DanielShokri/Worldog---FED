@@ -4,28 +4,34 @@
       <img @click="goParkDetails" aspect-ratio="1.75" :src="park.img" />
     </figure>
     <section class="content">
-      <a href="#">
+      <a @click="goParkDetails">
         <h2 class="title">{{park.name}}</h2>
       </a>
       <br />
+      <p class="subtitle">Dogs in park({{distanceFromUsering}})</p>
+      <br />
       <p class="subtitle" v-if="park.distanceValueFromUser">
         {{park.rating}}
-        <b-icon class="b-icon" icon="star-outline"></b-icon>
+        <b-icon v-if="numOfStars>=1" class="b-icon" icon="star-outline"></b-icon>
+        <b-icon v-if="numOfStars>=2" class="b-icon" icon="star-outline"></b-icon>
+        <b-icon v-if="numOfStars>=3" class="b-icon" icon="star-outline"></b-icon>
+        <b-icon v-if="numOfStars>=4" class="b-icon" icon="star-outline"></b-icon>
+        <b-icon v-if="numOfStars===5" class="b-icon" icon="star-outline"></b-icon>
         &nbsp; &bull; &nbsp; {{park.distanceValueFromUser/1000}} km
       </p>
-       <p class="subtitle" v-else>
-        3.5
-        <b-icon class="b-icon" icon="star-outline"></b-icon>
-        &nbsp; &bull; &nbsp;1.4 km
+      <p class="subtitle" v-else>
+        {{numOfStars}}
+        <b-icon v-if="numOfStars>=1" class="b-icon" icon="star-outline"></b-icon>
+        <b-icon v-if="numOfStars>=2" class="b-icon" icon="star-outline"></b-icon>
+        <b-icon v-if="numOfStars>=3" class="b-icon" icon="star-outline"></b-icon>
+        <b-icon v-if="numOfStars>=4" class="b-icon" icon="star-outline"></b-icon>
+        <b-icon v-if="numOfStars===5" class="b-icon" icon="star-outline"></b-icon>&nbsp; &bull; &nbsp;1.4 km
       </p>
 
-      <br>
-      <p class="subtitle"> Dogs in park({{distanceFromUsering}})</p>
+      <br />
     </section>
     <footer>
-      <a href="#">
-        <span>go to park</span>
-      </a>
+      <span class="goToPark" @click="goParkDetails">go to park</span>
     </footer>
   </main>
 
@@ -87,12 +93,14 @@ export default {
   data() {
     return {
       user: {},
-      dogs: null
+      dogs: null,
+      numOfStars: 3
     };
   },
   created() {
     this.dogs = this.$store.getters.dogsToShow;
     this.user = this.$store.getters.getLoggedinUser;
+    this.numOfStars = this.park.rating;
   },
 
   methods: {
@@ -112,7 +120,7 @@ export default {
       }
     },
     distanceFromUsering() {
-      var dogsInPark=[];
+      var dogsInPark = [];
       for (var i = 0; i < this.dogs.length; i++) {
         var lat1 = this.dogs[i].location.lat;
         var lon1 = this.dogs[i].location.lng;
@@ -132,7 +140,7 @@ export default {
             Math.cos(lat2);
         var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
         var distance = R * c;
-        if(distance<=1) dogsInPark.push(this.dogs[i]);
+        if (distance <= 1) dogsInPark.push(this.dogs[i]);
         function toRad(Value) {
           return (Value * Math.PI) / 180;
         }
@@ -153,6 +161,13 @@ $color: #44a3d9; // #2f559e;
 
 .b-icon {
   color: gold;
+}
+.fullStar {
+  visibility: hidden;
+}
+
+.goToPark {
+  cursor: pointer;
 }
 
 body {
