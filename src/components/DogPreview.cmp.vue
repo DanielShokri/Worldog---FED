@@ -43,7 +43,7 @@
             <i class="fa fa-share"></i>
           </span>
           <span class="more stats" tooltip="Likes">
-            256
+            {{dog.gotLikes.length}}
             <i class="fa fa-eye"></i>
           </span>
         </div>
