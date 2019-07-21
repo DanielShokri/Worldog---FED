@@ -160,6 +160,11 @@ export default {
           });
         } else {
           this.$store.dispatch({ type: "updateFriendLike", dogId }).then(() => {
+             socket.emit(
+              "friend like",
+              this.dog,
+              this.$store.getters.getcurrLoggedinUser[0]
+            );
             this.$toast.open({
               message: "Like successfully!",
               type: "is-success"
