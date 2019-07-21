@@ -38,8 +38,17 @@ export default {
         type: "is-success",
         duration: 2000
       });
+      
     });
+     socket.on("you got liked", user => {
+      console.log("Listen to emit");
+      this.$toast.open({
+        message: `You have got liked by ${user}`,
+        type: "is-success"
+      });
+     })
     this.$store.dispatch({ type: "loggedInUser" });
+
   },
   computed: {
     isChatOpen() {

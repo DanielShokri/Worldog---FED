@@ -43,7 +43,7 @@
             <i class="fa fa-share"></i>
           </span>
           <span class="more stats" tooltip="Likes">
-            256
+            {{dog.gotLikes.length}}
             <i class="fa fa-eye"></i>
           </span>
         </div>
@@ -107,6 +107,7 @@ export default {
           });
         }
       }
+      
     },
     addLike(dogId) {
       if (!this.loggedinUser) {
@@ -125,7 +126,7 @@ export default {
           });
         } else {
           this.$store.dispatch({ type: "updateFriendLike", dogId }).then(() => {
-            socket.emit(
+             socket.emit(
               "friend like",
               this.dog,
               this.$store.getters.getcurrLoggedinUser[0]
