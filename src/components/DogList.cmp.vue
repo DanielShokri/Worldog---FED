@@ -4,7 +4,7 @@
       <dog-preview
         class="onlyCell"
         @nextDog="plusDivs"
-        :loggedinUser="loggedinUser[0]"
+        :loggedinUser="loggedinUser"
         :dog="dogToShow"
         @delete="emitDeleteDog"
         @chatWith="userChatWith"
@@ -13,7 +13,7 @@
     <v-flex class="onlyDesk" xs12 sm6 mb4 lg3 v-for="dog in dogs" :key="dog._id">
       <dog-preview
         @chatWith="userChatWith"
-        :loggedinUser="loggedinUser[0]"
+        :loggedinUser="loggedinUser"
         :dog="dog"
         @delete="emitDeleteDog"
       ></dog-preview>
