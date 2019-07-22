@@ -3,15 +3,14 @@
     <figure>
       <img @click="goParkDetails" aspect-ratio="1.75" :src="park.img" />
     </figure>
+    <br />
+    <a @click="goParkDetails">
+      <h3 class="title">{{park.name}}</h3>
+    </a>
     <section class="content">
       <button class="plus onlyCell" @click="plusDivs(-1)">&#10094;</button>
       <button class="minus onlyCell" @click="plusDivs(1)">&#10095;</button>
-      <a @click="goParkDetails">
-        <h3 class="title">{{park.name}}</h3>
-      </a>
-      <br />
       <p class="subtitle">Dogs in park({{distanceFromUsering}})</p>
-      <br />
       <p class="subtitle" v-if="park.distanceValueFromUser">
         {{park.rating}}
         <b-icon v-if="numOfStars>=1" class="b-icon" icon="star-outline"></b-icon>
@@ -32,9 +31,6 @@
 
       <br />
     </section>
-    <footer>
-      <span class="goToPark" @click="goParkDetails">go to park</span>
-    </footer>
   </main>
 </template>
 
@@ -134,13 +130,13 @@ $color: #44a3d9; // #2f559e;
 
 .minus {
   position: relative;
-  right: -128px;
+  right: -194px;
   display: inline;
 }
 
 .plus {
   position: relative;
-  left: -128px;
+  left: -83px;
   display: inline;
 }
 
@@ -159,11 +155,12 @@ body {
   justify-content: center;
 }
 main {
-  max-width: 20rem;
   background: white;
   color: #263238;
   //   border-radius: 0.5rem;
   overflow: hidden;
+  max-height: 350px;
+  max-width: 307px;
 
   //   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
 
@@ -181,8 +178,12 @@ main {
       cursor: pointer;
     }
   }
+
+  .title {
+    font-weight: 600;
+  }
   .content {
-    padding: 1.5rem;
+    padding: 2rem;
 
     a {
       text-decoration: none;

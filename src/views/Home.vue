@@ -25,7 +25,7 @@
     <section class="hero parks-section">
       <div class="hero-body">
         <h1 class="parks-title1">
-          <strong>Nearby Parks</strong>
+          <strong style="margin-left: 15px;">Nearby Parks</strong>
         </h1>
         <park-list></park-list>
         <h1 @click="seeMoreParks" class="see-more">
@@ -38,7 +38,7 @@
     <div class="sandbox">
       <section v-if="dogs" class="hero dogs-section">
         <div class="hero-body">
-          <h1 class="parks-title">
+          <h1 style="margin-top: 12px;" class="parks-title">
             <strong>Nearby Dogs</strong>
           </h1>
           <dog-list
@@ -78,6 +78,7 @@ export default {
     this.$store.dispatch({ type: "loggedInUser" }).then(() => {
       this.loggedInUser = this.$store.getters.getLoggedinUser;
     });
+
     this.$store.dispatch({ type: "loadDogs" }).then(() => {
       this.$store.dispatch({ type: "loadUserLoc" }).then(() => {
         this.$store.dispatch({ type: "loadSortDogs" }).then(() => {
