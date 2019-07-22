@@ -1,7 +1,7 @@
 <template>
-  <div class="grid" v-touch:swipe="swipeHandler">
+  <div v-if="dog" class="grid" v-touch:swipe="swipeHandler">
     <div class="card">
-      <div
+      <div 
         @click="openProfile(dog._id)"
         class="card__thumbnail"
         :style="{ 'background-image': 'url(' + imgToLoad + ')'

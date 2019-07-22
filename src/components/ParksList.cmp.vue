@@ -64,7 +64,6 @@ export default {
                 .dispatch({ type: "loadParksLocFromUser" })
                 .then(() => {
                   this.gardens = this.$store.getters.getParks;
-                  console.log(this.gardens)
                 });
             });
           });

@@ -3,7 +3,7 @@
     <input type="text" v-model="filterBy.txt" placeholder="Search user..."><input @click.enter="searchUser" type="button" value="Search">
   </div>-->
   <div class="wrapper">
-    <input type="text" class="users-search input" placeholder="Who are you looking for?" />
+    <input type="text" v-model="filterBy.txt" @change="searchUser" class="users-search input" placeholder="Who are you looking for?" />
     <a @click.enter="searchUser" class="button is-dark search-btn">
       <b-icon icon="magnify"></b-icon>
     </a>

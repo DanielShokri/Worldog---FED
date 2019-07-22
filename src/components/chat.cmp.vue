@@ -1,7 +1,8 @@
 <template>
   <section>
-    <div class="chat" v-if="user">
+    <div class="chat" v-if="user && chatClosed">
       <!-- <div class="chat" v-if="members && members.length"> -->
+      <button class="close-chat" @click="closeChat">X</button>
       <div class="chat-title">
         <h1>{{this.user.owner.fullName}}</h1>
         <h2>Supah</h2>
@@ -76,12 +77,14 @@ export default {
       members: null,
       txt: "",
       messagess: [],
-      msgUserTyping: ""
+      msgUserTyping: "",
+      chatClosed: true
     };
   },
   destroyed() {
     socket.removeListener("chat newMsg");
     socket.removeListener("chat history");
+    socket.removeListener('user typing');
   },
   methods: {
     sendMsg() {
@@ -105,6 +108,9 @@ export default {
         members: this.members,
         user: currUserLogin
       });
+    },
+    closeChat(){
+      this.chatClosed = !this.chatClosed
     }
   }
 };
@@ -244,6 +250,34 @@ Chat Title
 /*--------------------
 Messages
 --------------------*/
+@media screen and(max-width: 376px){
+  .chat{
+    left: 50%;
+    top: 63%;
+  }
+}
+@media screen and(max-width: 415px){
+  .chat{
+    left: 50%;
+    top: 63%;
+  }
+}
+@media screen and(max-width: 769px){
+  .chat{
+    left: 80%;
+    top: 76%;
+  }
+}
+@media screen and(max-width: 1025px){
+  .chat{
+    left: 75%;
+    top: 72%;
+  }
+}
+.close-chat{
+background-color: #EEE;
+}
+
 .messages {
   flex: 1 1 auto;
   color: rgba(255, 255, 255, 0.5);
