@@ -1,14 +1,15 @@
 <template>
-  <div class="grid">
+  <div class="grid" v-touch:swipe="swipeHandler">
     <div class="card">
       <div
         @click="openProfile(dog._id)"
         class="card__thumbnail"
-        :style="{ 'background-image': 'url(' + imgToLoad + ')' }"
+        :style="{ 'background-image': 'url(' + imgToLoad + ')'
+          ,   'height': '300px'}"
       ></div>
-      <!-- <img :src="imgToLoad" class="card__thumbnail" /> -->
-
       <span class="card__content">
+        <button class="plus onlyCell" @click="plusDivs(-1)">&#10094;</button>
+        <button class="minus onlyCell" @click="plusDivs(1)">&#10095;</button>
         <h3>{{dog.owner.fullName}} and {{dog.preference.name}}</h3>
         <span class="ago">{{dog.preference.name}} is {{dog.preference.type}}</span>
         <p>
@@ -17,7 +18,7 @@
           <span
             v-for="hobby in dog.preference.hobbies"
             :key="hobby._id"
-          >{{hobby}},</span>
+          >{{hobby}},</span> and more...
         </p>
       </span>
       <div class="card__footer">
@@ -33,7 +34,7 @@
             </button>
           </span>
           <span class="meta more" tooltip="chat">
-            <button @click="openChat(dog._id)">
+            <button @click.prevent="openChat(dog)">
               <b-icon icon="chat-processing"></b-icon>
             </button>
           </span>
@@ -54,7 +55,7 @@
 
 <script>
 import socket from "../services/socket.service.js";
-
+import eventBus from "../eventBus.js";
 export default {
   props: ["dog", "loggedinUser"],
   data() {
@@ -62,9 +63,20 @@ export default {
   },
 
   methods: {
-    openChat() {
-      this.$store.dispatch({ type: "isChatOpen" });
-      console.log("chat is open");
+    openChat(dog) {
+      this.$store.dispatch({ type: "isChatOpen", dog }).then(() => {
+        const loggedUser = this.$store.getters.getcurrLoggedinUser[0]
+        if (this.$store.getters.isChatOpen) eventBus.$emit("chatOpen", dog, loggedUser );
+        socket.emit("chat join", this.$store.getters.getcurrLoggedinUser[0]);
+      });
+      // this.$emit("chatWith", dog);
+    },
+    plusDivs(diff) {
+      this.$emit("nextDog", diff);
+    },
+    swipeHandler(direction) {
+      if (direction === "right") this.plusDivs(1);
+      else if (direction === "left") this.plusDivs(-1);
     },
 
     addFriend(dogId) {
@@ -107,9 +119,9 @@ export default {
           });
         }
       }
-      
     },
     addLike(dogId) {
+      console.log(this.loggedinUser);
       if (!this.loggedinUser) {
         this.$toast.open({
           message: "You need to login",
@@ -126,16 +138,16 @@ export default {
           });
         } else {
           this.$store.dispatch({ type: "updateFriendLike", dogId }).then(() => {
-             socket.emit(
-              "friend like",
-              this.dog,
-              this.$store.getters.getcurrLoggedinUser[0]
-            );
             this.$toast.open({
               message: "Like successfully!",
               type: "is-success",
               duration: 2000
             });
+            socket.emit(
+              "friend like",
+              this.dog,
+              this.$store.getters.getcurrLoggedinUser[0]
+            );
           });
         }
       }
@@ -180,12 +192,32 @@ export default {
   grid-gap: 1.9vw;
   margin: 20px;
 }
+.minus {
+  position: relative;
+  right: -140px;
+  display: inline;
+}
+
+.plus {
+  position: relative;
+  left: -166px;
+  display: inline;
+}
+
+.onlyCell {
+  visibility: hidden;
+}
+
+.card__thumbnail:hover {
+  cursor: pointer;
+}
 .card {
   // background-color: white;
   // box-shadow: 0 2px 3px rgba(10, 10, 10, 0.1), 0 0 0 1px rgba(10, 10, 10, 0.1);
   // color: #4a4a4a;
   // max-width: 100%;
   // position: relative;
+  // width: 300px;
   border-radius: 0;
   will-change: transform, box-shadow;
   background-color: #fff;
@@ -256,7 +288,7 @@ export default {
     }
     .read-more,
     .ago {
-      color: rgba(179, 192, 200, 1);
+      color: rgb(122, 128, 133);
       font-size: 12px;
       text-align: left;
       transition: color 0.35s;
@@ -310,8 +342,8 @@ export default {
         float: right;
         font-family: Arial, sans-serif;
         color: #b3c0c8;
-        font-size: 11px;
-        line-height: 22px;
+        font-size: 15px;
+        line-height: 20px;
         vertical-align: middle;
         margin-right: 5px;
         .fa {
@@ -323,7 +355,18 @@ export default {
     }
   }
 }
-
+.card__content {
+  h3 {
+    font-weight: bold;
+    font-size: 20px;
+  }
+  .ago,
+  p,
+  span {
+    font-size: 16px;
+    padding: 7px;
+  }
+}
 [tooltip] {
   position: relative;
   font-family: Arial, sans-serif;
@@ -344,7 +387,7 @@ export default {
     border-width: 4px 6px 0 6px;
     border-style: solid;
     border-color: rgba(0, 0, 0, 0.7) transparent transparent transparent;
-    z-index: 100;
+    z-index: 0;
     opacity: 0;
     will-change: opacity;
     transition: opacity 0.3s ease-out;
@@ -366,6 +409,16 @@ export default {
     opacity: 0;
     will-change: opacity;
     transition: opacity 0.3s ease-out;
+  }
+}
+
+@media only screen and (max-width: 550px) {
+  .onlyDesk {
+    display: none;
+  }
+
+  .onlyCell {
+    visibility: visible;
   }
 }
 </style>

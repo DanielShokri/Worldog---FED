@@ -2,11 +2,19 @@
 <template>
   <nav class="navbar" role="navigation" aria-label="main navigation">
     <div class="navbar-brand">
-      <img class="logo" @click="goHome" src="https://i.imgur.com/d7kCfoE.png" width="170" height="100" />
+      <img
+        class="logo"
+        @click="goHome"
+        src="https://i.imgur.com/d7kCfoE.png"
+        width="170"
+        height="100"
+      />
       <!-- https://i.ibb.co/n8DtFs5/logo.png -->
       <a
+        v-on:click="toggleNav"
         role="button"
         class="navbar-burger burger"
+        v-bind:class="{ 'is-active': isActive}"
         aria-label="menu"
         aria-expanded="false"
         data-target="navbarBasicExample"
@@ -17,16 +25,15 @@
       </a>
     </div>
 
-    <div id="navbarBasicExample" class="navbar-menu">
+    <div id="navbarBasicExample" class="navbar-menu" v-bind:class="{ 'is-active': isActive}">
       <div class="navbar-start">
         <router-link class="navbar-item" to="/">Home</router-link>
-
         <router-link class="navbar-item" to="/user">Users</router-link>
       </div>
-
-      <div v-if="!getUser" class="navbar-end">
+      <div class="navbar-end">
+      <div v-if="!getUser">
         <div class="navbar-item">
-          <div class="buttons">
+          <div class="buttons" style="justify-content: center;">
             <router-link class="button is-primary" to="/signup">
               <strong>Sign up</strong>
             </router-link>
@@ -34,9 +41,7 @@
           </div>
         </div>
       </div>
-
-      <div v-if="getUser" class="navbar-menu">
-        <div class="navbar-end">
+      <div v-if="getUser" class="navbar-menu" v-bind:class="{ 'is-active': isActive}">
           <b-dropdown position="is-bottom-left" aria-role="menu">
             <a class="navbar-item" slot="trigger" role="button">
               <v-badge left>
@@ -47,7 +52,6 @@
               <span>Menu</span>
               <b-icon icon="menu-down"></b-icon>
             </a>
-
             <b-dropdown-item custom aria-role="menuitem">
               Logged as
               <b>{{getUser[0].owner.fullName}}</b>
@@ -64,8 +68,8 @@
             </b-dropdown-item>
           </b-dropdown>
         </div>
+        </div>
       </div>
-    </div>
   </nav>
 </template>
 
@@ -74,6 +78,7 @@ import Login from "./Login";
 export default {
   data() {
     return {
+      isActive: false,
       user: {
         name: "",
         pass: ""
@@ -81,6 +86,9 @@ export default {
     };
   },
   methods: {
+    toggleNav() {
+      this.isActive = !this.isActive;
+    },
     goHome() {
       this.$router.push("/");
     },
@@ -127,4 +135,10 @@ export default {
 .logo:hover {
   cursor: pointer;
 }
+.buttons{
+  justify-content: center;
+}
+/* .navbar-menu{
+  display: block;
+} */
 </style>

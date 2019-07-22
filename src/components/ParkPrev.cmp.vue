@@ -1,11 +1,13 @@
 <template>
-  <main>
+  <main v-if="park" v-touch:swipe="swipeHandler">
     <figure>
       <img @click="goParkDetails" aspect-ratio="1.75" :src="park.img" />
     </figure>
     <section class="content">
+      <button class="plus onlyCell" @click="plusDivs(-1)">&#10094;</button>
+      <button class="minus onlyCell" @click="plusDivs(1)">&#10095;</button>
       <a @click="goParkDetails">
-        <h2 class="title">{{park.name}}</h2>
+        <h3 class="title">{{park.name}}</h3>
       </a>
       <br />
       <p class="subtitle">Dogs in park({{distanceFromUsering}})</p>
@@ -34,53 +36,6 @@
       <span class="goToPark" @click="goParkDetails">go to park</span>
     </footer>
   </main>
-
-  <!-- <div class="slide-container">
-    <div class="wrapper">
-      <div class="clash-card barbarian">
-        <div class="clash-card__image clash-card__image--barbarian">
-          <img @click="goParkDetails" aspect-ratio="1.75" :src="park.img" />
-        </div>
-        <button class="btn-read-more" @click="goParkDetails">Read More</button>
-        <div class="clash-card__unit-name">{{park.name}}</div>
-
-        <div class="clash-card__unit-description">
-          <b>{{new Date() | timeAgo}}</b>
-        </div>
-  </div>-->
-  <!-- end clash-card barbarian-->
-  <!-- </div> -->
-  <!-- end wrapper -->
-  <!-- </div> -->
-  <!-- end container -->
-  <!-- <div class="blog-grid">
-    <v-img @click="goParkDetails" aspect-ratio="1.75" :src="park.img"></v-img>
-    <div class="blog-grid1">
-      <ul class="post">
-        <li></li>
-        <li>
-          <span>
-            <b>{{new Date() | timeAgo}}</b>
-          </span>
-        </li>
-        <label>|</label>
-        <li>
-          <a href="#">
-            <i class="fa fa-comments-o"></i> 30 Comments
-          </a>
-        </li>
-      </ul>
-      <h5>
-        <a href="#">{{park.name}}</a>
-      </h5>
-
-      <div class="blog-ic">
-        <button @click="goParkDetails">Read More</button>
-        <div class="clearfix"></div>
-      </div>
-    </div>
-  </div>
-  -->
 </template>
 
 <script>
@@ -109,6 +64,13 @@ export default {
       this.$store.dispatch({ type: "goToPark", park: this.park }).then(() => {
         this.$router.push("/park-details");
       });
+    },
+    plusDivs(diff) {
+      this.$emit("nextPark", diff);
+    },
+    swipeHandler(direction) {
+      if (direction === "right") this.plusDivs(1);
+      else if (direction === "left") this.plusDivs(-1);
     }
   },
   computed: {
@@ -170,6 +132,22 @@ $color: #44a3d9; // #2f559e;
   cursor: pointer;
 }
 
+.minus {
+  position: relative;
+  right: -128px;
+  display: inline;
+}
+
+.plus {
+  position: relative;
+  left: -128px;
+  display: inline;
+}
+
+.onlyCell {
+  visibility: hidden;
+}
+
 body {
   height: 100vh;
 
@@ -199,6 +177,9 @@ main {
       width: 100%;
       height: 160px;
     }
+    img:hover {
+      cursor: pointer;
+    }
   }
   .content {
     padding: 1.5rem;
@@ -218,7 +199,7 @@ main {
     }
     > p.subtitle {
       display: inline-block;
-      font-size: 0.8rem;
+      font-size: 16px;
       color: #607d8b;
       margin: 0;
       margin-top: 0.25rem;
@@ -256,6 +237,15 @@ main {
         font-size: 1.25rem;
       }
     }
+  }
+}
+@media only screen and (max-width: 550px) {
+  .onlyDesk {
+    display: none;
+  }
+
+  .onlyCell {
+    visibility: visible;
   }
 }
 </style>

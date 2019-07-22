@@ -33,7 +33,7 @@
 </template>
 
 <script>
-import socket from '../services/socket.service.js'
+import socket from "../services/socket.service.js";
 
 export default {
   data() {
@@ -52,8 +52,12 @@ export default {
     loginUser() {
       this.$store
         .dispatch({ type: "userLogin", currUser: this.user })
-        .then((res) => {
-          socket.emit("user login", this.$store.getters.getcurrLoggedinUser[0]._id);
+        .then(res => {
+          socket.emit("chat join", this.$store.getters.getcurrLoggedinUser[0]);
+          socket.emit(
+            "user login",
+            this.$store.getters.getcurrLoggedinUser[0]._id
+          );
           this.$toast.open({
             message: "Login Successfully!",
             type: "is-success",
@@ -62,7 +66,11 @@ export default {
           this.$emit("close");
         })
         .catch(err => {
-          this.$toast.open({ message: "Login Failed!", type: "is-danger",duration: 2000 });
+          this.$toast.open({
+            message: "Login Failed!",
+            type: "is-danger",
+            duration: 2000
+          });
           this.$emit("close");
         });
     }

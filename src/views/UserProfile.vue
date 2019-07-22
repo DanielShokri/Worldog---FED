@@ -1,10 +1,8 @@
 <template>
   <div v-if="dog && comp" class="container">
-    <header>
-      <img :src="backImgToLoad" />
-      <i>
-        <b-icon icon="menu"></b-icon>
-      </i>
+    <header  :style="{ 'background-image': 'url(' + backImgToLoad + ')',
+     'background-size': 'cover',
+     'background-position': 'center'}">
     </header>
     <main>
       <div class="row">
@@ -18,7 +16,6 @@
           <div class="btn-wrapper" v-if="notMyProfile || !dog">
             <span @click="addFriend(dog._id)" class="add-friend">Add Friend</span>
             <span @click="addLike(dog._id)" class="like-friend">Like ({{dog.gotLikes.length}})</span>
-            <!-- <b-icon icon="thumb-up"></b-icon> -->
           </div>
           <div class="btn-wrapper" v-if="!notMyProfile || !dog">
             <span class="like-friend">{{dog.gotLikes.length}} Likes</span>
@@ -53,44 +50,38 @@
           </div>
         </div>
         <div class="right col-lg-8">
-          <!-- This is start -->
-          <!-- <v-tabs  centered color="white" light slider-color icons-and-text>
-            <v-tabs-slider color="yellow"></v-tabs-slider>
+      
+          <a
+            v-on:click="toggleNav"
+            role="button"
+            class="navbar-burger burger"
+            v-bind:class="{ 'is-active': isActive}"
+            aria-label="menu"
+            aria-expanded="false"
+            data-target="navbarBasicExample"
+          >
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+          </a>
 
-            <v-tab @click="openCopm('Gallery')">
-              Gallery 
-              <b-icon icon="image"></b-icon>
-            </v-tab>
+          <div id="navbarBasicExample" class="navbar-menu" v-bind:class="{ 'is-active': isActive}">
+            <ul class="nav">
+              <li @click="openCopm('Gallery')">
+                <b-icon icon="image"></b-icon>Gallery
+              </li>
+              <li @click="openCopm('Friends')">
+                <b-icon icon="account-group"></b-icon>Friends
+              </li>
+              <li v-if="!notMyProfile || !dog" @click="openCopm('Messages')">
+                <b-icon icon="message-bulleted"></b-icon>Messages
+              </li>
+              <li v-if="!notMyProfile || !dog" @click="openCopm('Notfication')">
+                <b-icon icon="bell-ring"></b-icon>Notfication
+              </li>
+            </ul>
+          </div>
 
-            <v-tab @click="openCopm('Friends')">
-              Friends ({{dog.friends.length}})
-              <b-icon icon="account-group"></b-icon>
-            </v-tab>
-
-            <v-tab @click="openCopm('Messages')">
-              Messages
-              <b-icon icon="message-bulleted"></b-icon>
-            </v-tab>
-
-            <v-tab @click="openCopm('Notfication')">
-              Notification's({{dog.gotFriendsReq.length}})
-              <b-icon icon="bell-ring"></b-icon>
-            </v-tab>
-          </v-tabs>-->
-          <ul class="nav">
-            <li @click="openCopm('Gallery')">
-              <b-icon icon="image"></b-icon>Gallery
-            </li>
-            <li @click="openCopm('Friends')">
-              <b-icon icon="account-group"></b-icon>Friends
-            </li>
-            <li v-if="!notMyProfile || !dog" @click="openCopm('Messages')">
-              <b-icon icon="message-bulleted"></b-icon>Messages
-            </li>
-            <li v-if="!notMyProfile || !dog" @click="openCopm('Notfication')">
-              <b-icon icon="bell-ring"></b-icon>Notfication
-            </li>
-          </ul>
           <div class="row comp">
             <div style="width: 100%;" v-if="this.comp ==='Gallery'">
               <user-gallery :user="dog"></user-gallery>
@@ -109,7 +100,6 @@
               ></user-notfication>
             </div>
           </div>
-           
         </div>
       </div>
     </main>
@@ -126,7 +116,8 @@ export default {
   name: "profile",
   data() {
     return {
-      comp: "",
+      isActive: false,
+      comp: ""
     };
   },
   mounted() {},
@@ -139,13 +130,19 @@ export default {
       dogId
     });
     this.$store.dispatch({ type: "loggedInUser" });
-
   },
   methods: {
-   
+    toggleNav() {
+      this.isActive = !this.isActive;
+    },
+
     addLike(dogId) {
       if (!this.loggedinUser) {
-        this.$toast.open({ message: "You need to login", type: "is-danger" ,duration: 2000});
+        this.$toast.open({
+          message: "You need to login",
+          type: "is-danger",
+          duration: 2000
+        });
       } else {
         const userSentLikes = this.loggedinUser.sentLikes;
         if (userSentLikes.find(id => id === this.dog._id)) {
@@ -167,7 +164,11 @@ export default {
     },
     addFriend(dogId) {
       if (!this.loggedinUser) {
-        this.$toast.open({ message: "You need to login", type: "is-danger",duration: 2000 });
+        this.$toast.open({
+          message: "You need to login",
+          type: "is-danger",
+          duration: 2000
+        });
       } else {
         const userFriends = this.loggedinUser.friends;
         const userSentFriendReq = this.loggedinUser.sentFriendsReq;
@@ -178,7 +179,7 @@ export default {
             duration: 2000
           });
         } else if (userSentFriendReq.find(id => id === this.dog._id)) {
-         this.$toast.open({
+          this.$toast.open({
             message: "You have already sent friend request",
             type: "is-danger",
             duration: 2000
@@ -215,7 +216,7 @@ export default {
       console.log(dogId);
       this.$store.dispatch({ type: "removeFriend", dogId });
       this.$toast.open({
-        message: "friend request successfully sent!",
+        message: "Remove friend successfully",
         type: "is-success",
         duration: 2000
       });
@@ -223,8 +224,11 @@ export default {
   },
   computed: {
     notMyProfile() {
+      if(!this.loggedinUser) return true
+    else{
       if (this.loggedinUser._id === this.dog._id) return false;
       else return true;
+    }
     },
     loggedinUser() {
       if (!this.$store.getters.getcurrLoggedinUser) return;
@@ -253,8 +257,7 @@ export default {
     UserGallery,
     UserFriends,
     UserMessages,
-    UserNotfication,
-    
+    UserNotfication
   }
 };
 </script>
@@ -269,19 +272,14 @@ body {
   max-width: 1250px;
   margin: 30px auto 30px;
   padding: 0 !important;
-  width: 90%;
+  width:100%;
   background-color: #fff;
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1), 0 3px 6px rgba(0, 0, 0, 0.1);
 }
 
 header {
-  /* background: #eee;
-  background-image: url("https://image.noelshack.com/fichiers/2017/38/2/1505775648-annapurnafocus.jpg");
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: cover;
-  background-color: red; */
   height: 250px;
+  /* background-color: #97debe; */
 }
 
 header i {
@@ -309,12 +307,13 @@ main {
 }
 
 .photo {
-  width: 200px;
+  /* width: 200px; */
   height: 200px;
   margin-top: -120px;
-  border-radius: 100px;
+  /* border-radius: 100px; */
   border: 4px solid #fff;
 }
+
 
 @media (max-width: 800px) {
   header {
@@ -507,7 +506,8 @@ main {
 
 @media (max-width: 990px) {
   .nav {
-    display: none;
+        flex-direction: column;
+    /* display: none; */
   }
 }
 </style>

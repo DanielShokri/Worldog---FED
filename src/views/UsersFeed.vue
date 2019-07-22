@@ -1,14 +1,17 @@
 
 <template>
   <section v-if="dogs">
-    <dog-list :loggedinUser="loggedinUser" :dogs="dogs" @delete="deleteDog"></dog-list>
+<UsersFilter @setFilter="setFilter"></UsersFilter>
+  <dog-list :loggedinUser="loggedinUser" :dogs="dogs" @delete="deleteDog"></dog-list>
   </section>
 </template>
 
 <script>
 import dogList from "../components/DogList.cmp.vue";
+  import UsersFilter from "../components/UsersFilter.cmp";
 
 export default {
+
   data() {
     return {
     
@@ -20,6 +23,9 @@ export default {
     this.$store.dispatch({ type: "loggedInUser" });
   },
   methods: {
+    setFilter(filterBy) {
+      this.$store.dispatch({ type: "loadDogs", filterBy });
+    },
     deleteDog(dogId) {
       this.$store.dispatch({
         type: "deleteDog",
@@ -44,7 +50,8 @@ export default {
     }
   },
   components: {
-    dogList
+    dogList,
+     UsersFilter
   }
 };
 </script>

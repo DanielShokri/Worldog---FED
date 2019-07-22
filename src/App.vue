@@ -20,8 +20,12 @@ export default {
   },
   data() {
     return {
-      user: null
+      user: null,
+      userChatWith: null
     };
+  },
+  methods: {
+    
   },
   created() {
     socket.on("friend req sent", user => {
@@ -32,28 +36,28 @@ export default {
         duration: 2000
       });
     });
-    socket.on("friend like sent", user => {
+
+    socket.on("chat notification sent", user => {
+      console.log("Listen to emit");
       this.$toast.open({
-        message: `You have got like from ${user}`,
+        message: `You have got message from ${user}`,
         type: "is-success",
         duration: 2000
       });
-      
     });
-     socket.on("you got liked", user => {
-      console.log("Listen to emit");
+
+    socket.on("you got liked", user => {
       this.$toast.open({
         message: `You have got liked by ${user}`,
         type: "is-success"
       });
-     })
+    });
     this.$store.dispatch({ type: "loggedInUser" });
-
   },
   computed: {
     isChatOpen() {
       return this.$store.getters.isChatOpen;
-    }
+    },
   }
 };
 </script>

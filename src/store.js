@@ -20,12 +20,13 @@ export default new Vuex.Store({
         currPark: null,
         parks: null,
         compInProfile: "Gallery",
-        isChatOpen: false
+        isChatOpen: false,
+        currUserChatWith: null
     },
     mutations: {
-        setIsOpenChat(state) {
-            console.log('in store', state.isChatOpen)
+        setIsOpenChat(state, { dog }) {
             state.isChatOpen = !state.isChatOpen
+            state.currUserChatWith = dog
         },
         updateCompInProfile(state, {
             comp
@@ -163,7 +164,6 @@ export default new Vuex.Store({
         updateDogFriendShip(state, {
             updatedDog
         }) {
-            console.log(updatedDog)
             const dogIdx = state.dogs.findIndex(dog => dog._id === updatedDog.userId)
             var dog;
             state.dogs.forEach(currDog => {
@@ -192,7 +192,6 @@ export default new Vuex.Store({
         rejectDogFriendShip(state, {
             updatedDog
         }) {
-            console.log(updatedDog)
             const dogIdx = state.dogs.findIndex(dog => dog._id === updatedDog.userId)
             var dog;
             state.dogs.forEach(currDog => {
@@ -216,7 +215,6 @@ export default new Vuex.Store({
         },
 
         removeDogFriendShip(state, { updatedDog }) {
-            console.log(updatedDog)
             const dogIdx = state.dogs.findIndex(dog => dog._id === updatedDog)
             var dog;
             state.dogs.forEach(currDog => {
@@ -250,44 +248,47 @@ export default new Vuex.Store({
     },
     getters: {
         compToShoe(state) {
-            return state.compInProfile
+            return state.compInProfile;
+        },
+        userYouChatWith(state) {
+            return state.currUserChatWith;
         },
         dogsToShow(state) {
-            return state.dogs
+            return state.dogs;
         },
         getLoggedinUser(state) {
-            return state.currUser
+            return state.currUser;
         },
         getcurrLoggedinUser(state) {
-            return state.currUser
+            return state.currUser;
         },
         getDog(state) {
-            return state.dog
+            return state.dog;
         },
         getCurrPark(state) {
             return state.currPark;
         },
         getNotfications(state) {
-            return state.currUser[0].gotFriendsReq
+            return state.currUser[0].gotFriendsReq;
         },
         gotLikes(state) {
-            return state.currUser[0].gotLikes
+            return state.currUser[0].gotLikes;
         },
         getParks(state) {
             return state.parks;
         },
         isChatOpen(state) {
-            return state.isChatOpen
+            return state.isChatOpen;
         }
     },
 
     actions: {
-        isChatOpen(context) {
+        isChatOpen(context, { dog }) {
             context.commit({
                 type: 'setIsOpenChat',
+                dog
             })
         },
-
         loadSortDogs(context) {
 
             var x = [];
@@ -396,7 +397,6 @@ export default new Vuex.Store({
         }) {
             return dogsService.makeFriendshipOn(dog)
                 .then(updatedDog => {
-                    console.log(updatedDog)
                     context.commit({
                         type: 'updateDogFriendShip',
                         updatedDog
@@ -419,7 +419,6 @@ export default new Vuex.Store({
         removeFriend(context, { dogId }) {
             return dogsService.removeFriendship(dogId)
                 .then(updatedDog => {
-                    console.log(updatedDog)
                     context.commit({
                         type: 'removeDogFriendShip',
                         updatedDog

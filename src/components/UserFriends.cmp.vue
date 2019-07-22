@@ -7,7 +7,16 @@
           <b class="dogName" @click="goToUser(dog.userId)">{{dog.userName}}</b>
         </h4>
         <br />
-       <button @click="removeUser(dog.userId)"><b-icon class="remove" icon="account-remove"></b-icon></button> 
+         <span v-if="myProfile" class="meta more chat" tooltip="chat">
+            <button @click="openChat(dog.userId)">
+              <b-icon icon="chat-processing"></b-icon>
+            </button>
+          </span>
+           <span v-if="myProfile" class="meta more remove" tooltip="remove">
+            <button @click="removeUser(dog.userId)">
+              <b-icon icon="account-remove"></b-icon>
+            </button>
+          </span>
       </div>
     </div>
   </div>
@@ -20,14 +29,31 @@ export default {
   }),
   props: ["user"],
   methods: {
+     openChat() {
+      this.$store.dispatch({ type: "isChatOpen" });
+      console.log("chat is open");
+    },
     goToUser(dogId) {
       this.$emit("goTO", dogId);
     },
     removeUser(dogId) {
       this.$emit("removeUser", dogId);
     }
-  }
-};
+  },
+   computed: {
+    myProfile() {
+      if(!this.loggedinUser) return false
+    else{
+      if (this.loggedinUser._id === this.user._id) return true;
+      else return false;
+    }
+    },
+     loggedinUser() {
+      if (!this.$store.getters.getcurrLoggedinUser) return;
+      return this.$store.getters.getcurrLoggedinUser[0];
+    },
+   }
+}
 </script>
 
 
@@ -37,14 +63,18 @@ export default {
   transition: 0.3s;
   margin: 10px;
   max-width: 150px;
-  height: 170px;
+  height: fit-content
 }
-
+.chat{
+  position: relative;
+  bottom: 0px;
+  right: 41px;
+}
 .remove {
   cursor: pointer;
   position: relative;
   bottom: 0px;
-  right: -51px;
+  right: -41px;
 }
 
 .dogName {

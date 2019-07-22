@@ -1,9 +1,21 @@
 <template>
-  <section class="parksList" v-if="userLoc" style="mar">
+  <section class="parksList" v-if="userLoc && gardens.length>0" style="mar">
     <v-layout row wrap>
-      <v-flex xs12 sm6 mb4 lg3 v-for="nearestGarden in gardens" :key="nearestGarden.id">
+      <v-flex
+        class="onlyDesk"
+        xs12
+        sm6
+        mb4
+        lg3
+        v-for="nearestGarden in gardens"
+        :key="nearestGarden.id"
+      >
         <parkPrev style="margin-bottom: 20px;" :park="nearestGarden"></parkPrev>
       </v-flex>
+
+      <div class="onlyCell">
+        <parkPrev @nextPark="plusDivs" style="margin: 0 auto;;" :park="parkToShow"></parkPrev>
+      </div>
     </v-layout>
   </section>
 </template>
@@ -20,7 +32,8 @@ export default {
       distance: "",
       userLoc: null,
       gardens: [],
-      photos: []
+      photos: [],
+      indexRoll: 0
     };
   },
   components: {
@@ -51,16 +64,60 @@ export default {
                 .dispatch({ type: "loadParksLocFromUser" })
                 .then(() => {
                   this.gardens = this.$store.getters.getParks;
+                  console.log(this.gardens)
                 });
             });
           });
       });
     });
   },
-  computed: {}
+  computed: {
+    parkToShow() {
+      if (this.gardens.length > 0) return this.gardens[this.indexRoll];
+    }
+  },
+  methods: {
+    plusDivs(diff) {
+      if (this.indexRoll >= 0 && this.indexRoll < 4) {
+        if (diff === 1 && this.indexRoll === 3) {
+          this.indexRoll = 0;
+          this.parkToShow;
+        } else if (diff === -1 && this.indexRoll === 0) {
+          this.indexRoll = 3;
+          this.parkToShow;
+        } else {
+          this.indexRoll += diff;
+          this.parkToShow;
+        }
+      }
+    }
+  }
 };
 </script>
 
+<style scoped lang="scss">
+.hide {
+  display: none;
+}
+.show {
+  display: block;
+}
 
-<style>
+.onlyDesk {
+  display: block;
+}
+
+.onlyCell {
+  display: none;
+}
+
+@media only screen and (max-width: 550px) {
+  .onlyDesk {
+    display: none;
+  }
+
+  .onlyCell {
+    display: block;
+  }
+}
 </style>

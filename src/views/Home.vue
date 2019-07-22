@@ -29,7 +29,7 @@
           See More
           <b-icon class="icon" icon="chevron-right"></b-icon>
         </h1>
-            <br>
+        <br />
       </div>
     </section>
     <div class="sandbox">
@@ -38,12 +38,18 @@
           <h1 class="parks-title">
             <strong>Nearby Dogs</strong>
           </h1>
-          <dog-list :dogs="dogsToShow" @delete="deleteDog"></dog-list>
+          <dog-list
+            :dogs="dogsToShow"
+            @chatWith="userChatWith"
+            @delete="deleteDog"
+            :loggedinUser="loggedInUser"
+          ></dog-list>
+
           <h1 @click="seeMore" class="see-more">
             See More
             <b-icon class="icon" icon="chevron-right"></b-icon>
           </h1>
-              <br>
+          <br />
         </div>
       </section>
     </div>
@@ -55,41 +61,6 @@
     </footer>
   </section>
 
-  <!-- <div>
-    <div>
-      <img slot="img" src="../../public/img/home.svg" alt />
-      <UsersFilter @setFilter="setFilter"></UsersFilter>
-    </div>
-    <section class="hero parks-section">
-      <div class="hero-body">
-        <h1 class="parks-title1"><strong> Nearby Parks </strong></h1>
-        <park-list></park-list>
-        <h1 @click="seeMoreParks" class="see-more">
-          See More
-          <b-icon class="icon" icon="chevron-right"></b-icon>
-        </h1>
-      </div>
-    </section>
-    <section v-if="dogs" class="hero dogs-section">
-      <div class="hero-body">
-        <h1 class="parks-title"><strong>Nearby Dogs</strong></h1>
-        <dog-list :dogs="dogsToShow" @delete="deleteDog"></dog-list>
-        <h1 @click="seeMore" class="see-more">
-          See More
-          <b-icon class="icon" icon="chevron-right"></b-icon>
-        </h1>
-      </div>
-    </section>
-
-    <div class="container">
-      <userLiList></userLiList>
-    </div>
-    <footer class="footer">
-      <div class="content has-text-centered">
-          MEET<strong>HAV</strong> by Daniel Shokri ,Idan Elbaz and Chen Mordechai
-      </div>
-    </footer>
-  </!-->
 </template>
 
 <script>
@@ -103,7 +74,9 @@ export default {
 
   created() {
     this.$store.dispatch({ type: "loadCompInProfile", comp: "gallery" });
-    this.$store.dispatch({ type: "loggedInUser" });
+    this.$store.dispatch({ type: "loggedInUser" }).then(() => {
+      this.loggedInUser = this.$store.getters.getLoggedinUser;
+    });
     this.$store.dispatch({ type: "loadDogs" }).then(() => {
       this.$store.dispatch({ type: "loadUserLoc" }).then(() => {
         this.$store.dispatch({ type: "loadSortDogs" }).then(() => {
@@ -115,24 +88,45 @@ export default {
   data() {
     return {
       dogs: null,
-      numOfParks: 4
+      numOfParks: 4,
+      loggedInUser: null
     };
   },
   computed: {
+     loggedinUser() {
+      if (!this.$store.getters.getcurrLoggedinUser) return;
+      return this.$store.getters.getcurrLoggedinUser[0];
+    },
+
     dogsToShow() {
-      var newDogs = [this.dogs[0], this.dogs[1], this.dogs[2], this.dogs[3]];
-      return newDogs;
+      if (!this.loggedinUser) {
+        var newDogs = [this.dogs[0], this.dogs[1], this.dogs[2], this.dogs[3]];
+        return newDogs;
+      } else {
+        const dogsToShow = this.dogs.filter(
+          dog => dog._id !== this.loggedinUser._id
+        );
+        var newDogs = [
+          dogsToShow[0],
+          dogsToShow[1],
+          dogsToShow[2],
+          dogsToShow[3]
+        ];
+        return newDogs;
+      }
     }
   },
   methods: {
     seeMore() {
-      console.log("push");
       this.$router.push("/user");
     },
     setFilter(filterBy) {
       this.$store.dispatch({ type: "loadDogs", filterBy });
     },
-
+    userChatWith(dog) {
+      this.$emit("chatWith", dog);
+      // console.log('this is home', dog)
+    },
     deleteDog(dogId) {
       this.$store.dispatch({
         type: "deleteDog",
@@ -146,16 +140,14 @@ export default {
   components: { UserListMap, ParkList, UserLiList, UsersFilter, DogList }
 };
 </script>
+
+
 <style scoped lang="scss">
 .parks-section {
   background-color: #f9f7f7 !important;
 }
 .dogs-section {
   background-color: #a8e6cf !important;
-}
-.footer {
-  // background-color: #ff2e63 !important;
-  
 }
 .home-logo {
   min-width: 100%;
@@ -176,6 +168,9 @@ h1 {
   .icon {
     font-size: 30px;
   }
+}
+h1:hover {
+  cursor: pointer;
 }
 .hero-body {
   margin: 0 30px;
@@ -199,9 +194,14 @@ h1 {
     order: 2;
     min-width: 60%;
   }
-  .top-section{
+  .top-section {
     display: grid !important;
     height: 380px;
+  }
+
+  .hero-body {
+    margin: 0 auto;
+    padding: 0;
   }
 }
 </style>

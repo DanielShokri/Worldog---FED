@@ -13,8 +13,14 @@ Vue.use(Buefy)
 
 import Vuetify from 'vuetify'
 Vue.use(Vuetify)
-import 'vuetify/dist/vuetify.min.css' 
+import 'vuetify/dist/vuetify.min.css'
 import '@mdi/font/css/materialdesignicons.css'
+
+import Vue2TouchEvents from 'vue2-touch-events'
+
+Vue.use(Vue2TouchEvents)
+
+
 
 
 Vue.config.productionTip = false
