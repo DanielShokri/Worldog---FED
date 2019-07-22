@@ -84,7 +84,7 @@ export default {
   destroyed() {
     socket.removeListener("chat newMsg");
     socket.removeListener("chat history");
-    socket.removeListener('user typing');
+    socket.removeListener("user typing");
   },
   methods: {
     sendMsg() {
@@ -109,8 +109,8 @@ export default {
         user: currUserLogin
       });
     },
-    closeChat(){
-      this.chatClosed = !this.chatClosed
+    closeChat() {
+      this.chatClosed = !this.chatClosed;
     }
   }
 };
@@ -250,32 +250,32 @@ Chat Title
 /*--------------------
 Messages
 --------------------*/
-@media screen and(max-width: 376px){
-  .chat{
+@media screen and(max-width: 376px) {
+  .chat {
     left: 50%;
     top: 63%;
   }
 }
-@media screen and(max-width: 415px){
-  .chat{
+@media screen and(max-width: 415px) {
+  .chat {
     left: 50%;
     top: 63%;
   }
 }
-@media screen and(max-width: 769px){
-  .chat{
+@media screen and(max-width: 769px) {
+  .chat {
     left: 80%;
     top: 76%;
   }
 }
-@media screen and(max-width: 1025px){
-  .chat{
-    left: 75%;
-    top: 72%;
+@media screen and(max-width: 1025px) {
+  .chat {
+    left: 79%;
+    top: 60%;
   }
 }
-.close-chat{
-background-color: #EEE;
+.close-chat {
+  background-color: #eee;
 }
 
 .messages {
