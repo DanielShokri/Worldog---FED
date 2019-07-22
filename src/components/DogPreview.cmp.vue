@@ -65,8 +65,9 @@ export default {
   methods: {
     openChat(dog) {
       this.$store.dispatch({ type: "isChatOpen", dog }).then(() => {
-        const loggedUser = this.$store.getters.getcurrLoggedinUser[0]
-        if (this.$store.getters.isChatOpen) eventBus.$emit("chatOpen", dog, loggedUser );
+        const loggedUser = this.$store.getters.getcurrLoggedinUser[0];
+        if (this.$store.getters.isChatOpen)
+          eventBus.$emit("chatOpen", dog, loggedUser);
         socket.emit("chat join", this.$store.getters.getcurrLoggedinUser[0]);
       });
       // this.$emit("chatWith", dog);
@@ -194,13 +195,13 @@ export default {
 }
 .minus {
   position: relative;
-  right: -140px;
+  right: -131px;
   display: inline;
 }
 
 .plus {
   position: relative;
-  left: -166px;
+  left: -157px;
   display: inline;
 }
 
