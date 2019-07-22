@@ -34,6 +34,13 @@ export default {
   max-width: 500px;
   margin: 14px 4px 0px 4px;
 }
+@media(max-width:950px) {
+  .users-search {
+    width: 240px;
+  }
+
+}
+
 .search-btn {
   margin-top: 14px;
 }

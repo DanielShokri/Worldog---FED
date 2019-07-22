@@ -1,17 +1,14 @@
 <template>
-  <section class="parksList" v-if="userLoc && gardens.length>0" style="mar">
-    <v-layout row wrap>
-      <v-flex
+  <section class="parksList" v-if="userLoc && gardens.length>0">
+    <v-layout row wrap style="justify-content: space-between; padding:25px;">
+      <div
         class="onlyDesk"
-        xs12
-        sm6
-        mb4
-        lg3
         v-for="nearestGarden in gardens"
         :key="nearestGarden.id"
+        
       >
         <parkPrev style="margin-bottom: 20px;" :park="nearestGarden"></parkPrev>
-      </v-flex>
+    </div>
 
       <div class="onlyCell">
         <parkPrev @nextPark="plusDivs" style="margin: 0 auto;;" :park="parkToShow"></parkPrev>

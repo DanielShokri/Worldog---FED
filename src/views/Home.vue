@@ -4,8 +4,11 @@
       <div class="hero-head"></div>
       <div class="hero-body top-section is-flex">
         <div class="container">
-          <h1>MEETHAV</h1>
-          <h2 class>
+          <h1>
+            MEET
+            <span>HAV</span>
+          </h1>
+          <h2>
             MEET NEW AND
             INTRESTING DOGS NEARBY.
           </h2>
@@ -22,7 +25,7 @@
     <section class="hero parks-section">
       <div class="hero-body">
         <h1 class="parks-title1">
-          <strong>Nearby Parks</strong>
+          <strong style="margin-left: 15px;">Nearby Parks</strong>
         </h1>
         <park-list></park-list>
         <h1 @click="seeMoreParks" class="see-more">
@@ -35,7 +38,7 @@
     <div class="sandbox">
       <section v-if="dogs" class="hero dogs-section">
         <div class="hero-body">
-          <h1 class="parks-title">
+          <h1 style="margin-top: 12px;" class="parks-title">
             <strong>Nearby Dogs</strong>
           </h1>
           <dog-list
@@ -53,14 +56,12 @@
         </div>
       </section>
     </div>
-    <footer class="footer">
+    <footer>
       <div class="content has-text-centered">
-        MEET
-        <strong>HAV</strong> by Daniel Shokri ,Idan Elbaz and Chen Mordechai
+        MEET<strong>HAV</strong> by Daniel Shokri ,Idan Elbaz and Chen Mordechai
       </div>
     </footer>
   </section>
-
 </template>
 
 <script>
@@ -77,6 +78,7 @@ export default {
     this.$store.dispatch({ type: "loggedInUser" }).then(() => {
       this.loggedInUser = this.$store.getters.getLoggedinUser;
     });
+
     this.$store.dispatch({ type: "loadDogs" }).then(() => {
       this.$store.dispatch({ type: "loadUserLoc" }).then(() => {
         this.$store.dispatch({ type: "loadSortDogs" }).then(() => {
@@ -93,7 +95,7 @@ export default {
     };
   },
   computed: {
-     loggedinUser() {
+    loggedinUser() {
       if (!this.$store.getters.getcurrLoggedinUser) return;
       return this.$store.getters.getcurrLoggedinUser[0];
     },
@@ -143,6 +145,20 @@ export default {
 
 
 <style scoped lang="scss">
+.container {
+  h1 {
+    font-size: 90px;
+    span {
+      font-weight: bold;
+    }
+  }
+  h2 {
+    font-size: 22px;
+  }
+}
+footer{
+  padding: 30px 10px;
+}
 .parks-section {
   background-color: #f9f7f7 !important;
 }
@@ -151,6 +167,7 @@ export default {
 }
 .home-logo {
   min-width: 100%;
+  padding-right: 150px;
 }
 .hero-body {
   padding: 1rem 2.5rem 0 2.5rem;
@@ -189,19 +206,30 @@ h1:hover {
   font-size: 17px;
 }
 
-@media screen and(max-width: 775px) {
+@media screen and(max-width: 450px) {
   .home-logo {
     order: 2;
     min-width: 60%;
   }
   .top-section {
     display: grid !important;
-    height: 380px;
+    height: 496px;
   }
 
   .hero-body {
     margin: 0 auto;
     padding: 0;
   }
+  .container {
+  h1 {
+    font-size: 40px;
+  }
+  h2 {
+    font-size: 16px;
+  }
+}
+    .home-logo {
+    padding-right: 0px;
+}
 }
 </style>
