@@ -129,11 +129,14 @@ export default {
 </script>
 
 
-<style scope>
+<style scoped >
  a.home{
-  color: blueviolet
+  color: #5ec8aa
 }
-
+.navbar-end a.navbar-item:hover{
+color: #5ec8aa;
+background-color: white;
+}
 .navbar{
   height: 50px;
   padding: 0 10px;
@@ -143,7 +146,7 @@ border: 1px solid rgb(48, 47, 47);
 border-radius: 3px;
 }
 .login:hover{
-  background-color: blueviolet
+  background-color: #5ec8aa
 }
 .logo:hover {
   cursor: pointer;
