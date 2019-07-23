@@ -327,42 +327,41 @@ export default new Vuex.Store({
             }
 
         },
-        loadCompInProfile(context, {
-            comp
-        }) {
+        loadCompInProfile(context, { comp }) {
             context.commit({
                 type: 'updateCompInProfile',
                 comp
             })
             return comp
         },
-        loadParks(context, {
-            gardens
-        }) {
+        loadParks(context, { gardens }) {
             context.commit({
                 type: 'setParks',
                 gardens
             })
         },
-        loadParksLocFromUser(context) {
+        async loadParksLocFromUser(context) {
             var x = [];
             for (var i = 0; i < context.state.parks.length; i++) {
                 x.push(context.state.parks[i].geometry.location.lat + "," + context.state.parks[i].geometry.location.lng);
             }
             x = x.join("|");
-            googleMapsService
-                .getDist({
 
-                    userLoc: context.state.userLoc.position.lat + "," + context.state.userLoc.position.lng,
-                    usersLoc: x
-                })
-                .then(res => {
-                    context.commit({
-                        type: 'setSortParksNearUser',
-                        res
+            try {
+                const res = await googleMapsService
+                    .getDist({
+                        userLoc: context.state.userLoc.position.lat + "," + context.state.userLoc.position.lng,
+                        usersLoc: x
                     })
-                    return res
-                });
+                context.commit({
+                    type: 'setSortParksNearUser',
+                    res
+                })
+                return res
+            } catch (err) {
+                console.log(err)
+            }
+
         },
 
         async updateFriendReq(context, { dogId }) {
