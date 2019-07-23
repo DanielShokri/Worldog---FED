@@ -13,6 +13,9 @@ Vue.use(Buefy)
 
 import Vuetify from 'vuetify'
 Vue.use(Vuetify)
+Vue.use(Vuetify, {
+    iconfont: 'mdi' // 'md' || 'mdi' || 'fa' || 'fa4'
+})
 import 'vuetify/dist/vuetify.min.css'
 import '@mdi/font/css/materialdesignicons.css'
 
