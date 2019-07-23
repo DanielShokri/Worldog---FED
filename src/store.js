@@ -247,6 +247,7 @@ export default new Vuex.Store({
         }
     },
     getters: {
+       
         compToShoe(state) {
             return state.compInProfile;
         },

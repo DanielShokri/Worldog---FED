@@ -9,6 +9,7 @@
         @delete="emitDeleteDog"
         @chatWith="userChatWith"
         @openChat ="openChat"
+        :userLoc="userLoc"
       ></dog-preview>
     </div>
     <v-flex class="onlyDesk" xs12 sm6 mb4 lg3 v-for="dog in dogs" :key="dog._id">
@@ -18,6 +19,7 @@
         :loggedinUser="loggedinUser"
         :dog="dog"
         @delete="emitDeleteDog"
+        :userLoc="userLoc"
       ></dog-preview>
     </v-flex>
   </v-layout>
@@ -27,7 +29,7 @@
 import DogPreview from "./DogPreview.cmp.vue";
 
 export default {
-  props: ["dogs", "loggedinUser"],
+  props: ["dogs", "loggedinUser" ,"userLoc"],
   data() {
     return {
       indexRoll: 0,

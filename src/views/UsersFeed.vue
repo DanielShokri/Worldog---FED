@@ -1,8 +1,8 @@
 
 <template>
-  <section v-if="dogs">
+  <section v-if="dogs && userLoc">
 <UsersFilter @setFilter="setFilter"></UsersFilter>
-  <dog-list @openChat ="openChat" :loggedinUser="loggedinUser" :dogs="dogs" @delete="deleteDog"></dog-list>
+  <dog-list :userLoc="userLoc" @openChat ="openChat" :loggedinUser="currUser" :dogs="dogs" @delete="deleteDog"></dog-list>
   </section>
 </template>
 
@@ -16,13 +16,25 @@ export default {
 
   data() {
     return {
-    
+    userLoc:null,
+    sortDog:false,
+    currUser:null
     };
   },
   created() {
-         this.$store.dispatch({ type: "loadCompInProfile" , comp: "gallery"} )
-
-    this.$store.dispatch({ type: "loggedInUser" });
+    this.$store.dispatch({ type: "loadCompInProfile" , comp: "gallery"} )
+    this.$store.dispatch({ type: "loggedInUser" }).then(()=>{
+            this.currUser = this.$store.getters.getcurrLoggedinUser;
+    })
+    this.$store.dispatch({ type: "loadDogs" }).then(() => {
+      this.$store.dispatch({ type: "loadUserLoc" }).then(() => {
+        this.userLoc = this.$store.getters.userLoc;
+        console.log('in feed', this.getUserLoc)
+        this.$store.dispatch({ type: "loadSortDogs" }).then(() => {
+          this.sortDog =true
+        });
+      });
+    });
   },
   methods: {
     openChat(dog){
@@ -45,16 +57,11 @@ export default {
   },
 
   computed: {
-    loggedinUser() {
-      if(!this.$store.getters.getcurrLoggedinUser) return
-      return this.$store.getters.getcurrLoggedinUser;
-    },
-  
      dogs() {
       const dogs = this.$store.getters.dogsToShow;
-      if(!this.loggedinUser) return dogs
-      else{
-        const dogsToShow = dogs.filter(dog => dog._id !== this.loggedinUser._id);
+      if(this.currUser===null) return dogs
+      else {
+        const dogsToShow = dogs.filter(dog => dog._id !== this.currUser._id);
         return dogsToShow;
       }
     }

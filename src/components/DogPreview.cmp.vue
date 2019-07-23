@@ -12,14 +12,11 @@
         <button class="minus onlyCell" @click="plusDivs(1)">&#10095;</button>
         <h3>{{dog.owner.fullName}} and {{dog.preference.name}}</h3>
         <span class="ago">{{dog.preference.name}} is {{dog.preference.type}}</span>
-        <p>
+        <p>{{distanceFromCurrUser}} km from you</p> 
+        <!-- <p>
           {{dog.preference.name}} is a {{dog.preference.gender}},
-          {{gender}} likes to:
-          <span
-            v-for="hobby in dog.preference.hobbies"
-            :key="hobby._id"
-          >{{hobby}},</span> and more...
-        </p>
+          {{gender}} likes to<span v-for="hobby in dog.preference.hobbies" :key="hobby._id">{{hobby}} ,</span> and more...
+        </p> -->
       </span>
       <div class="card__footer">
         <div class="card__footer__meta">
@@ -28,8 +25,8 @@
               <b-icon icon="thumb-up"></b-icon>
             </button>
           </span>
-          <span class="meta" tooltip="Likes">
-            ({{dog.gotLikes.length}})
+          <span class="meta more" tooltip="Likes">
+            {{dog.gotLikes.length}}
             <i class="fa fa-eye"></i>
           </span>
           <span class="meta" tooltip="Friendog">
@@ -37,8 +34,8 @@
               <b-icon icon="account-plus"></b-icon>
             </button>
           </span>
-          <span class="meta" tooltip="Friends">
-            ({{dog.friends.length}})
+          <span class="meta more" tooltip="Friends">
+            {{dog.friends.length}}
             <i class="fa fa-share"></i>
           </span>
           <span class="meta" tooltip="chat">
@@ -56,12 +53,13 @@
 <script>
 
 export default {
-  props: ["dog", "loggedinUser"],
+  props: ["dog", "loggedinUser","userLoc"],
   data() {
     return {};
   },
 
   methods: {
+    
     openChat(dog) {
       this.$emit('openChat', dog)
     },
@@ -159,6 +157,32 @@ export default {
     }
   },
   computed: {
+    distanceFromCurrUser() {
+        var lat1 = this.dog.location.lat;
+        var lon1 = this.dog.location.lng;
+        var lat2 = this.userLoc.position.lat;
+        var lon2 = this.userLoc.position.lng;
+        var R = 6371; // km
+        var dLat = toRad(lat2 - lat1);
+        var dLon = toRad(lon2 - lon1);
+        lat1 = toRad(lat1);
+        lat2 = toRad(lat2);
+
+        var a =
+          Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+          Math.sin(dLon / 2) *
+            Math.sin(dLon / 2) *
+            Math.cos(lat1) *
+            Math.cos(lat2);
+        var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        var distance = R * c;
+        function toRad(Value) {
+          return (Value * Math.PI) / 180;
+        }
+        var shortDistance = distance.toString().substring(0, 5);
+        return shortDistance
+      },
+  
     gender() {
       if (this.dog.preference.gender === "female") return "she";
       else return "he";
@@ -309,8 +333,10 @@ export default {
       align-items: center;
       // display: block;
       min-height: 50px;
-      padding: 12px 15px;
+      padding: 0px 15px;
       box-sizing: border-box;
+      padding-top: 10px;
+      
       .meta {
         cursor: pointer;
         display: block;
@@ -332,8 +358,9 @@ export default {
         background-color: transparent;
         line-height: 26px;
         font-size: 16px;
-        margin-left: 5px;
+        margin-left: 4px;
         color: #b2c0c8;
+        margin-bottom: 10px;
       }
       .stats {
         float: right;

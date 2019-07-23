@@ -46,7 +46,8 @@
             @chatWith="userChatWith"
             @delete="deleteDog"
             :loggedinUser="currUser"
-            @openChat ="openChat"
+            @openChat="openChat"
+            :userLoc="userLoc"
           ></dog-list>
           <h1 @click="seeMore" class="see-more">
             See More
@@ -75,26 +76,29 @@ import socket from "../services/socket.service.js";
 import eventBus from "../eventBus.js";
 export default {
   name: "home",
+    data() {
+      return {
+        dogs: null,
+        numOfParks: 4,
+        currUser: null,
+        userLoc: null
+      };
+    },
 
   created() {
-    this.$store.dispatch({ type: "loggedInUser" }).then(()=> { 
+    this.$store.dispatch({ type: "loggedInUser" }).then(() => {
       this.currUser = this.$store.getters.getcurrLoggedinUser;
-    })
+    });
     this.$store.dispatch({ type: "loadCompInProfile", comp: "gallery" });
     this.$store.dispatch({ type: "loadDogs" }).then(() => {
       this.$store.dispatch({ type: "loadUserLoc" }).then(() => {
+        this.userLoc = this.$store.getters.getUserLoc;
+        console.log('in home', this.userLoc)
         this.$store.dispatch({ type: "loadSortDogs" }).then(() => {
           this.dogs = this.$store.getters.dogsToShow;
         });
       });
     });
-  },
-  data() {
-    return {
-      dogs: null,
-      numOfParks: 4,
-      currUser: null,
-    };
   },
   computed: {
     dogsToShow() {
@@ -113,11 +117,11 @@ export default {
         ];
         return newDogs;
       }
-    }, 
+    }
   },
   methods: {
-    openChat(dog){
-       this.$store.dispatch({ type: "isChatOpen", dog }).then(() => {
+    openChat(dog) {
+      this.$store.dispatch({ type: "isChatOpen", dog }).then(() => {
         const loggedUser = this.$store.getters.getcurrLoggedinUser[0];
         if (this.$store.getters.isChatOpen)
           eventBus.$emit("chatOpen", dog, loggedUser);

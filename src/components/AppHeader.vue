@@ -26,18 +26,16 @@
     </div>
 
     <div id="navbarBasicExample" class="navbar-menu" v-bind:class="{ 'is-active': isActive}">
-      <div class="navbar-start">
-        <router-link class="navbar-item" to="/">Home</router-link>
-        <router-link class="navbar-item" to="/user">Users</router-link>
-      </div>
+      <!-- <div class="navbar-start">
+      </div> -->
       <div class="navbar-end">
       <div v-if="getUser === null">
         <div class="navbar-item">
           <div class="buttons" style="justify-content: center;">
-            <router-link class="button is-primary" to="/signup">
-              <strong>Sign up</strong>
-            </router-link>
-            <button class="button is-light" @click="cardModal()">Login</button>
+        <router-link class="navbar-item home" to="/">Home</router-link>
+        <router-link class="navbar-item" to="/user">Users</router-link>
+            <router-link  class="navbar-item " to="/signup">Sign Up</router-link>
+            <button class="navbar-item login" @click="cardModal()">Log In</button>
           </div>
         </div>
       </div>
@@ -132,13 +130,27 @@ export default {
 
 
 <style scope>
+ a.home{
+  color: blueviolet
+}
+
+.navbar{
+  height: 50px;
+  padding: 0 10px;
+}
+.login{
+border: 1px solid rgb(48, 47, 47);
+border-radius: 3px;
+}
+.login:hover{
+  background-color: blueviolet
+}
 .logo:hover {
   cursor: pointer;
 }
 .buttons{
   justify-content: center;
+  align-items: baseline;
 }
-/* .navbar-menu{
-  display: block;
-} */
+
 </style>

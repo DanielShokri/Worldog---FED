@@ -4,21 +4,30 @@
       <img @click="goParkDetails" aspect-ratio="1.75" :src="park.img" />
     </figure>
     <br />
-    <a @click="goParkDetails">
-      <h3 class="title">{{park.name}}</h3>
-    </a>
-    <section class="content">
-      <button class="plus onlyCell" @click="plusDivs(-1)">&#10094;</button>
-      <button class="minus onlyCell" @click="plusDivs(1)">&#10095;</button>
-      <p class="subtitle">Dogs in park({{distanceFromUsering}})</p>
-      <p class="subtitle" v-if="park.distanceValueFromUser">
+    <div class="content-container">
+      <a @click="goParkDetails">
+        <h3 class="title">{{park.name}}</h3>
+      </a>
+      <section class="content">
+        <button class="plus onlyCell" @click="plusDivs(-1)">&#10094;</button>
+        <button class="minus onlyCell" @click="plusDivs(1)">&#10095;</button>
+        <p class="subtitle padding">{{park.distanceValueFromUser/1000}} km from you</p>
+        <br />
+        <p class="subtitle">There are {{distanceFromUsering}} dogs in park</p>
+        <br />
+        <p class="rate">
+          <b-icon class="b-icon" icon="star"></b-icon>
+          {{park.rating}} (1k+)
+        </p>
+
+        <!-- <p class="subtitle" v-if="park.distanceValueFromUser">
         {{park.rating}}
         <b-icon v-if="numOfStars>=1" class="b-icon" icon="star-outline"></b-icon>
         <b-icon v-if="numOfStars>=2" class="b-icon" icon="star-outline"></b-icon>
         <b-icon v-if="numOfStars>=3" class="b-icon" icon="star-outline"></b-icon>
         <b-icon v-if="numOfStars>=4" class="b-icon" icon="star-outline"></b-icon>
         <b-icon v-if="numOfStars===5" class="b-icon" icon="star-outline"></b-icon>
-        &nbsp; &bull; &nbsp; {{park.distanceValueFromUser/1000}} km
+        &nbsp; &bull; &nbsp; 
       </p>
       <p class="subtitle" v-else>
         {{numOfStars}}
@@ -27,10 +36,10 @@
         <b-icon v-if="numOfStars>=3" class="b-icon" icon="star-outline"></b-icon>
         <b-icon v-if="numOfStars>=4" class="b-icon" icon="star-outline"></b-icon>
         <b-icon v-if="numOfStars===5" class="b-icon" icon="star-outline"></b-icon>&nbsp; &bull; &nbsp;1.4 km
-      </p>
+        </p>-->
 
-      <br />
-    </section>
+      </section>
+    </div>
   </main>
 </template>
 
@@ -136,12 +145,13 @@ $color: #44a3d9; // #2f559e;
 
 .plus {
   position: relative;
-  left: -83px;
+  left: -61px;
   display: inline;
 }
 
 .onlyCell {
   visibility: hidden;
+  // display: none;
 }
 
 body {
@@ -154,14 +164,21 @@ body {
   align-items: center;
   justify-content: center;
 }
+.content-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 31%;
+}
 main {
   background: white;
   color: #263238;
   //   border-radius: 0.5rem;
   overflow: hidden;
-  max-height: 350px;
+  // max-height: 350px;
   max-width: 307px;
-
+  height: 380px;
+  margin-bottom: 20px;
   //   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
 
   figure {
@@ -172,7 +189,7 @@ main {
       image-rendering: crisp-edges;
       object-fit: cover;
       width: 100%;
-      height: 160px;
+      height: 230px;
     }
     img:hover {
       cursor: pointer;
@@ -180,11 +197,10 @@ main {
   }
 
   .title {
-    font-weight: 600;
+    // text-align: left;
+    // font-weight: 600;
   }
   .content {
-    padding: 2rem;
-
     a {
       text-decoration: none;
       color: $color;
@@ -203,12 +219,25 @@ main {
       font-size: 16px;
       color: #607d8b;
       margin: 0;
-      margin-top: 0.25rem;
+      margin-top: 0.3rem;
     }
+    .rate {
+      display: flex;
+      align-items: center;
+       font-size: 16px;
+      color: #607d8b;
+      margin: 0;
+      margin-top: 0.25rem;
+      justify-content: center
+    }
+    .padding{
+      padding-right: 11px;
+    }
+
     > p {
       line-height: 1.25rem;
       font-size: 0.95rem;
-      text-align: justify;
+      text-align: left;
       margin: 0;
       margin-top: 1.25rem;
     }
@@ -247,6 +276,7 @@ main {
 
   .onlyCell {
     visibility: visible;
+    // display: block;
   }
 }
 </style>
