@@ -84,7 +84,6 @@ export default {
     this.$store.dispatch({ type: "loadDogs" }).then(() => {
       this.$store.dispatch({ type: "loadUserLoc" }).then(() => {
         this.userLoc = this.$store.getters.getUserLoc;
-        console.log('in home', this.userLoc)
         this.$store.dispatch({ type: "loadSortDogs" }).then(() => {
           this.dogs = this.$store.getters.dogsToShow;
         });
@@ -130,11 +129,11 @@ export default {
       this.$router.push("/user");
     },
     setFilter(filterBy) {
+      console.log('This is home filter', filterBy)
       this.$store.dispatch({ type: "loadDogs", filterBy });
     },
     userChatWith(dog) {
       this.$emit("chatWith", dog);
-      // console.log('this is home', dog)
     },
     deleteDog(dogId) {
       this.$store.dispatch({

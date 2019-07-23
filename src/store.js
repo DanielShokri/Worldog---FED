@@ -67,7 +67,7 @@ export default new Vuex.Store({
                 state.dogs[i].distanceValueFromUser = res.elements[i].distance.value;
             }
             if (!state.currPark) {
-                state.dogs.sort(function(a, b) {
+                state.dogs.sort(function (a, b) {
                     return a.distanceValueFromUser - b.distanceValueFromUser;
                 });
             }
@@ -87,7 +87,7 @@ export default new Vuex.Store({
                 state.dogs[i].distanceTextFromMap = res.elements[i].distance.text;
                 state.dogs[i].distanceValueFromMap = res.elements[i].distance.value;
             }
-            state.dogs.sort(function(a, b) {
+            state.dogs.sort(function (a, b) {
                 return a.distanceValueFromUser - b.distanceValueFromUser;
             });
         },
@@ -247,7 +247,7 @@ export default new Vuex.Store({
         }
     },
     getters: {
-       
+
         compToShoe(state) {
             return state.compInProfile;
         },
@@ -436,6 +436,7 @@ export default new Vuex.Store({
 
         async loadDogs(context, { filterBy }) {
             try {
+                console.log('this is the filter in store', filterBy)
                 const dogs = await dogsService.query(filterBy)
                 context.commit({
                     type: 'setDogs',

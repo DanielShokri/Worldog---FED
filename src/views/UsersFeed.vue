@@ -18,7 +18,7 @@ export default {
     return {
     userLoc:null,
     sortDog:false,
-    currUser:null
+    currUser:null,
     };
   },
   created() {
@@ -29,7 +29,6 @@ export default {
     this.$store.dispatch({ type: "loadDogs" }).then(() => {
       this.$store.dispatch({ type: "loadUserLoc" }).then(() => {
         this.userLoc = this.$store.getters.getUserLoc;
-        console.log('in feed', this.userLoc)
         this.$store.dispatch({ type: "loadSortDogs" }).then(() => {
           this.sortDog =true
         });

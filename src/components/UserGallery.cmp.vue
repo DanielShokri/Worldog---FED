@@ -20,7 +20,7 @@ export default {
   props: ["user"],
   data() {
     return {
-      num: 0
+      num: 0,
     };
   },
   methods: {},
@@ -73,17 +73,17 @@ img {
   grid-row: 4/5;
 }
 
-@media screen and(max-width: 770px) {
+@media (max-width: 768px) {
     .mobile-gallery{
-    display: block;
-}
+        display: block;
+    }
 }
 
 @media (min-width: 768px) {
   .gallery {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    grid-template-rows: repeat(8, 150px);
+    grid-template-rows: repeat(2, 150px);
     grid-gap: 15px;
   }
 
