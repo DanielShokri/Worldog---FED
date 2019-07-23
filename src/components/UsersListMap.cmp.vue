@@ -67,7 +67,7 @@ export default {
       dogs: null,
       langs: ["he", "en"],
       times: [1552552892953, 1552552891953, 1552522892953],
-      zoomIn: 16,
+      zoomIn: 18,
       posIsrael: { lat: 32.088007, lng: 34.8031678 },
       infoWindowPos: null,
       infoWinOpen: false,

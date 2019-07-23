@@ -33,6 +33,11 @@
             and so.
             We are living in {{dog.address}}
           </p>
+            <span class="meta more" tooltip="chat">
+            <button @click.prevent="openChat(dog)">
+              <b-icon icon="chat-processing"></b-icon>
+            </button>
+          </span>
 
           <div class="social">
             <i>
@@ -111,6 +116,8 @@ import UserGallery from "../components/UserGallery.cmp.vue";
 import UserFriends from "../components/UserFriends.cmp.vue";
 import UserMessages from "../components/UserMessages.cmp.vue";
 import UserNotfication from "../components/UserNotfication.cmp.vue";
+import socket from "../services/socket.service.js"
+import eventBus from "../eventBus.js";
 
 export default {
   name: "profile",
@@ -132,6 +139,15 @@ export default {
     this.$store.dispatch({ type: "loggedInUser" });
   },
   methods: {
+      openChat(dog) {
+      this.$store.dispatch({ type: "isChatOpen", dog }).then(() => {
+        const loggedUser = this.$store.getters.getcurrLoggedinUser[0];
+        if (this.$store.getters.isChatOpen)
+          eventBus.$emit("chatOpen", dog, loggedUser);
+        socket.emit("chat join", this.$store.getters.getcurrLoggedinUser[0]);
+      });
+    },
+    
     toggleNav() {
       this.isActive = !this.isActive;
     },
