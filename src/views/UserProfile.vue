@@ -1,5 +1,10 @@
 <template>
-  <div v-if="dog && comp" class="container">
+  <section v-if="dog && comp">
+    <div class="profile">
+      <user-gallery :user="dog"></user-gallery>
+    </div>
+  </section>
+  <!-- <div v-if="dog && comp" class="container">
     <header  :style="{ 'background-image': 'url(' + backImgToLoad + ')',
      'background-size': 'cover',
      'background-position': 'center'}">
@@ -108,7 +113,7 @@
         </div>
       </div>
     </main>
-  </div>
+  </div>-->
 </template>
 
 <script>
@@ -116,7 +121,7 @@ import UserGallery from "../components/UserGallery.cmp.vue";
 import UserFriends from "../components/UserFriends.cmp.vue";
 import UserMessages from "../components/UserMessages.cmp.vue";
 import UserNotfication from "../components/UserNotfication.cmp.vue";
-import socket from "../services/socket.service.js"
+import socket from "../services/socket.service.js";
 import eventBus from "../eventBus.js";
 
 export default {
@@ -139,7 +144,7 @@ export default {
     this.$store.dispatch({ type: "loggedInUser" });
   },
   methods: {
-      openChat(dog) {
+    openChat(dog) {
       this.$store.dispatch({ type: "isChatOpen", dog }).then(() => {
         const loggedUser = this.$store.getters.getcurrLoggedinUser[0];
         if (this.$store.getters.isChatOpen)
@@ -147,7 +152,7 @@ export default {
         socket.emit("chat join", this.$store.getters.getcurrLoggedinUser[0]);
       });
     },
-    
+
     toggleNav() {
       this.isActive = !this.isActive;
     },
@@ -240,11 +245,11 @@ export default {
   },
   computed: {
     notMyProfile() {
-      if(!this.loggedinUser) return true
-    else{
-      if (this.loggedinUser._id === this.dog._id) return false;
-      else return true;
-    }
+      if (!this.loggedinUser) return true;
+      else {
+        if (this.loggedinUser._id === this.dog._id) return false;
+        else return true;
+      }
     },
     loggedinUser() {
       if (!this.$store.getters.getcurrLoggedinUser) return;
@@ -278,6 +283,14 @@ export default {
 };
 </script>
 <style scoped>
+.profile {
+  /* display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  grid-template-rows: repeat(11, 5vw); */
+  /* grid-gap: 15px; */
+}
+
+/* _-------------_ */
 html,
 body {
   background: #efefef;
@@ -288,7 +301,7 @@ body {
   max-width: 1250px;
   margin: 30px auto 30px;
   padding: 0 !important;
-  width:100%;
+  width: 100%;
   background-color: #fff;
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1), 0 3px 6px rgba(0, 0, 0, 0.1);
 }
@@ -329,7 +342,6 @@ main {
   /* border-radius: 100px; */
   border: 4px solid #fff;
 }
-
 
 @media (max-width: 800px) {
   header {
@@ -522,7 +534,7 @@ main {
 
 @media (max-width: 990px) {
   .nav {
-        flex-direction: column;
+    flex-direction: column;
     /* display: none; */
   }
 }
