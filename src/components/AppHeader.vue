@@ -31,7 +31,7 @@
         <router-link class="navbar-item" to="/user">Users</router-link>
       </div>
       <div class="navbar-end">
-      <div v-if="!getUser">
+      <div v-if="getUser === null">
         <div class="navbar-item">
           <div class="buttons" style="justify-content: center;">
             <router-link class="button is-primary" to="/signup">
@@ -41,7 +41,7 @@
           </div>
         </div>
       </div>
-      <div v-if="getUser" class="navbar-menu" v-bind:class="{ 'is-active': isActive}">
+      <div v-if="getUser !== null" class="navbar-menu" v-bind:class="{ 'is-active': isActive}">
           <b-dropdown position="is-bottom-left" aria-role="menu">
             <a class="navbar-item" slot="trigger" role="button">
               <v-badge left>
@@ -54,7 +54,7 @@
             </a>
             <b-dropdown-item custom aria-role="menuitem">
               Logged as
-              <b>{{getUser[0].owner.fullName}}</b>
+              <b>{{getUser.owner.fullName}}</b>
             </b-dropdown-item>
             <b-dropdown-item @click="goToMyNotfication" aria-role="menuitem">
               <b-icon icon="bell"></b-icon>Notification's
@@ -94,12 +94,12 @@ export default {
     },
     goToMyNotfication() {
       this.$store.dispatch({ type: "loadCompInProfile", comp: "Notfication" });
-      this.$router.push(`/user/${this.getUser[0]._id}`);
+      this.$router.push(`/user/${this.getUser._id}`);
     },
     goToMyProfile() {
       this.$store.dispatch({ type: "loadCompInProfile", comp: "Gallery" });
 
-      this.$router.push(`/user/${this.getUser[0]._id}`);
+      this.$router.push(`/user/${this.getUser._id}`);
     },
     cardModal() {
       this.$modal.open({

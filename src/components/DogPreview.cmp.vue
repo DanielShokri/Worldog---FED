@@ -1,7 +1,7 @@
 <template>
   <div v-if="dog" class="grid" v-touch:swipe="swipeHandler">
     <div class="card">
-      <div 
+      <div
         @click="openProfile(dog._id)"
         class="card__thumbnail"
         :style="{ 'background-image': 'url(' + imgToLoad + ')'
@@ -65,10 +65,10 @@ export default {
   methods: {
     openChat(dog) {
       this.$store.dispatch({ type: "isChatOpen", dog }).then(() => {
-        const loggedUser = this.$store.getters.getcurrLoggedinUser[0];
+        const loggedUser = this.$store.getters.getcurrLoggedinUser;
         if (this.$store.getters.isChatOpen)
           eventBus.$emit("chatOpen", dog, loggedUser);
-        socket.emit("chat join", this.$store.getters.getcurrLoggedinUser[0]);
+        socket.emit("chat join", this.$store.getters.getcurrLoggedinUser);
       });
       // this.$emit("chatWith", dog);
     },
@@ -81,7 +81,7 @@ export default {
     },
 
     addFriend(dogId) {
-      if (!this.loggedinUser) {
+      if (this.loggedinUser === null) {
         this.$toast.open({
           message: "You need to login",
           type: "is-danger",
@@ -110,7 +110,7 @@ export default {
             socket.emit(
               "friend req",
               this.dog,
-              this.$store.getters.getcurrLoggedinUser[0]
+              this.$store.getters.getcurrLoggedinUser
             );
             this.$toast.open({
               message: "friend request successfully sent!",
@@ -147,7 +147,7 @@ export default {
             socket.emit(
               "friend like",
               this.dog,
-              this.$store.getters.getcurrLoggedinUser[0]
+              this.$store.getters.getcurrLoggedinUser
             );
           });
         }

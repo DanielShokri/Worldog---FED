@@ -42,28 +42,28 @@ function query(filterBy) {
 
 function sendFriendReq(dogId) {
     const user = JSON.parse(sessionStorage.getItem('LoggedUser'));
-    return httpService.put(_getUrl('sendFriendReq'), { dogId, user })
+    return httpService.put(_getUrl('sendFriendReq'), { dogId, user: user[0] })
 }
 
 function addLike(dogId) {
     const user = JSON.parse(sessionStorage.getItem('LoggedUser'));
-    return httpService.put(_getUrl('addLike'), { dogId, user })
+    return httpService.put(_getUrl('addLike'), { dogId, user: user[0] })
 
 }
 
 function makeFriendshipOn(dog) {
     const user = JSON.parse(sessionStorage.getItem('LoggedUser'));
-    return httpService.put(_getUrl('makeFriendship'), { dog, user })
+    return httpService.put(_getUrl('makeFriendship'), { dog, user: user[0] })
 }
 
 function rejectFriendshipOn(dog) {
     const user = JSON.parse(sessionStorage.getItem('LoggedUser'));
-    return httpService.put(_getUrl('rejectFriendship'), { dog, user })
+    return httpService.put(_getUrl('rejectFriendship'), { dog, user: user[0] })
 }
 
 function removeFriendship(dogId) {
     const user = JSON.parse(sessionStorage.getItem('LoggedUser'));
-    return httpService.put(_getUrl('removeFriendship'), { dogId, user })
+    return httpService.put(_getUrl('removeFriendship'), { dogId, user: user[0] })
 }
 
 function getFriendReq(dogId, dogImg, dogName) {
@@ -99,7 +99,9 @@ function update(updateDog) {
 
 function getLoggedinUser() {
     const user = JSON.parse(sessionStorage.getItem('LoggedUser'));
-    return Promise.resolve(user);
+    if (user === null) return Promise.resolve(user);
+    return Promise.resolve(user[0]);
+
 }
 
 function logIn(user) {
@@ -108,7 +110,7 @@ function logIn(user) {
         .then(res => {
             if (!res) throw new Error('Cant Login')
             sessionStorage.setItem('LoggedUser', JSON.stringify(res));
-            return res;
+            return res[0];
         })
         .catch(err => {
             console.log(err, 'at front service')

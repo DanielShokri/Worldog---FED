@@ -159,9 +159,9 @@ export default {
         this.dogs = this.$store.getters.dogsToShow;
         this.currUser = this.$store.getters.getLoggedinUser;
         if (this.currUser[0].friends.length > 0) {
-          for (var i = 0; i < this.currUser[0].friends.length; i++) {
+          for (var i = 0; i < this.currUser.friends.length; i++) {
             for (var j = 0; j < this.dogs.length; j++) {
-              if (this.currUser[0].friends[i].userId === this.dogs[j]._id)
+              if (this.currUser.friends[i].userId === this.dogs[j]._id)
                 this.friends.push(this.dogs[j]);
               else this.notFriends.push(this.dogs[j]);
             }
@@ -172,7 +172,7 @@ export default {
         })
         dogsService.getPosition().then(pos => {
           if (this.currUser[0])
-            var toShow = `<p>${this.currUser[0].owner.fullName}</p>`;
+            var toShow = `<p>${this.currUser.owner.fullName}</p>`;
           else var toShow = `<p>Guest</p>`;
           this.userLoc = {
             position: {
