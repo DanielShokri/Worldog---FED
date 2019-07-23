@@ -53,7 +53,7 @@ export default {
       const members = [dog, loggedUser];
       this.members = members;
       socket.emit("test users chat", members);
-      // console.log(dog)
+      console.log('chatttttttt',this.user)
       // console.log(loggedUser)
     });
     socket.on("test got msg", msg => {

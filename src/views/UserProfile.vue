@@ -38,7 +38,7 @@
             and so.
             We are living in {{dog.address}}
           </p>
-            <span class="meta more" tooltip="chat">
+            <span v-if="notMyProfile" class="meta more" tooltip="chat">
             <button @click.prevent="openChat(dog)">
               <b-icon icon="chat-processing"></b-icon>
             </button>
@@ -97,7 +97,7 @@
               <user-gallery :user="dog"></user-gallery>
             </div>
             <div style="width: 100%;" v-if="this.comp==='Friends'">
-              <user-friends @removeUser="removeUser" @goTO="onGoTo" :user="dog"></user-friends>
+              <user-friends @openChat ="openChat" @removeUser="removeUser" @goTO="onGoTo" :user="dog"></user-friends>
             </div>
             <div style="width: 100%;" v-if="this.comp==='Messages'">
               <user-messages :user="dog"></user-messages>
@@ -144,13 +144,19 @@ export default {
     this.$store.dispatch({ type: "loggedInUser" });
   },
   methods: {
-    openChat(dog) {
-      this.$store.dispatch({ type: "isChatOpen", dog }).then(() => {
+        openChat(dog) {
+       console.log('lalalal', dog)
+      this.$store.dispatch({type:"loadDogById" , dogId: dog.userId})
+      .then(()=>{
+        const curDog = this.$store.getters.getDog
+        console.log('curr dog', curDog)
+      this.$store.dispatch({ type: "isChatOpen", curDog }).then(() => {
         const loggedUser = this.$store.getters.getcurrLoggedinUser[0];
         if (this.$store.getters.isChatOpen)
-          eventBus.$emit("chatOpen", dog, loggedUser);
+          eventBus.$emit("chatOpen", curDog, loggedUser);
         socket.emit("chat join", this.$store.getters.getcurrLoggedinUser[0]);
       });
+      }) 
     },
 
     toggleNav() {
