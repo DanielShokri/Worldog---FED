@@ -64,7 +64,7 @@ export default {
     },
      loggedinUser() {
       if (!this.$store.getters.getcurrLoggedinUser) return;
-      return this.$store.getters.getcurrLoggedinUser[0];
+      return this.$store.getters.getcurrLoggedinUser;
     },
    }
 }

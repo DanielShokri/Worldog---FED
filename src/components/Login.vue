@@ -53,10 +53,10 @@ export default {
       this.$store
         .dispatch({ type: "userLogin", currUser: this.user })
         .then(res => {
-          socket.emit("chat join", this.$store.getters.getcurrLoggedinUser[0]);
+          socket.emit("chat join", this.$store.getters.getcurrLoggedinUser);
           socket.emit(
             "user login",
-            this.$store.getters.getcurrLoggedinUser[0]._id
+            this.$store.getters.getcurrLoggedinUser._id
           );
           this.$toast.open({
             message: "Login Successfully!",

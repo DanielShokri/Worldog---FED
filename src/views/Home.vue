@@ -24,8 +24,8 @@
 
     <section class="hero parks-section">
       <div class="hero-body">
-        <h1 class="parks-title1">
-          <strong style="margin-left: 15px;">Nearby Parks</strong>
+        <h1 style="margin-left: 15px;" class="parks-title1">
+          <strong>Nearby Parks</strong>
         </h1>
         <park-list></park-list>
         <h1 @click="seeMoreParks" class="see-more">
@@ -45,8 +45,12 @@
             :dogs="dogsToShow"
             @chatWith="userChatWith"
             @delete="deleteDog"
+<<<<<<< HEAD
             :loggedinUser="loggedInUser"
             @openChat ="openChat"
+=======
+            :loggedinUser="currUser"
+>>>>>>> d94f472f0b48cec54619fe9fea917a9a1f743bef
           ></dog-list>
 
           <h1 @click="seeMore" class="see-more">
@@ -59,7 +63,8 @@
     </div>
     <footer>
       <div class="content has-text-centered">
-        MEET<strong>HAV</strong> by Daniel Shokri ,Idan Elbaz and Chen Mordechai
+        MEET
+        <strong>HAV</strong> by Daniel Shokri ,Idan Elbaz and Chen Mordechai
       </div>
     </footer>
   </section>
@@ -77,11 +82,10 @@ export default {
   name: "home",
 
   created() {
+    this.$store.dispatch({ type: "loggedInUser" }).then(()=> { 
+      this.currUser = this.$store.getters.getcurrLoggedinUser;
+    })
     this.$store.dispatch({ type: "loadCompInProfile", comp: "gallery" });
-    this.$store.dispatch({ type: "loggedInUser" }).then(() => {
-      this.loggedInUser = this.$store.getters.getLoggedinUser;
-    });
-
     this.$store.dispatch({ type: "loadDogs" }).then(() => {
       this.$store.dispatch({ type: "loadUserLoc" }).then(() => {
         this.$store.dispatch({ type: "loadSortDogs" }).then(() => {
@@ -94,22 +98,17 @@ export default {
     return {
       dogs: null,
       numOfParks: 4,
-      loggedInUser: null
+      currUser: null,
     };
   },
   computed: {
-    loggedinUser() {
-      if (!this.$store.getters.getcurrLoggedinUser) return;
-      return this.$store.getters.getcurrLoggedinUser[0];
-    },
-
     dogsToShow() {
-      if (!this.loggedinUser) {
+      if (this.currUser === null) {
         var newDogs = [this.dogs[0], this.dogs[1], this.dogs[2], this.dogs[3]];
         return newDogs;
       } else {
         const dogsToShow = this.dogs.filter(
-          dog => dog._id !== this.loggedinUser._id
+          dog => dog._id !== this.currUser._id
         );
         var newDogs = [
           dogsToShow[0],
@@ -119,7 +118,7 @@ export default {
         ];
         return newDogs;
       }
-    }
+    }, 
   },
   methods: {
     openChat(dog){
@@ -167,7 +166,7 @@ export default {
     font-size: 22px;
   }
 }
-footer{
+footer {
   padding: 30px 10px;
 }
 .parks-section {
@@ -232,15 +231,15 @@ h1:hover {
     padding: 0;
   }
   .container {
-  h1 {
-    font-size: 40px;
+    h1 {
+      font-size: 40px;
+    }
+    h2 {
+      font-size: 16px;
+    }
   }
-  h2 {
-    font-size: 16px;
-  }
-}
-    .home-logo {
+  .home-logo {
     padding-right: 0px;
-}
+  }
 }
 </style>

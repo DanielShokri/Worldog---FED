@@ -88,7 +88,7 @@ export default {
   },
   methods: {
     sendMsg() {
-      const currUserLogin = this.$store.getters.getcurrLoggedinUser[0].owner
+      const currUserLogin = this.$store.getters.getcurrLoggedinUser.owner
         .fullName;
 
       const msg = {
@@ -101,7 +101,7 @@ export default {
       this.txt = "";
     },
     userIsTyping() {
-      const currUserLogin = this.$store.getters.getcurrLoggedinUser[0].owner
+      const currUserLogin = this.$store.getters.getcurrLoggedinUser.owner
         .fullName;
       console.log(currUserLogin);
       socket.emit("user typing", {

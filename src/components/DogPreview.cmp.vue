@@ -63,7 +63,17 @@ export default {
 
   methods: {
     openChat(dog) {
+<<<<<<< HEAD
       this.$emit('openChat', dog)
+=======
+      this.$store.dispatch({ type: "isChatOpen", dog }).then(() => {
+        const loggedUser = this.$store.getters.getcurrLoggedinUser;
+        if (this.$store.getters.isChatOpen)
+          eventBus.$emit("chatOpen", dog, loggedUser);
+        socket.emit("chat join", this.$store.getters.getcurrLoggedinUser);
+      });
+      // this.$emit("chatWith", dog);
+>>>>>>> d94f472f0b48cec54619fe9fea917a9a1f743bef
     },
     
     plusDivs(diff) {
@@ -75,7 +85,7 @@ export default {
     },
 
     addFriend(dogId) {
-      if (!this.loggedinUser) {
+      if (this.loggedinUser === null) {
         this.$toast.open({
           message: "You need to login",
           type: "is-danger",
@@ -104,7 +114,7 @@ export default {
             socket.emit(
               "friend req",
               this.dog,
-              this.$store.getters.getcurrLoggedinUser[0]
+              this.$store.getters.getcurrLoggedinUser
             );
             this.$toast.open({
               message: "friend request successfully sent!",
@@ -141,7 +151,7 @@ export default {
             socket.emit(
               "friend like",
               this.dog,
-              this.$store.getters.getcurrLoggedinUser[0]
+              this.$store.getters.getcurrLoggedinUser
             );
           });
         }
