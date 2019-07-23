@@ -199,18 +199,14 @@ export default {
 footer {
   padding: 30px 10px;
 }
-.parks-section {
-  background-color: #f9f7f7 !important;
-}
-.dogs-section {
-  background-color: #a8e6cf !important;
-}
+
 .home-logo {
   min-width: 100%;
   padding-right: 150px;
 }
 .hero-body {
   padding: 1rem 2.5rem 0 2.5rem;
+  background-color: white;
 }
 
 h1 {
