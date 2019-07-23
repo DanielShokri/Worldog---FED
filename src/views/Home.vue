@@ -45,14 +45,9 @@
             :dogs="dogsToShow"
             @chatWith="userChatWith"
             @delete="deleteDog"
-<<<<<<< HEAD
             :loggedinUser="loggedInUser"
             @openChat ="openChat"
-=======
-            :loggedinUser="currUser"
->>>>>>> d94f472f0b48cec54619fe9fea917a9a1f743bef
           ></dog-list>
-
           <h1 @click="seeMore" class="see-more">
             See More
             <b-icon class="icon" icon="chevron-right"></b-icon>
