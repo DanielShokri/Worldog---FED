@@ -146,7 +146,7 @@ export default {
 }
 
 .top-section {
-  height: 31.25rem;
+  height: 37.25rem;
   width: 100vw;
   padding: 0;
   margin: 0 auto;
