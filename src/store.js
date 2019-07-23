@@ -279,7 +279,10 @@ export default new Vuex.Store({
         },
         isChatOpen(state) {
             return state.isChatOpen;
-        }
+        },
+        getUserLoc(state) {
+            return state.userLoc
+        },
     },
 
     actions: {
