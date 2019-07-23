@@ -45,7 +45,7 @@
             :dogs="dogsToShow"
             @chatWith="userChatWith"
             @delete="deleteDog"
-            :loggedinUser="loggedInUser"
+            :loggedinUser="currUser"
             @openChat ="openChat"
           ></dog-list>
           <h1 @click="seeMore" class="see-more">
