@@ -28,25 +28,25 @@
               <b-icon icon="thumb-up"></b-icon>
             </button>
           </span>
-          <span class="meta more" tooltip="Friendog">
+          <span class="meta" tooltip="Likes">
+            ({{dog.gotLikes.length}})
+            <i class="fa fa-eye"></i>
+          </span>
+          <span class="meta" tooltip="Friendog">
             <button @click="addFriend(dog._id)">
               <b-icon icon="account-plus"></b-icon>
             </button>
           </span>
-          <span class="meta more" tooltip="chat">
+          <span class="meta" tooltip="Friends">
+            ({{dog.friends.length}})
+            <i class="fa fa-share"></i>
+          </span>
+          <span class="meta" tooltip="chat">
             <button @click.prevent="openChat(dog)">
               <b-icon icon="chat-processing"></b-icon>
             </button>
           </span>
 
-          <span class="more stats" tooltip="Friends">
-            {{dog.friends.length}}
-            <i class="fa fa-share"></i>
-          </span>
-          <span class="more stats" tooltip="Likes">
-            {{dog.gotLikes.length}}
-            <i class="fa fa-eye"></i>
-          </span>
         </div>
       </div>
     </div>
@@ -54,8 +54,7 @@
 </template>
 
 <script>
-import socket from "../services/socket.service.js";
-import eventBus from "../eventBus.js";
+
 export default {
   props: ["dog", "loggedinUser"],
   data() {
@@ -64,13 +63,7 @@ export default {
 
   methods: {
     openChat(dog) {
-      this.$store.dispatch({ type: "isChatOpen", dog }).then(() => {
-        const loggedUser = this.$store.getters.getcurrLoggedinUser[0];
-        if (this.$store.getters.isChatOpen)
-          eventBus.$emit("chatOpen", dog, loggedUser);
-        socket.emit("chat join", this.$store.getters.getcurrLoggedinUser[0]);
-      });
-      // this.$emit("chatWith", dog);
+      this.$emit('openChat', dog)
     },
     
     plusDivs(diff) {
@@ -312,7 +305,9 @@ export default {
     border-top: 1px solid #eaf1f6;
     min-height: 50px;
     &__meta {
-      display: block;
+      display: flex;
+      align-items: center;
+      // display: block;
       min-height: 50px;
       padding: 12px 15px;
       box-sizing: border-box;

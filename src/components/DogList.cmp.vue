@@ -8,10 +8,12 @@
         :dog="dogToShow"
         @delete="emitDeleteDog"
         @chatWith="userChatWith"
+        @openChat ="openChat"
       ></dog-preview>
     </div>
     <v-flex class="onlyDesk" xs12 sm6 mb4 lg3 v-for="dog in dogs" :key="dog._id">
       <dog-preview
+              @openChat ="openChat"
         @chatWith="userChatWith"
         :loggedinUser="loggedinUser"
         :dog="dog"
@@ -37,6 +39,12 @@ export default {
     }
   },
   methods: {
+    openChat(dog){
+   this.$emit('openChat', dog)
+   console.log('list open')
+
+    },
+
     emitDeleteDog(dogId) {
       this.$emit("delete", dogId);
     },

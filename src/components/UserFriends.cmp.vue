@@ -8,7 +8,7 @@
         </h4>
         <br />
          <span v-if="myProfile" class="meta more chat" tooltip="chat">
-            <button @click="openChat(dog.userId)">
+            <button @click.stop.prevent="openChat(dog)">
               <b-icon icon="chat-processing"></b-icon>
             </button>
           </span>
@@ -29,10 +29,24 @@ export default {
   }),
   props: ["user"],
   methods: {
-     openChat() {
-      this.$store.dispatch({ type: "isChatOpen" });
-      console.log("chat is open");
+    openChat(dog) {
+      this.$emit('openChat', dog)
+      console.log('prev open')
     },
+    //   openChat(dog) {
+    //    console.log('lalalal', dog)
+    //   this.$store.dispatch({type:"loadDogById" , dogId: dog.userId})
+    //   .then(()=>{
+    //     const curDog = this.$store.getters.getDog
+    //     console.log('curr dog', curDog)
+    //   this.$store.dispatch({ type: "isChatOpen", curDog }).then(() => {
+    //     const loggedUser = this.$store.getters.getcurrLoggedinUser[0];
+    //     if (this.$store.getters.isChatOpen)
+    //       eventBus.$emit("chatOpen", curDog, loggedUser);
+    //     socket.emit("chat join", this.$store.getters.getcurrLoggedinUser[0]);
+    //   });
+    //   }) 
+    // },
     goToUser(dogId) {
       this.$emit("goTO", dogId);
     },

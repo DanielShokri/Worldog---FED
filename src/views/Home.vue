@@ -46,6 +46,7 @@
             @chatWith="userChatWith"
             @delete="deleteDog"
             :loggedinUser="loggedInUser"
+            @openChat ="openChat"
           ></dog-list>
 
           <h1 @click="seeMore" class="see-more">
@@ -70,6 +71,8 @@ import UserLiList from "../components/UserLiList.cmp";
 import ParkList from "../components/ParksList.cmp.vue";
 import DogList from "../components/DogList.cmp.vue";
 import UsersFilter from "../components/UsersFilter.cmp";
+import socket from "../services/socket.service.js";
+import eventBus from "../eventBus.js";
 export default {
   name: "home",
 
@@ -119,6 +122,14 @@ export default {
     }
   },
   methods: {
+    openChat(dog){
+       this.$store.dispatch({ type: "isChatOpen", dog }).then(() => {
+        const loggedUser = this.$store.getters.getcurrLoggedinUser[0];
+        if (this.$store.getters.isChatOpen)
+          eventBus.$emit("chatOpen", dog, loggedUser);
+        socket.emit("chat join", this.$store.getters.getcurrLoggedinUser[0]);
+      });
+    },
     seeMore() {
       this.$router.push("/user");
     },
