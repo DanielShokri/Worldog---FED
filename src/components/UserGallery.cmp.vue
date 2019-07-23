@@ -39,6 +39,10 @@ img {
   display: none;
 }
 
+.mobile-gallery{
+    display: none;
+}
+
 .gallery_item1 {
   grid-column: 1/2;
   grid-row: 1/2;
@@ -67,6 +71,12 @@ img {
 .gallery_item6 {
   grid-column: 2/3;
   grid-row: 4/5;
+}
+
+@media screen and(max-width: 770px) {
+    .mobile-gallery{
+    display: block;
+}
 }
 
 @media (min-width: 768px) {

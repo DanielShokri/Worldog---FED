@@ -1,25 +1,16 @@
 <template>
   <section>
-    <section class="hero top-section is-bold">
-      <div class="hero-head"></div>
-      <div class="hero-body top-section is-flex">
-        <div class="container">
-          <h1>
-            MEET
-            <span>HAV</span>
-          </h1>
-          <h2>
-            MEET NEW AND
-            INTRESTING DOGS NEARBY.
-          </h2>
-        </div>
-        <img class="home-logo" src="../../public/img/home.svg" alt />
-      </div>
-    </section>
-    <div class="box cta">
-      <p class="has-text-centered">
+    <div class="top-section">
+      <img class="mainImg" src="../../public/img/home.svg" />
+      <img class="mobileImg" src="../../public/img/home-mobile.svg" alt />
+      <div class="filterAndSelfContainer">
+        <h2 class="statment">
+          Meet new and
+          intresting
+          <br />dogs & people nearby
+        </h2>
         <UsersFilter @setFilter="setFilter"></UsersFilter>
-      </p>
+      </div>
     </div>
 
     <section class="hero parks-section">
@@ -100,6 +91,13 @@ export default {
       });
     });
   },
+  data() {
+    return {
+      dogs: null,
+      numOfParks: 4,
+      currUser: null
+    };
+  },
   computed: {
     dogsToShow() {
       if (this.currUser === null) {
@@ -154,6 +152,39 @@ export default {
 
 
 <style scoped lang="scss">
+.mobileImg {
+  display: none;
+}
+
+.top-section {
+  height: 31.25rem;
+  width: 100vw;
+  padding: 0;
+  margin: 0 auto;
+}
+
+.mainImg {
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  object-fit: cover;
+}
+
+.filterAndSelfContainer {
+  z-index: 1;
+  position: relative;
+  left: 2%;
+  bottom: 86%;
+  max-width: 29rem;
+}
+
+.statment {
+  padding-bottom: 1rem;
+  font-size: 2rem;
+  font-family: proximanova, helvetica neue, Helvetica, Arial, sans-serif;
+  font-weight: 700;
+}
+
 .container {
   h1 {
     font-size: 90px;
@@ -181,10 +212,7 @@ footer {
 .hero-body {
   padding: 1rem 2.5rem 0 2.5rem;
 }
-.top-section {
-  background-color: #97debe;
-  height: 566px;
-}
+
 h1 {
   font-size: 30px;
   text-align: left;
@@ -215,14 +243,26 @@ h1:hover {
   font-size: 17px;
 }
 
-@media screen and(max-width: 450px) {
+@media screen and(max-width: 955px) {
+  .statment {
+      font-size: 1.8rem;
+  }
+
+  .mainImg {
+    object-fit:fill;
+  }
+}
+
+
+
+@media screen and(max-width: 550px) {
   .home-logo {
     order: 2;
     min-width: 60%;
   }
   .top-section {
-    display: grid !important;
-    height: 496px;
+    // display: grid !important;
+    height: 400px;
   }
 
   .hero-body {
@@ -239,6 +279,18 @@ h1:hover {
   }
   .home-logo {
     padding-right: 0px;
+  }
+
+  .mainImg {
+    display: none;
+  }
+
+  .mobileImg {
+    display: block;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    object-fit: cover;
   }
 }
 </style>

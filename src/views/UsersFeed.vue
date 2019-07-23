@@ -39,10 +39,10 @@ export default {
   methods: {
     openChat(dog){
        this.$store.dispatch({ type: "isChatOpen", dog }).then(() => {
-        const loggedUser = this.$store.getters.getcurrLoggedinUser[0];
+        const loggedUser = this.$store.getters.getcurrLoggedinUser;
         if (this.$store.getters.isChatOpen)
           eventBus.$emit("chatOpen", dog, loggedUser);
-        socket.emit("chat join", this.$store.getters.getcurrLoggedinUser[0]);
+        socket.emit("chat join", this.$store.getters.getcurrLoggedinUser);
       });
     },
     setFilter(filterBy) {
