@@ -1,7 +1,50 @@
 <template>
   <section v-if="dog && comp">
-    <div class="profile">
+    <div class="profile-section">
       <user-gallery :user="dog"></user-gallery>
+    </div>
+
+    <div class="container">
+      <main>
+        <div class="row">
+          <div class="left col-lg-4">
+            <div class="photo-left">
+              <img class="photo" :src="imgToLoad" />
+            </div>
+          </div>
+        </div>
+        <h4 class="name">{{dog.owner.fullName}} and {{dog.preference.name}}</h4>
+
+        <div class="btn-wrapper" v-if="notMyProfile || !dog">
+          <span @click="addFriend(dog._id)" class="add-friend">Add Friend</span>
+          <!-- <span @click="addLike(dog._id)" class="like-friend">Like ({{dog.gotLikes.length}})</span> -->
+        </div>
+
+        <div class="btn-wrapper" v-if="!notMyProfile || !dog">
+          <span class="like-friend">{{dog.gotLikes.length}} Likes</span>
+        </div>
+
+    
+        <p class="desc">
+       ○  {{dog.owner.fullName}}</br>
+       ○  {{dog.owner.age}} year old</br>
+       ○  {{dog.preference.name}} is my dog</br>
+       ○  {{gender}} is {{dog.preference.type}}</br>
+       <span v-if="notMyProfile" class="meta more" tooltip="chat">
+            <button @click.prevent="openChat(dog)">
+              <b-icon icon="chat-processing"></b-icon>
+            </button>
+          </span>
+        </p>
+
+    <b-tabs animated position="is-centered">
+        <b-tab-item label="Pictures" icon="google-photos"></b-tab-item>
+        <b-tab-item label="Music" icon="library-music"></b-tab-item>
+        <b-tab-item label="Videos" icon="video"></b-tab-item>
+    </b-tabs>
+
+
+      </main>
     </div>
   </section>
   <!-- <div v-if="dog && comp" class="container">
@@ -144,19 +187,23 @@ export default {
     this.$store.dispatch({ type: "loggedInUser" });
   },
   methods: {
-        openChat(dog) {
-       console.log('lalalal', dog)
-      this.$store.dispatch({type:"loadDogById" , dogId: dog.userId})
-      .then(()=>{
-        const curDog = this.$store.getters.getDog
-        console.log('curr dog', curDog)
-      this.$store.dispatch({ type: "isChatOpen", curDog }).then(() => {
-        const loggedUser = this.$store.getters.getcurrLoggedinUser[0];
-        if (this.$store.getters.isChatOpen)
-          eventBus.$emit("chatOpen", curDog, loggedUser);
-        socket.emit("chat join", this.$store.getters.getcurrLoggedinUser[0]);
-      });
-      }) 
+    openChat(dog) {
+      console.log("lalalal", dog);
+      this.$store
+        .dispatch({ type: "loadDogById", dogId: dog.userId })
+        .then(() => {
+          const curDog = this.$store.getters.getDog;
+          console.log("curr dog", curDog);
+          this.$store.dispatch({ type: "isChatOpen", curDog }).then(() => {
+            const loggedUser = this.$store.getters.getcurrLoggedinUser[0];
+            if (this.$store.getters.isChatOpen)
+              eventBus.$emit("chatOpen", curDog, loggedUser);
+            socket.emit(
+              "chat join",
+              this.$store.getters.getcurrLoggedinUser[0]
+            );
+          });
+        });
     },
 
     toggleNav() {
@@ -289,6 +336,7 @@ export default {
 };
 </script>
 <style scoped>
+
 .profile {
   /* display: grid;
   grid-template-columns: repeat(8, 1fr);
@@ -304,12 +352,11 @@ body {
 }
 
 .container {
-  max-width: 1250px;
+  max-width: 1220px;
   margin: 30px auto 30px;
   padding: 0 !important;
   width: 100%;
-  background-color: #fff;
-  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1), 0 3px 6px rgba(0, 0, 0, 0.1);
+  background-color: #fafafa;
 }
 
 header {
@@ -363,6 +410,8 @@ main {
 }
 .btn-wrapper {
   padding: 20px;
+  text-align: left;
+  margin: 0 47px;
 }
 .active {
   width: 20px;
@@ -411,8 +460,9 @@ main {
   margin-top: 20px;
   font-family: "Open Sans";
   font-weight: 600;
-  font-size: 18pt;
+  font-size: 24pt;
   color: #777;
+      display: inline;
 }
 
 .info {
@@ -446,14 +496,13 @@ main {
 }
 
 .desc {
-  text-align: center;
+  text-align: left;
   margin-top: 25px;
-  margin: 5px 40px;
+  margin: 5px 67px;
   color: #999;
   font-size: 16pt;
   font-family: "Open Sans";
   padding-bottom: 15px;
-  border-bottom: 1px solid #ededed;
 }
 
 .social {
@@ -509,7 +558,7 @@ main {
   /* position: absolute;
   right: 8%; */
   /* top: 35px; */
-  font-size: 11pt;
+  font-size: 21px;
   background-color: #42b1fa;
   color: #fff;
   padding: 8px 15px;
@@ -529,13 +578,6 @@ main {
   font-family: "Montserrat", sans-serif;
   font-weight: 400;
   width: 250px;
-}
-
-.add-friend:hover {
-  box-shadow: 0 0 15px rgba(0, 0, 0, 0.2), 0 0 15px rgba(0, 0, 0, 0.2);
-}
-.like-friend:hover {
-  box-shadow: 0 0 15px rgba(0, 0, 0, 0.2), 0 0 15px rgba(0, 0, 0, 0.2);
 }
 
 @media (max-width: 990px) {

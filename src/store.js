@@ -46,6 +46,10 @@ export default new Vuex.Store({
                 }
             };
         },
+        setFilterBy(state, { filterBy }) {
+            state.filterBy = filterBy
+        },
+
         setLoginUser(state, {
             currUserLoggedIn
         }) {
@@ -123,7 +127,6 @@ export default new Vuex.Store({
         updateDogLikes(state, {
             updatedDogId
         }) {
-            console.log('store', updatedDogId)
             const dogIdx = state.dogs.findIndex(dog => dog._id === updatedDogId)
             var dog;
             state.dogs.forEach(currDog => {
@@ -248,7 +251,7 @@ export default new Vuex.Store({
         }
     },
     getters: {
-       
+
         compToShoe(state) {
             return state.compInProfile;
         },
@@ -437,13 +440,25 @@ export default new Vuex.Store({
             }
         },
 
-        async loadDogs(context, { filterBy }) {
+        async loadDogs(context) {
+            var dogs;
             try {
-                const dogs = await dogsService.query(filterBy)
+                if (context.state.filterBy === null) {
+                    var str = ""
+                    dogs = await dogsService.query(str)
+                } else {
+                    dogs = await dogsService.query(context.state.filterBy)
+                }
+
                 context.commit({
                     type: 'setDogs',
                     dogs
                 })
+                context.commit({
+                    type: 'setFilterBy',
+                    filterBy: ''
+                })
+
                 return dogs
             } catch (err) {
                 console.log(err);
@@ -569,12 +584,16 @@ export default new Vuex.Store({
             }
         },
 
-        goToPark(context, {
-            park
-        }) {
+        goToPark(context, { park }) {
             context.commit({
                 type: 'setCurrPark',
                 park
+            })
+        },
+        setFilter(context, { filterBy }) {
+            context.commit({
+                type: 'setFilterBy',
+                filterBy
             })
         }
 

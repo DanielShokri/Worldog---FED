@@ -2,19 +2,20 @@
   <v-layout row wrap v-if="dogs">
     <div>
       <dog-preview
+        style="width:307px;"
         class="onlyCell"
         @nextDog="plusDivs"
         :loggedinUser="loggedinUser"
         :dog="dogToShow"
         @delete="emitDeleteDog"
         @chatWith="userChatWith"
-        @openChat ="openChat"
+        @openChat="openChat"
         :userLoc="userLoc"
       ></dog-preview>
     </div>
     <v-flex class="onlyDesk" xs12 sm6 mb4 lg3 v-for="dog in dogs" :key="dog._id">
       <dog-preview
-              @openChat ="openChat"
+        @openChat="openChat"
         @chatWith="userChatWith"
         :loggedinUser="loggedinUser"
         :dog="dog"
@@ -29,10 +30,10 @@
 import DogPreview from "./DogPreview.cmp.vue";
 
 export default {
-  props: ["dogs", "loggedinUser" ,"userLoc"],
+  props: ["dogs", "loggedinUser", "userLoc"],
   data() {
     return {
-      indexRoll: 0,
+      indexRoll: 0
     };
   },
   computed: {
@@ -41,10 +42,9 @@ export default {
     }
   },
   methods: {
-    openChat(dog){
-   this.$emit('openChat', dog)
-   console.log('list open')
-
+    openChat(dog) {
+      this.$emit("openChat", dog);
+      console.log("list open");
     },
 
     emitDeleteDog(dogId) {
