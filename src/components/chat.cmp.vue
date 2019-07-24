@@ -18,9 +18,9 @@
           <!-- <div v-for="(message,idx) in messagess" :key="idx" class="message new">
           <figure class="avatar">
               <img :src="this.user.profileImg" />
-          </figure>{{message.txt}}
-          <div class="timestamp">{{timeAgo(Date.now())}}</div>
-          </div>-->
+          </figure>{{message.txt}} -->
+          <!-- <div class="timestamp">{{timeAgo(Date.now())}}</div> -->
+          <!-- </div> -->
         </div>
       </div>
       <form @submit.prevent="sendMsg">
@@ -52,7 +52,7 @@ export default {
       const members = [dog, loggedUser];
       this.members = members;
       socket.emit("test users chat", members);
-      console.log('chatttttttt',this.user)
+      console.log("chatttttttt", this.user);
       // console.log(loggedUser)
     });
     socket.on("test got msg", msg => {
@@ -194,7 +194,7 @@ Chat
   box-shadow: 0 5px 30px rgba(0, 0, 0, 0.2);
   // background: rgba(0, 0, 0, 0.5);
   background-color: white;
-  // border-radius: 20px;
+  border-radius: 2px;
   display: flex;
   justify-content: space-between;
   flex-direction: column;
@@ -207,15 +207,15 @@ Chat Title
   flex: 0 1 45px;
   position: relative;
   z-index: 2;
-  background: rgba(0, 0, 0, 0.2);
+  // background: rgba(0, 0, 0, 0.2);
+   background-color: #5ec8aa;
   // color: #fff;
   color: black;
   text-transform: uppercase;
   text-align: left;
   padding: 10px 10px 10px 50px;
 
-  h1
-{
+  h1 {
     font-weight: normal;
     font-size: 13px;
     // margin: 0;
@@ -224,15 +224,13 @@ Chat Title
     padding-top: 5px;
   }
 
- 
-
   .avatar {
     position: absolute;
     z-index: 1;
     top: 8px;
     left: 9px;
     // border-radius: 30px;
-    width: 50px;
+    width: 46px;
     // height: 30px;
     overflow: hidden;
     margin: 0;
@@ -249,14 +247,14 @@ Chat Title
 /*--------------------
 Messages
 --------------------*/
- 
+
 @media screen and(max-width: 1025px) {
   .chat {
     left: 82%;
     top: 60%;
   }
 }
-  
+
 @media screen and(max-width: 769px) {
   .chat {
     left: 80%;
@@ -277,11 +275,11 @@ Messages
 }
 .close-chat {
   // background-color: #eee;
-     position: absolute;
-    right: 17px;
-    color: white;
-    top: 14px;
-    z-index: 999;
+  position: absolute;
+  right: 17px;
+  color: black;
+  top: 14px;
+  z-index: 999;
 }
 
 .messages {
@@ -412,7 +410,8 @@ Message Box
 .message-box {
   flex: 0 1 40px;
   width: 100%;
-  background: rgba(0, 0, 0, 0.3);
+  background-color: #5ec8aa;
+  // background: rgba(0, 0, 0, 0.3);
   padding: 10px;
   position: relative;
 
@@ -422,9 +421,9 @@ Message Box
     outline: none !important;
     resize: none;
     // color: rgba(255, 255, 255, 0.7);
-    color:black;
-    font-size: 11px;
-    height: 17px;
+    color: black;
+    font-size: 13px;
+    height: 24px;
     margin: 0;
     padding-right: 20px;
     width: 265px;
@@ -449,7 +448,7 @@ Message Box
     border-radius: 10px;
     outline: none !important;
     transition: background 0.2s ease;
-    z-index:999;
+    z-index: 999;
 
     &:hover {
       background: #1d7745;
