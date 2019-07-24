@@ -200,7 +200,6 @@ export default {
   mounted() {},
   created() {
     this.comp = this.$store.getters.compToShoe;
-
     var dogId = this.$route.params.id;
     this.$store.dispatch({
       type: "loadDogById",
@@ -210,19 +209,26 @@ export default {
   },
   methods: {
     openChat(dog) {
-      console.log("lalalal", dog);
+      if(this.loggedinUser === null) { 
+        this.$toast.open({
+          message: "You need to login",
+          type: "is-danger",
+          duration: 2000
+        });
+        return
+      }
       this.$store
         .dispatch({ type: "loadDogById", dogId: dog.userId })
         .then(() => {
           const curDog = this.$store.getters.getDog;
           console.log("curr dog", curDog);
           this.$store.dispatch({ type: "isChatOpen", curDog }).then(() => {
-            const loggedUser = this.$store.getters.getcurrLoggedinUser[0];
+            const loggedUser = this.$store.getters.getcurrLoggedinUser;
             if (this.$store.getters.isChatOpen)
               eventBus.$emit("chatOpen", curDog, loggedUser);
             socket.emit(
               "chat join",
-              this.$store.getters.getcurrLoggedinUser[0]
+              this.$store.getters.getcurrLoggedinUser
             );
           });
         });
@@ -233,7 +239,7 @@ export default {
     },
 
     addLike(dogId) {
-      if (!this.loggedinUser) {
+      if (this.loggedinUser === null) {
         this.$toast.open({
           message: "You need to login",
           type: "is-danger",
@@ -259,7 +265,7 @@ export default {
       }
     },
     addFriend(dogId) {
-      if (!this.loggedinUser) {
+      if (this.loggedinUser === null) {
         this.$toast.open({
           message: "You need to login",
           type: "is-danger",
