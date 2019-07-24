@@ -194,7 +194,8 @@ export default {
   data() {
     return {
       isActive: false,
-      comp: ""
+      comp: "",
+      loggedinUser:null
     };
   },
   mounted() {},
@@ -205,7 +206,9 @@ export default {
       type: "loadDogById",
       dogId
     });
-    this.$store.dispatch({ type: "loggedInUser" });
+    this.$store.dispatch({ type: "loggedInUser" }).then(()=> { 
+      this.loggedinUser = this.$store.getters.getcurrLoggedinUser;
+    })
   },
   methods: {
     openChat(dog) {
@@ -271,6 +274,7 @@ export default {
           type: "is-danger",
           duration: 2000
         });
+        return
       } else {
         const userFriends = this.loggedinUser.friends;
         const userSentFriendReq = this.loggedinUser.sentFriendsReq;
@@ -332,10 +336,7 @@ export default {
         else return true;
       }
     },
-    loggedinUser() {
-      if (!this.$store.getters.getcurrLoggedinUser) return;
-      return this.$store.getters.getcurrLoggedinUser[0];
-    },
+
     dog() {
       return this.$store.getters.getDog;
     },
