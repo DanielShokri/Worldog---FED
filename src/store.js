@@ -440,13 +440,14 @@ export default new Vuex.Store({
             }
         },
 
-        async loadDogs(context, { filterBy }) {
+        async loadDogs(context) {
+            var dogs;
             try {
                 if (context.state.filterBy === null) {
                     var str = ""
-                    var dogs = await dogsService.query(str)
+                    dogs = await dogsService.query(str)
                 } else {
-                    var dogs = await dogsService.query(context.state.filterBy)
+                    dogs = await dogsService.query(context.state.filterBy)
                 }
 
                 context.commit({

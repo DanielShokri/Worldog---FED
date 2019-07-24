@@ -136,7 +136,6 @@ export default {
     },
     userChatWith(dog) {
       this.$emit("chatWith", dog);
-      // console.log('this is home', dog)
     },
     deleteDog(dogId) {
       this.$store.dispatch({
