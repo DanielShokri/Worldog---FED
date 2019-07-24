@@ -157,6 +157,7 @@ export default new Vuex.Store({
         updateDogFriendShip(state, {
             updatedDog
         }) {
+            console.log(state.dogs)
             const dogIdx = state.dogs.findIndex(dog => dog._id === updatedDog.userId)
             var dog;
             state.dogs.forEach(currDog => {
@@ -167,7 +168,7 @@ export default new Vuex.Store({
                 userImg: state.currUser.profileImg,
                 userName: state.currUser.owner.fullName
             });
-            state.currUser[0].friends.push(updatedDog)
+            state.currUser.friends.push(updatedDog)
             dog.sentFriendsReq.forEach((id, idx) => {
                 if (id === state.currUser._id)
                     dog.sentFriendsReq.splice(idx, 1);
