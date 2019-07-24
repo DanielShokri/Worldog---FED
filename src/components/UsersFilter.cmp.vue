@@ -29,7 +29,6 @@ export default {
   methods: {
     searchUser() {
       this.$emit("setFilter", this.filterBy);
-      this.$router.push("/user");
     }
   }
 };

@@ -51,6 +51,7 @@
 </template>
 
 <script>
+import socket from '../services/socket.service.js'
 
 export default {
   props: ["dog", "loggedinUser","userLoc"],
@@ -115,7 +116,7 @@ export default {
     },
     addLike(dogId) {
       console.log(this.loggedinUser);
-      if (!this.loggedinUser) {
+      if (this.loggedinUser === null) {
         this.$toast.open({
           message: "You need to login",
           type: "is-danger",
