@@ -9,25 +9,22 @@
         <div class="row">
           <div class="left col-lg-4">
             <div class="photo-left">
-              <img class="photo" :src="imgToLoad" />
+              <div class="contain-flex">
+                <img class="photo" :src="imgToLoad" />
+                <h4 class="name">{{dog.owner.fullName}} and {{dog.preference.name}}</h4>
+                <div class="btn-wrapper" v-if="notMyProfile || !dog">
+                  <span @click="addFriend(dog._id)" class="add-friend">Add Friend</span>
+                </div>
+              </div>
             </div>
           </div>
         </div>
-        <h4 class="name">{{dog.owner.fullName}} and {{dog.preference.name}}</h4>
-
-        <div class="btn-wrapper" v-if="notMyProfile || !dog">
-          <span @click="addFriend(dog._id)" class="add-friend">Add Friend</span>
-          <!-- <span @click="addLike(dog._id)" class="like-friend">Like ({{dog.gotLikes.length}})</span> -->
-        </div>
-
         <div class="btn-wrapper" v-if="!notMyProfile || !dog">
           <span class="like-friend">{{dog.gotLikes.length}} Likes</span>
         </div>
-
-    
-        <p class="desc">
-       ○  {{dog.owner.fullName}}</br>
-       ○  {{dog.owner.age}} year old</br>
+        <!-- <p class="desc">
+       ○  {{dog.owner.fullName}},
+         {{dog.owner.age}} year old</br>
        ○  {{dog.preference.name}} is my dog</br>
        ○  {{gender}} is {{dog.preference.type}}</br>
        <span v-if="notMyProfile" class="meta more" tooltip="chat">
@@ -35,15 +32,52 @@
               <b-icon icon="chat-processing"></b-icon>
             </button>
           </span>
-        </p>
+        </p>-->
+        <!-- <div id="navbarBasicExample" class="navbar-menu" v-bind:class="{ 'is-active': isActive}">
+            <ul class="nav">
+              <li @click="openCopm('Gallery')">
+                <b-icon icon="image"></b-icon>Gallery
+              </li>
+              <li @click="openCopm('Friends')">
+                <b-icon icon="account-group"></b-icon>Friends
+              </li>
+              <li v-if="!notMyProfile || !dog" @click="openCopm('Messages')">
+                <b-icon icon="message-bulleted"></b-icon>Messages
+              </li>
+              <li v-if="!notMyProfile || !dog" @click="openCopm('Notfication')">
+                <b-icon icon="bell-ring"></b-icon>Notfication
+              </li>
+            </ul>
+        </div>-->
+        <!-- <b-tabs animated position="is-centered">
+        <b-tab-item @click="openCopm('Friends')" label="Friends" icon="google-photos"></b-tab-item>
+        <b-tab-item v-if="!notMyProfile || !dog" @click="openCopm('Messages')" label="Music" icon="library-music"></b-tab-item>
+        <b-tab-item v-if="!notMyProfile || !dog" @click="openCopm('Notfication')" label="Videos" icon="video"></b-tab-item>
+        </b-tabs>-->
+        <div class="row-comp">
+          <v-subheader>Friends</v-subheader>
+          <v-divider inset></v-divider>
 
-    <b-tabs animated position="is-centered">
-        <b-tab-item label="Pictures" icon="google-photos"></b-tab-item>
-        <b-tab-item label="Music" icon="library-music"></b-tab-item>
-        <b-tab-item label="Videos" icon="video"></b-tab-item>
-    </b-tabs>
+          <div style="width: 100%;">
+            <user-friends @openChat="openChat" @removeUser="removeUser" @goTO="onGoTo" :user="dog"></user-friends>
+          </div>
 
+          <v-subheader>Messages</v-subheader>
+          <v-divider inset></v-divider>
+          <div style="width: 100%;">
+            <user-messages :user="dog"></user-messages>
+          </div>
 
+          <v-subheader>Notfication</v-subheader>
+          <v-divider inset></v-divider>
+          <div style="width: 100%;">
+            <user-notfication
+              @rejectReq="rejectFriendReq"
+              @makeFriends="makeFriendship"
+              :user="dog"
+            ></user-notfication>
+          </div>
+        </div>
       </main>
     </div>
   </section>
@@ -336,12 +370,15 @@ export default {
 };
 </script>
 <style scoped>
+.contain-flex {
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+}
 
-.profile {
-  /* display: grid;
-  grid-template-columns: repeat(8, 1fr);
-  grid-template-rows: repeat(11, 5vw); */
-  /* grid-gap: 15px; */
+.row-comp {
+  grid-column: 4/8;
+  grid-row: 1/5;
 }
 
 /* _-------------_ */
@@ -377,8 +414,16 @@ header img {
   width: 100%;
 }
 
+.b-tabs {
+  grid-column: 3/8;
+  grid-row: 1/4;
+}
+
 main {
   padding: 20px 20px 0px 20px;
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  grid-template-rows: repeat(3, 150px);
 }
 
 .left {
@@ -462,7 +507,7 @@ main {
   font-weight: 600;
   font-size: 24pt;
   color: #777;
-      display: inline;
+  display: inline;
 }
 
 .info {
@@ -498,11 +543,12 @@ main {
 .desc {
   text-align: left;
   margin-top: 25px;
-  margin: 5px 67px;
+  margin: 61px 67px;
   color: #999;
   font-size: 16pt;
   font-family: "Open Sans";
   padding-bottom: 15px;
+  grid-column: 1/3;
 }
 
 .social {
