@@ -89,13 +89,17 @@ export default {
         });
       });
     });
-  },
-  data() {
-    return {
-      dogs: null,
-      numOfParks: 4,
-      currUser: null
-    };
+    eventBus.$on('userLogin', ()=> { 
+      this.$store.dispatch({ type: "loggedInUser" }).then(() => {
+      this.currUser = this.$store.getters.getcurrLoggedinUser;
+    });
+    })
+
+    eventBus.$on('userLoggedOut',()=> { 
+       this.$store.dispatch({ type: "loggedInUser" }).then(() => {
+      this.currUser = this.$store.getters.getcurrLoggedinUser;
+    });
+    })
   },
   computed: {
     dogsToShow() {
