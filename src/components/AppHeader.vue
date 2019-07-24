@@ -25,22 +25,22 @@
     </div>
 
     <div id="navbarBasicExample" class="navbar-menu" v-bind:class="{ 'is-active': isActive}">
-      <!-- <div class="navbar-start">
-      </div> -->
+      <div class="navbar-start">
+      </div>
       <div class="navbar-end">
       <div v-if="getUser === null">
         <div class="navbar-item">
           <div class="buttons" style="justify-content: center;">
-        <router-link class="navbar-item home" to="/">Home</router-link>
-        <router-link class="navbar-item" to="/user">Friends</router-link>
-            <router-link  class="navbar-item " to="/signup">Sign Up</router-link>
-            <button class="navbar-item login" @click="cardModal()">Log In</button>
+        <router-link @click.native="toggleNav" class="navbar-item home" to="/">Home</router-link>
+        <router-link @click.native="toggleNav" class="navbar-item" to="/user">Friends</router-link>
+            <router-link  @click.native="toggleNav"  class="navbar-item " to="/signup">Sign Up</router-link>
+            <button class="navbar-item login" v-on:click="toggleNav" @click="cardModal()" >Log In</button>
           </div>
         </div>
       </div>
       <div v-if="getUser !== null" class="navbar-menu" v-bind:class="{ 'is-active': isActive}">
-        <router-link class="navbar-item home" to="/">Home</router-link>
-        <router-link class="navbar-item" to="/user">Users</router-link>
+        <router-link @click.native="toggleNav" class="navbar-item home" to="/">Home</router-link>
+        <router-link  @click.native="toggleNav" class="navbar-item" to="/user">Friends</router-link>
             <p class="navbar-item"><b> {{getUser.owner.fullName}}</b></p>
           <b-dropdown position="is-bottom-left" aria-role="menu">
             <a class="navbar-item" slot="trigger" role="button">
@@ -52,15 +52,15 @@
               <span> Menu</span>
               <b-icon icon="menu-down"></b-icon>
             </a>
-            <b-dropdown-item @click="goToMyNotfication" aria-role="menuitem">
+            <b-dropdown-item @click.native="toggleNav" @click="goToMyNotfication" aria-role="menuitem">
               <b-icon icon="bell"></b-icon>Notification's <span v-if="getNotfications">({{getNotfications.length}}) </span>
             </b-dropdown-item>
-            <b-dropdown-item @click="goToMyProfile" value="settings">
+            <b-dropdown-item  @click.native="toggleNav" @click="goToMyProfile" value="settings">
               <b-icon icon="settings"></b-icon>Profile
             </b-dropdown-item>
             <hr class="dropdown-divider" aria-role="menuitem" />
-            <b-dropdown-item value="logout" @click="userLogout" aria-role="menuitem">
-              <b-icon icon="logout"></b-icon>Logout
+            <b-dropdown-item value="logout"  @click.native="toggleNav" @click="userLogout" aria-role="menuitem">
+              <b-icon  icon="logout"></b-icon>Logout
             </b-dropdown-item>
           </b-dropdown>
           </div>
