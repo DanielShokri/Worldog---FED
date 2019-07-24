@@ -1,5 +1,5 @@
 <template>
-  <div class="grid" v-touch:swipe="swipeHandler">
+  <div class="grid" v-touch:swipe="swipeHandler" v-if="dog">
     <div class="card">
       <div
         @click="openProfile(dog._id)"
@@ -62,6 +62,14 @@ export default {
   methods: {
     
     openChat(dog) {
+      if(this.loggedinUser === null) { 
+          this.$toast.open({
+          message: "You need to login",
+          type: "is-danger",
+          duration: 2000
+        });
+        return
+      }
       this.$emit('openChat', dog)
     },
     

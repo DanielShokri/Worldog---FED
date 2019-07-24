@@ -389,10 +389,10 @@ export default new Vuex.Store({
             // console.log('dog id', dogId)
             try {
                 const updateDogId = await dogsService.addLike(dogId)
-                // console.log('const', updateDogId)
+                    // console.log('const', updateDogId)
                 context.commit({
                     type: 'updateDogLikes',
-                    updateDogId:updateDogId
+                    updateDogId: updateDogId
                 })
                 return updateDogId
             } catch (err) {
@@ -558,7 +558,7 @@ export default new Vuex.Store({
         async loggedInUser(context) {
             try {
                 const userLoggedNow = await dogsService.getLoggedinUser()
-                if (!userLoggedNow) {
+                if (userLoggedNow === null) {
                     context.commit({
                         type: 'setLoggedUser',
                         userLoggedNow: null

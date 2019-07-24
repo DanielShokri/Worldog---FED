@@ -51,12 +51,12 @@ export default {
       this.$emit("delete", dogId);
     },
     plusDivs(diff) {
-      if (this.indexRoll >= 0 && this.indexRoll < 4) {
-        if (diff === 1 && this.indexRoll === 3) {
+      if (this.indexRoll >= 0 && this.indexRoll < this.dogs.length) {
+        if (diff === 1 && this.indexRoll === this.dogs.length-1) {
           this.indexRoll = 0;
           this.dogToShow;
         } else if (diff === -1 && this.indexRoll === 0) {
-          this.indexRoll = 3;
+          this.indexRoll = this.dogs.length -1;
           this.dogToShow;
         } else {
           this.indexRoll += diff;

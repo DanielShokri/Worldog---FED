@@ -89,8 +89,18 @@ export default {
         });
       });
     });
+    eventBus.$on('userLogin', ()=> { 
+      this.$store.dispatch({ type: "loggedInUser" }).then(() => {
+      this.currUser = this.$store.getters.getcurrLoggedinUser;
+    });
+    })
+
+    eventBus.$on('userLoggedOut',()=> { 
+       this.$store.dispatch({ type: "loggedInUser" }).then(() => {
+      this.currUser = this.$store.getters.getcurrLoggedinUser;
+    });
+    })
   },
- 
   computed: {
     dogsToShow() {
       if (this.currUser === null) {

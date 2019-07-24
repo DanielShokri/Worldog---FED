@@ -102,6 +102,7 @@ export default {
       return marker;
     },
     dogsToShowFriends() {
+      if(this.currUser ===null) return;
       var marker = [];
       for (var i = 0; i < this.friends.length; i++) {
         marker.push({
@@ -158,6 +159,9 @@ export default {
       this.$store.dispatch({ type: "loggedInUser" }).then(() => {
         this.dogs = this.$store.getters.dogsToShow;
         this.currUser = this.$store.getters.getLoggedinUser;
+        if(this.currUser === null) { 
+          this.currUser = {friends:[]};
+        }
         if (this.currUser.friends.length > 0) {
           for (var i = 0; i < this.currUser.friends.length; i++) {
             for (var j = 0; j < this.dogs.length; j++) {
@@ -171,7 +175,7 @@ export default {
           return dog
         })
         dogsService.getPosition().then(pos => {
-          if (this.currUser)
+          if (this.currUser ==! null)
             var toShow = `<p>${this.currUser.owner.fullName}</p>`;
           else var toShow = `<p>Guest</p>`;
           this.userLoc = {

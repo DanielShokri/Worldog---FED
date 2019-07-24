@@ -12,6 +12,7 @@
 import AppHeader from "./components/AppHeader.vue";
 import socket from "./services/socket.service.js";
 import chat from "./components/chat.cmp.vue";
+import eventBus from "./eventBus.js"
 
 export default {
   components: {
@@ -52,13 +53,20 @@ export default {
 //     });
 
 
-    socket.on("you got liked", user => {
+    socket.on("friend like sent", user => {
       this.$toast.open({
         message: `You have got liked by ${user}`,
         type: "is-success"
       });
-       this.$store.dispatch({ type: "loadDogs" });
     });
+
+    eventBus.$on('userLogin', ()=> { 
+      this.$store.dispatch({ type: "loggedInUser" });
+    })
+
+    eventBus.$on('userLoggedOut', ()=> {
+       this.$store.dispatch({ type: "loggedInUser" });
+    })
     
   },
   computed: {

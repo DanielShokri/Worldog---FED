@@ -31,7 +31,6 @@ export default {
   display: flex;
   flex-direction: row;
   justify-content: space-around;
-  flex-wrap: wrap;
 }
 
 .parkImg {
@@ -58,8 +57,16 @@ export default {
 }
 
 @media only screen and (max-width: 700px) {
-.parkDetails {
-  flex-direction: column;
-}
+  .parkDetails {
+    flex-direction: column;
+  }
+
+  .list {
+    padding-left: 0;
+    min-width: 100vw;
+  }
+  .parkDetails {
+    height: 100vh;
+  }
 }
 </style>

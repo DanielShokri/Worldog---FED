@@ -34,6 +34,7 @@
 
 <script>
 import socket from "../services/socket.service.js";
+import eventBus from "../eventBus.js"
 
 export default {
   data() {
@@ -53,6 +54,7 @@ export default {
       this.$store
         .dispatch({ type: "userLogin", currUser: this.user })
         .then(res => {
+          eventBus.$emit('userLogin')
           socket.emit("chat join", this.$store.getters.getcurrLoggedinUser);
           socket.emit(
             "user login",

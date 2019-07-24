@@ -1,7 +1,7 @@
 <template>
   <section class="userLiList" v-if="dogs && currPark">
     <v-layout row>
-      <v-flex style="padding-right: 40px;padding-left: 40px; min-width:300px;">
+      <v-flex class="containor">
         <v-card>
           <v-toolbar color="teal" dark>
             <!-- <v-toolbar-side-icon></v-toolbar-side-icon> -->
@@ -65,8 +65,8 @@ export default {
     distanceInKm(dog) {
       return dog.distanceValueFromUser / 1000;
     },
-    dogsToShow(){ 
-      var dogsInPark=[];
+    dogsToShow() {
+      var dogsInPark = [];
       for (var i = 0; i < this.dogs.length; i++) {
         var lat1 = this.dogs[i].location.lat;
         var lon1 = this.dogs[i].location.lng;
@@ -86,7 +86,7 @@ export default {
             Math.cos(lat2);
         var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
         var distance = R * c;
-        if(distance<=1) dogsInPark.push(this.dogs[i]);
+        if (distance <= 1) dogsInPark.push(this.dogs[i]);
         function toRad(Value) {
           return (Value * Math.PI) / 180;
         }
@@ -95,7 +95,6 @@ export default {
 
       // Converts numeric degrees to radians
     }
-    
   },
   methods: {
     goToUserProfile(dogId) {
@@ -115,3 +114,19 @@ export default {
   }
 };
 </script>
+
+<style>
+.container {
+  padding-right: 40px;
+  padding-left: 40px;
+  min-width: 300px;
+}
+
+@media only screen and (max-width: 700px) {
+  .containor {
+    margin-top: 25px;
+    padding-left: 0;
+    padding-right: 0;
+  }
+}
+</style>
