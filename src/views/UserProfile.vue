@@ -58,13 +58,13 @@
 
           <v-subheader>Notfication</v-subheader>
           <v-divider inset></v-divider>
-          <div id="notfication" name="notfication" style="width: 100%;">
+          <a id="notfication" name="notfication" style="width: 100%;">
             <user-notfication
               @rejectReq="rejectFriendReq"
               @makeFriends="makeFriendship"
               :user="dog"
             ></user-notfication>
-          </div>
+          </a>
         </div>
       </main>
     </div>

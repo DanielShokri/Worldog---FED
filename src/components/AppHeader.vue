@@ -52,8 +52,8 @@
               <span> Menu</span>
               <b-icon icon="menu-down"></b-icon>
             </a>
-            <b-dropdown-item  aria-role="menuitem">
-              <b-icon icon="bell"></b-icon><router-link :to="getLink" name="notfication">Notification's</router-link> <span v-if="getNotfications">({{getNotfications.length}}) </span>
+            <!-- <b-dropdown-item  aria-role="menuitem">
+              <b-icon icon="bell"></b-icon><router-link :to="getLink" name="notfication">Notification's</router-link> <span v-if="getNotfications">({{getNotfications.length}}) </span> -->
             <b-dropdown-item @click.native="toggleNav" @click="goToMyNotfication" aria-role="menuitem">
               <b-icon icon="bell"></b-icon>Notification's <span v-if="getNotfications">({{getNotfications.length}}) </span>
             </b-dropdown-item>
