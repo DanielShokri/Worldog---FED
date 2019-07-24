@@ -90,13 +90,7 @@ export default {
       });
     });
   },
-  data() {
-    return {
-      dogs: null,
-      numOfParks: 4,
-      currUser: null
-    };
-  },
+ 
   computed: {
     dogsToShow() {
       if (this.currUser === null) {
