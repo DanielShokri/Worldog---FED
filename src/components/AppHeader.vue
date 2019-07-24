@@ -32,7 +32,7 @@
         <div class="navbar-item">
           <div class="buttons" style="justify-content: center;">
         <router-link @click.native="toggleNav" class="navbar-item home" to="/">Home</router-link>
-        <router-link @click.native="toggleNav" class="navbar-item" to="/user">Friends</router-link>
+        <router-link @click.native="toggleNav" class="navbar-item" to="/user">Dogs around</router-link>
             <router-link  @click.native="toggleNav"  class="navbar-item " to="/signup">Sign Up</router-link>
             <button class="navbar-item login" v-on:click="toggleNav" @click="cardModal()" >Log In</button>
           </div>
@@ -40,7 +40,7 @@
       </div>
       <div v-if="getUser !== null" class="navbar-menu" v-bind:class="{ 'is-active': isActive}">
         <router-link @click.native="toggleNav" class="navbar-item home" to="/">Home</router-link>
-        <router-link  @click.native="toggleNav" class="navbar-item" to="/user">Friends</router-link>
+        <router-link  @click.native="toggleNav" class="navbar-item" to="/user">Dogs around</router-link>
             <p class="navbar-item"><b> {{getUser.owner.fullName}}</b></p>
           <b-dropdown position="is-bottom-left" aria-role="menu">
             <a class="navbar-item" slot="trigger" role="button">
