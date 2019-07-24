@@ -3,7 +3,7 @@
     <div class="profile-section">
       <user-gallery :user="dog"></user-gallery>
     </div>
-
+    <!-- {{dog.friends}} -->
     <div class="container">
       <main>
         <div class="row">
@@ -13,17 +13,24 @@
                 <div class="user-profile-img">
                   <img class="photo" :src="imgToLoad" />
                   <h4 class="name">{{dog.owner.fullName}} and {{dog.preference.name}}</h4>
-                  <div class="btn-wrapper" v-if="notMyProfile || !dog">
+                  <div
+                    class="btn-wrapper"
+                    :class="{alerdyFriend : isFriends}"
+                    v-if="notMyProfile || !dog"
+                  >
                     <span @click="addFriend(dog._id)" class="add-friend">Add Friend</span>
                   </div>
+                  <span class="like-friend">Likes ({{dog.gotLikes.length}})</span>
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <div class="btn-wrapper" v-if="!notMyProfile || !dog">
-          <span class="like-friend">{{dog.gotLikes.length}} Likes</span>
+
+        <div class="btn-wrapper" v-if="notMyProfile || !dog">
+          <!-- <span @click="addLike(dog._id)" class="like-friend">Like ({{dog.gotLikes.length}})</span> -->
         </div>
+
         <div class="row-comp">
           <v-subheader>About Me</v-subheader>
           <v-divider inset></v-divider>
@@ -60,6 +67,7 @@
           <v-divider inset></v-divider>
           <a id="notfication" name="notfication" style="width: 100%;">
             <user-notfication
+              v-if="!notMyProfile || !dog"
               @rejectReq="rejectFriendReq"
               @makeFriends="makeFriendship"
               :user="dog"
@@ -195,7 +203,8 @@ export default {
     return {
       isActive: false,
       comp: "",
-      loggedinUser:null
+      loggedinUser: null,
+      isFriends: false
     };
   },
   mounted() {},
@@ -206,19 +215,19 @@ export default {
       type: "loadDogById",
       dogId
     });
-    this.$store.dispatch({ type: "loggedInUser" }).then(()=> { 
+    this.$store.dispatch({ type: "loggedInUser" }).then(() => {
       this.loggedinUser = this.$store.getters.getcurrLoggedinUser;
-    })
+    });
   },
   methods: {
     openChat(dog) {
-      if(this.loggedinUser === null) { 
+      if (this.loggedinUser === null) {
         this.$toast.open({
           message: "You need to login",
           type: "is-danger",
           duration: 2000
         });
-        return
+        return;
       }
       this.$store
         .dispatch({ type: "loadDogById", dogId: dog.userId })
@@ -229,10 +238,7 @@ export default {
             const loggedUser = this.$store.getters.getcurrLoggedinUser;
             if (this.$store.getters.isChatOpen)
               eventBus.$emit("chatOpen", curDog, loggedUser);
-            socket.emit(
-              "chat join",
-              this.$store.getters.getcurrLoggedinUser
-            );
+            socket.emit("chat join", this.$store.getters.getcurrLoggedinUser);
           });
         });
     },
@@ -274,13 +280,14 @@ export default {
           type: "is-danger",
           duration: 2000
         });
-        return
+        return;
       } else {
         const userFriends = this.loggedinUser.friends;
         const userSentFriendReq = this.loggedinUser.sentFriendsReq;
         if (userFriends.find(friend => friend.userId === this.dog._id)) {
+          this.isFriends = false;
           this.$toast.open({
-            message: "You are alredy friend",
+            message: "You are already friend",
             type: "is-danger",
             duration: 2000
           });
@@ -370,7 +377,10 @@ export default {
   flex-direction: column;
   position: fixed;
 }
-
+.alerdyFriend {
+  background-color: #888;
+  color: #fff;
+}
 .row-comp {
   grid-column: 4/9;
   grid-row: 1/5;
