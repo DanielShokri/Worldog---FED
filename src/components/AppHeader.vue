@@ -52,8 +52,8 @@
               <span> Menu</span>
               <b-icon icon="menu-down"></b-icon>
             </a>
-            <b-dropdown-item @click="goToMyNotfication" aria-role="menuitem">
-              <b-icon icon="bell"></b-icon>Notification's <span v-if="getNotfications">({{getNotfications.length}}) </span>
+            <b-dropdown-item  aria-role="menuitem">
+              <b-icon icon="bell"></b-icon><router-link :to="getLink" name="notfication">Notification's</router-link> <span v-if="getNotfications">({{getNotfications.length}}) </span>
             </b-dropdown-item>
             <b-dropdown-item @click="goToMyProfile" value="settings">
               <b-icon icon="settings"></b-icon>Profile
@@ -92,7 +92,7 @@ export default {
     },
     goToMyNotfication() {
       this.$store.dispatch({ type: "loadCompInProfile", comp: "Notfication" });
-      this.$router.push(`/user/${this.getUser._id}`);
+      this.$router.push(`/user/${this.getUser._id}/#notfication`);
     },
     goToMyProfile() {
       this.$store.dispatch({ type: "loadCompInProfile", comp: "Gallery" });
@@ -124,6 +124,9 @@ export default {
     },
     getNotfications() {
       return this.$store.getters.getNotfications;
+    },
+    getLink(){
+      return `/user/${this.getUser._id}`
     }
   }
 };
@@ -165,7 +168,8 @@ padding: 4px 6px;
 margin-left: 10.5px;
 }
 .login:hover{
-  background-color: #5ec8aa
+  background-color: #5ec8aa;
+  color: #FFF;
 }
 .logo img{
   height: 70px;
