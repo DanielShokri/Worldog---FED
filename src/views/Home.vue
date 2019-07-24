@@ -51,7 +51,9 @@
     <footer>
       <div class="content has-text-centered">
         MEET
-        <strong>HAV</strong> by Daniel Shokri, Idan Elbaz and Chen Mordechai
+        <strong>HAV</strong>
+        <br>
+         by Daniel Shokri, Idan Elbaz and Chen Mordechai
       </div>
     </footer>
   </section>
