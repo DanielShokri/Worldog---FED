@@ -217,12 +217,12 @@ export default {
           const curDog = this.$store.getters.getDog;
           console.log("curr dog", curDog);
           this.$store.dispatch({ type: "isChatOpen", curDog }).then(() => {
-            const loggedUser = this.$store.getters.getcurrLoggedinUser[0];
+            const loggedUser = this.$store.getters.getcurrLoggedinUser;
             if (this.$store.getters.isChatOpen)
               eventBus.$emit("chatOpen", curDog, loggedUser);
             socket.emit(
               "chat join",
-              this.$store.getters.getcurrLoggedinUser[0]
+              this.$store.getters.getcurrLoggedinUser
             );
           });
         });
