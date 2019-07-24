@@ -5,7 +5,6 @@
       <button class="close-chat" @click="closeChat">X</button>
       <div class="chat-title">
         <h1>{{this.user.owner.fullName}}</h1>
-        <h2>Supah</h2>
         <figure class="avatar">
           <img :src="this.user.profileImg" />
         </figure>
@@ -126,8 +125,8 @@ Mixins
 --------------------*/
 @mixin center {
   position: fixed;
-  top: 65%;
-  left: 90%;
+  top: 60%;
+  left: 88%;
   transform: translate(-50%, -50%);
 }
 
@@ -193,8 +192,9 @@ Chat
   z-index: 2;
   overflow: hidden;
   box-shadow: 0 5px 30px rgba(0, 0, 0, 0.2);
-  background: rgba(0, 0, 0, 0.5);
-  border-radius: 20px;
+  // background: rgba(0, 0, 0, 0.5);
+  background-color: white;
+  // border-radius: 20px;
   display: flex;
   justify-content: space-between;
   flex-direction: column;
@@ -208,37 +208,36 @@ Chat Title
   position: relative;
   z-index: 2;
   background: rgba(0, 0, 0, 0.2);
-  color: #fff;
+  // color: #fff;
+  color: black;
   text-transform: uppercase;
   text-align: left;
   padding: 10px 10px 10px 50px;
 
-  h1,
-  h2 {
+  h1
+{
     font-weight: normal;
-    font-size: 10px;
-    margin: 0;
-    padding: 0;
+    font-size: 13px;
+    // margin: 0;
+    // padding: 0;
+    padding-left: 19px;
+    padding-top: 5px;
   }
 
-  h2 {
-    color: rgba(255, 255, 255, 0.5);
-    font-size: 8px;
-    letter-spacing: 1px;
-  }
+ 
 
   .avatar {
     position: absolute;
     z-index: 1;
     top: 8px;
     left: 9px;
-    border-radius: 30px;
-    width: 30px;
-    height: 30px;
+    // border-radius: 30px;
+    width: 50px;
+    // height: 30px;
     overflow: hidden;
     margin: 0;
     padding: 0;
-    border: 2px solid rgba(255, 255, 255, 0.24);
+    // border: 2px solid rgba(255, 255, 255, 0.24);
 
     img {
       width: 100%;
@@ -250,37 +249,45 @@ Chat Title
 /*--------------------
 Messages
 --------------------*/
-@media screen and(max-width: 376px) {
+ 
+@media screen and(max-width: 1025px) {
   .chat {
-    left: 50%;
-    top: 63%;
+    left: 82%;
+    top: 60%;
+  }
+}
+  
+@media screen and(max-width: 769px) {
+  .chat {
+    left: 80%;
+    top: 60%;
   }
 }
 @media screen and(max-width: 415px) {
   .chat {
     left: 50%;
-    top: 63%;
+    top: 60%;
   }
 }
-@media screen and(max-width: 769px) {
+@media screen and(max-width: 376px) {
   .chat {
-    left: 80%;
-    top: 76%;
-  }
-}
-@media screen and(max-width: 1025px) {
-  .chat {
-    left: 79%;
+    left: 50%;
     top: 60%;
   }
 }
 .close-chat {
-  background-color: #eee;
+  // background-color: #eee;
+     position: absolute;
+    right: 17px;
+    color: white;
+    top: 14px;
+    z-index: 999;
 }
 
 .messages {
   flex: 1 1 auto;
-  color: rgba(255, 255, 255, 0.5);
+  // color: rgba(255, 255, 255, 0.5);
+  color: black;
   overflow: hidden;
   position: relative;
   width: 100%;
@@ -310,7 +317,8 @@ Messages
       position: absolute;
       bottom: -15px;
       font-size: 9px;
-      color: rgba(255, 255, 255, 0.3);
+      // color: rgba(255, 255, 255, 0.3);
+      color: gray;
     }
 
     &::before {
@@ -343,7 +351,8 @@ Messages
 
     &.message-personal {
       float: right;
-      color: #fff;
+      // color: #fff;
+      color: black;
       text-align: right;
       background: linear-gradient(120deg, #248a52, #257287);
       border-radius: 10px 10px 0 10px;
@@ -412,7 +421,8 @@ Message Box
     border: none;
     outline: none !important;
     resize: none;
-    color: rgba(255, 255, 255, 0.7);
+    // color: rgba(255, 255, 255, 0.7);
+    color:black;
     font-size: 11px;
     height: 17px;
     margin: 0;
@@ -439,6 +449,7 @@ Message Box
     border-radius: 10px;
     outline: none !important;
     transition: background 0.2s ease;
+    z-index:999;
 
     &:hover {
       background: #1d7745;

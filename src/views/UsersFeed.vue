@@ -2,7 +2,14 @@
 <template>
   <section v-if="dogs && userLoc">
 <UsersFilter @setFilter="setFilter"></UsersFilter>
-  <dog-list :userLoc="userLoc" @openChat ="openChat" :loggedinUser="currUser" :dogs="dogs" @delete="deleteDog"></dog-list>
+  <dog-list 
+   :userLoc="userLoc"
+   @openChat ="openChat" 
+   :loggedinUser="currUser" 
+   :dogs="dogs" 
+   @delete="deleteDog"
+  @chatWith="userChatWith">
+   </dog-list>
   </section>
 </template>
 
@@ -54,7 +61,10 @@ export default {
         type: "deleteDog",
         dogId
       });
-    }
+    },
+    userChatWith(dog) {
+      this.$emit("chatWith", dog);
+    },
   },
 
   computed: {
