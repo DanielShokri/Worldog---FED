@@ -28,8 +28,8 @@
               {{notfication.userName}} Has sent you friend request
               <v-list-tile-content></v-list-tile-content>
               <v-list-tile-action>
-                <v-btn @click="confirmFriendShip(notfication)" icon ripple>Confirm</v-btn>
-                <v-btn @click="rejectFriendReq(notfication)" icon ripple>Reject</v-btn>
+                <v-btn @click="confirmFriendShip(notfication)" icon ripple><b-icon icon="account-check"></b-icon></v-btn>
+                <v-btn @click="rejectFriendReq(notfication)" icon ripple><b-icon icon="account-minus"></b-icon></v-btn>
               </v-list-tile-action>
             </v-list-tile>
           </v-list>
@@ -71,5 +71,9 @@ export default {
 <style scoped>
 .no-notification {
   margin: 0 auto;
+}
+
+.v-list__tile__action--stack{
+      flex-direction: row;
 }
 </style>

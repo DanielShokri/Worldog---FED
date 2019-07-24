@@ -79,6 +79,11 @@ export default {
   max-width: 150px;
   height: fit-content
 }
+@media (max-width: 550px) {
+  .card{
+    max-width: 147px;
+  }
+}
 .chat{
   position: relative;
   bottom: 0px;
