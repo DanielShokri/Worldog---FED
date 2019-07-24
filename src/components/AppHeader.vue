@@ -32,7 +32,7 @@
         <div class="navbar-item">
           <div class="buttons" style="justify-content: center;">
         <router-link class="navbar-item home" to="/">Home</router-link>
-        <router-link class="navbar-item" to="/user">Users</router-link>
+        <router-link class="navbar-item" to="/user">Friends</router-link>
             <router-link  class="navbar-item " to="/signup">Sign Up</router-link>
             <button class="navbar-item login" @click="cardModal()">Log In</button>
           </div>
@@ -158,6 +158,8 @@ b{
 .login{
 border: 1px solid rgb(48, 47, 47);
 border-radius: 3px;
+padding: 4px 6px;
+margin-left: 10.5px;
 }
 .login:hover{
   background-color: #5ec8aa
