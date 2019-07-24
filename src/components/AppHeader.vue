@@ -71,6 +71,8 @@
 
 <script>
 import Login from "./Login";
+import eventBus from "../eventBus.js"
+
 export default {
   data() {
     return {
@@ -107,6 +109,7 @@ export default {
     },
     userLogout() {
       this.$store.dispatch({ type: "userLogout" }).then(() => {
+        eventBus.$emit('userLoggedOut')
         this.$toast.open({
           message: "You have logout",
           type: "is-danger",
