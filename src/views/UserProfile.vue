@@ -10,10 +10,12 @@
           <div class="left col-lg-4">
             <div class="photo-left">
               <div class="contain-flex">
-                <img class="photo" :src="imgToLoad" />
-                <h4 class="name">{{dog.owner.fullName}} and {{dog.preference.name}}</h4>
-                <div class="btn-wrapper" v-if="notMyProfile || !dog">
-                  <span @click="addFriend(dog._id)" class="add-friend">Add Friend</span>
+                <div class="user-profile-img">
+                  <img class="photo" :src="imgToLoad" />
+                  <h4 class="name">{{dog.owner.fullName}} and {{dog.preference.name}}</h4>
+                  <div class="btn-wrapper" v-if="notMyProfile || !dog">
+                    <span @click="addFriend(dog._id)" class="add-friend">Add Friend</span>
+                  </div>
                 </div>
               </div>
             </div>
@@ -22,39 +24,25 @@
         <div class="btn-wrapper" v-if="!notMyProfile || !dog">
           <span class="like-friend">{{dog.gotLikes.length}} Likes</span>
         </div>
-        <!-- <p class="desc">
-       ○  {{dog.owner.fullName}},
-         {{dog.owner.age}} year old</br>
-       ○  {{dog.preference.name}} is my dog</br>
-       ○  {{gender}} is {{dog.preference.type}}</br>
-       <span v-if="notMyProfile" class="meta more" tooltip="chat">
-            <button @click.prevent="openChat(dog)">
-              <b-icon icon="chat-processing"></b-icon>
-            </button>
-          </span>
-        </p>-->
-        <!-- <div id="navbarBasicExample" class="navbar-menu" v-bind:class="{ 'is-active': isActive}">
-            <ul class="nav">
-              <li @click="openCopm('Gallery')">
-                <b-icon icon="image"></b-icon>Gallery
-              </li>
-              <li @click="openCopm('Friends')">
-                <b-icon icon="account-group"></b-icon>Friends
-              </li>
-              <li v-if="!notMyProfile || !dog" @click="openCopm('Messages')">
-                <b-icon icon="message-bulleted"></b-icon>Messages
-              </li>
-              <li v-if="!notMyProfile || !dog" @click="openCopm('Notfication')">
-                <b-icon icon="bell-ring"></b-icon>Notfication
-              </li>
-            </ul>
-        </div>-->
-        <!-- <b-tabs animated position="is-centered">
-        <b-tab-item @click="openCopm('Friends')" label="Friends" icon="google-photos"></b-tab-item>
-        <b-tab-item v-if="!notMyProfile || !dog" @click="openCopm('Messages')" label="Music" icon="library-music"></b-tab-item>
-        <b-tab-item v-if="!notMyProfile || !dog" @click="openCopm('Notfication')" label="Videos" icon="video"></b-tab-item>
-        </b-tabs>-->
         <div class="row-comp">
+          <v-subheader>About Me</v-subheader>
+          <v-divider inset></v-divider>
+          <p class="desc">
+            {{dog.owner.fullName}},
+            {{dog.owner.age}} year old
+            {{dog.preference.name}} is my dog
+            {{gender}} is {{dog.preference.type}}
+            <span
+              v-if="notMyProfile"
+              class="meta more"
+              tooltip="chat"
+            >
+              <button @click.prevent="openChat(dog)">
+                <b-icon icon="chat-processing"></b-icon>
+              </button>
+            </span>
+          </p>
+
           <v-subheader>Friends</v-subheader>
           <v-divider inset></v-divider>
 
@@ -377,7 +365,7 @@ export default {
 }
 
 .row-comp {
-  grid-column: 4/8;
+  grid-column: 4/9;
   grid-row: 1/5;
 }
 
@@ -422,8 +410,8 @@ header img {
 main {
   padding: 20px 20px 0px 20px;
   display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  grid-template-rows: repeat(3, 150px);
+  grid-template-columns: repeat(8, 1fr);
+  grid-template-rows: repeat(8, 100px);
 }
 
 .left {
@@ -434,11 +422,37 @@ main {
 }
 
 .photo {
-  /* width: 200px; */
   height: 200px;
   margin-top: -120px;
-  /* border-radius: 100px; */
   border: 4px solid #fff;
+}
+
+.btn-wrapper {
+  padding: 20px;
+  text-align: left;
+  margin: 0 81px;
+}
+
+@media (max-width: 575px) {
+  .contain-flex {
+    display: grid;
+    position: static;
+  }
+  .btn-wrapper {
+    margin: 0 54px;
+  }
+  .row {
+    display: grid;
+    grid-column: 4;
+  }
+  main {
+    grid-template-columns: repeat(8, 1fr);
+    grid-template-rows: repeat(12, 100px);
+  }
+  .row-comp {
+    grid-column: 1/9;
+    grid-row: 5/5;
+  }
 }
 
 @media (max-width: 800px) {
@@ -450,14 +464,10 @@ main {
     height: 200px;
   }
   .photo {
-    margin-top: -70px;
+    margin-top: 0;
   }
 }
-.btn-wrapper {
-  padding: 20px;
-  text-align: left;
-  margin: 0 47px;
-}
+
 .active {
   width: 20px;
   height: 20px;
@@ -507,7 +517,6 @@ main {
   font-weight: 600;
   font-size: 24pt;
   color: #777;
-  display: inline;
 }
 
 .info {
@@ -542,13 +551,9 @@ main {
 
 .desc {
   text-align: left;
-  margin-top: 25px;
-  margin: 61px 67px;
-  color: #999;
   font-size: 16pt;
   font-family: "Open Sans";
-  padding-bottom: 15px;
-  grid-column: 1/3;
+  grid-column: 7/4;
 }
 
 .social {
