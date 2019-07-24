@@ -123,6 +123,7 @@ export default new Vuex.Store({
         updateDogLikes(state, {
             updatedDogId
         }) {
+            console.log('store', updatedDogId)
             const dogIdx = state.dogs.findIndex(dog => dog._id === updatedDogId)
             var dog;
             state.dogs.forEach(currDog => {
@@ -382,11 +383,13 @@ export default new Vuex.Store({
         },
 
         async updateFriendLike(context, { dogId }) {
+            // console.log('dog id', dogId)
             try {
                 const updateDogId = await dogsService.addLike(dogId)
+                // console.log('const', updateDogId)
                 context.commit({
                     type: 'updateDogLikes',
-                    updateDogId
+                    updateDogId:updateDogId
                 })
                 return updateDogId
             } catch (err) {

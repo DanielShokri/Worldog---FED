@@ -11,7 +11,7 @@
       <section class="content">
         <button class="plus onlyCell" @click="plusDivs(-1)">&#10094;</button>
         <button class="minus onlyCell" @click="plusDivs(1)">&#10095;</button>
-        <p class="subtitle padding">{{park.distanceValueFromUser/1000}} km from you</p>
+        <p class="subtitle padding">{{distance/100}} km from you</p>
         <br />
         <p class="subtitle">There are {{distanceFromUsering}} dogs in park</p>
         <br />
@@ -61,6 +61,7 @@ export default {
     this.dogs = this.$store.getters.dogsToShow;
     this.user = this.$store.getters.getLoggedinUser;
     this.numOfStars = this.park.rating;
+   
   },
 
   methods: {
@@ -79,6 +80,11 @@ export default {
     }
   },
   computed: {
+    distance(){
+      if(!this.park.distanceValueFromUser) return 
+       var distance = this.park.distanceValueFromUser
+       return distance.toString().substring(0, 3)
+    },
     imgToLoad() {
       if (this.park.photos[1]) {
         return this.park.img;
@@ -173,13 +179,11 @@ body {
 main {
   background: white;
   color: #263238;
-  //   border-radius: 0.5rem;
   overflow: hidden;
-  // max-height: 350px;
   max-width: 307px;
   height: 380px;
   margin-bottom: 20px;
-  //   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+  box-shadow: 0 0.5px 0.5px rgba(10, 10, 10, 0.1), 0 0 0 1px rgba(10, 10, 10, 0.1);
 
   figure {
     padding: 0;

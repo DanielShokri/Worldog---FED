@@ -51,6 +51,7 @@
 </template>
 
 <script>
+import socket from "../services/socket.service.js";
 
 export default {
   props: ["dog", "loggedinUser","userLoc"],
@@ -179,7 +180,7 @@ export default {
         function toRad(Value) {
           return (Value * Math.PI) / 180;
         }
-        var shortDistance = distance.toString().substring(0, 5);
+        var shortDistance = distance.toString().substring(0, 4);
         return shortDistance
       },
   
@@ -232,7 +233,7 @@ export default {
 }
 .card {
   // background-color: white;
-  // box-shadow: 0 2px 3px rgba(10, 10, 10, 0.1), 0 0 0 1px rgba(10, 10, 10, 0.1);
+  box-shadow: 0 0.5px 0.5px rgba(10, 10, 10, 0.1), 0 0 0 1px rgba(10, 10, 10, 0.1);
   // color: #4a4a4a;
   // max-width: 100%;
   // position: relative;
@@ -358,9 +359,8 @@ export default {
         background-color: transparent;
         line-height: 26px;
         font-size: 16px;
-        margin-left: 4px;
         color: #b2c0c8;
-        margin-bottom: 10px;
+        margin-bottom: 6px;
       }
       .stats {
         float: right;
