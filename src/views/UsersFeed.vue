@@ -45,7 +45,9 @@ export default {
       });
     },
     setFilter(filterBy) {
-      this.$store.dispatch({ type: "loadDogs", filterBy });
+      this.$store.dispatch({ type: "setFilter", filterBy  });
+      this.$store.dispatch({ type: "loadDogs" })
+
     },
     deleteDog(dogId) {
       this.$store.dispatch({

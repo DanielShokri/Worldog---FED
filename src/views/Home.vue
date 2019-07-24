@@ -51,7 +51,7 @@
     <footer>
       <div class="content has-text-centered">
         MEET
-        <strong>HAV</strong> by Daniel Shokri ,Idan Elbaz and Chen Mordechai
+        <strong>HAV</strong> by Daniel Shokri, Idan Elbaz and Chen Mordechai
       </div>
     </footer>
   </section>
@@ -90,13 +90,7 @@ export default {
       });
     });
   },
-  data() {
-    return {
-      dogs: null,
-      numOfParks: 4,
-      currUser: null
-    };
-  },
+ 
   computed: {
     dogsToShow() {
       if (this.currUser === null) {
@@ -119,18 +113,20 @@ export default {
   methods: {
     openChat(dog) {
       this.$store.dispatch({ type: "isChatOpen", dog }).then(() => {
-        const loggedUser = this.$store.getters.getcurrLoggedinUser[0];
+        const loggedUser = this.$store.getters.getcurrLoggedinUser;
         if (this.$store.getters.isChatOpen)
           eventBus.$emit("chatOpen", dog, loggedUser);
-        socket.emit("chat join", this.$store.getters.getcurrLoggedinUser[0]);
+        socket.emit("chat join", this.$store.getters.getcurrLoggedinUser);
       });
     },
     seeMore() {
       this.$router.push("/user");
     },
     setFilter(filterBy) {
-      console.log('This is home filter', filterBy)
-      this.$store.dispatch({ type: "loadDogs", filterBy });
+      console.log(filterBy)
+      this.$store.dispatch({ type: "setFilter", filterBy }).then(()=> { 
+         this.$router.push("/user");
+      })
     },
     userChatWith(dog) {
       this.$emit("chatWith", dog);

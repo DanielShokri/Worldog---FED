@@ -46,6 +46,10 @@ export default new Vuex.Store({
                 }
             };
         },
+        setFilterBy(state, { filterBy }) {
+            state.filterBy = filterBy
+        },
+
         setLoginUser(state, {
             currUserLoggedIn
         }) {
@@ -67,7 +71,7 @@ export default new Vuex.Store({
                 state.dogs[i].distanceValueFromUser = res.elements[i].distance.value;
             }
             if (!state.currPark) {
-                state.dogs.sort(function (a, b) {
+                state.dogs.sort(function(a, b) {
                     return a.distanceValueFromUser - b.distanceValueFromUser;
                 });
             }
@@ -87,7 +91,7 @@ export default new Vuex.Store({
                 state.dogs[i].distanceTextFromMap = res.elements[i].distance.text;
                 state.dogs[i].distanceValueFromMap = res.elements[i].distance.value;
             }
-            state.dogs.sort(function (a, b) {
+            state.dogs.sort(function(a, b) {
                 return a.distanceValueFromUser - b.distanceValueFromUser;
             });
         },
@@ -382,11 +386,13 @@ export default new Vuex.Store({
         },
 
         async updateFriendLike(context, { dogId }) {
+            // console.log('dog id', dogId)
             try {
                 const updateDogId = await dogsService.addLike(dogId)
+                // console.log('const', updateDogId)
                 context.commit({
                     type: 'updateDogLikes',
-                    updateDogId
+                    updateDogId:updateDogId
                 })
                 return updateDogId
             } catch (err) {
@@ -434,14 +440,25 @@ export default new Vuex.Store({
             }
         },
 
-        async loadDogs(context, { filterBy }) {
+        async loadDogs(context) {
+            var dogs;
             try {
-                console.log('this is the filter in store', filterBy)
-                const dogs = await dogsService.query(filterBy)
+                if (context.state.filterBy === null) {
+                    var str = ""
+                    dogs = await dogsService.query(str)
+                } else {
+                    dogs = await dogsService.query(context.state.filterBy)
+                }
+
                 context.commit({
                     type: 'setDogs',
                     dogs
                 })
+                context.commit({
+                    type: 'setFilterBy',
+                    filterBy: ''
+                })
+
                 return dogs
             } catch (err) {
                 console.log(err);
@@ -567,12 +584,16 @@ export default new Vuex.Store({
             }
         },
 
-        goToPark(context, {
-            park
-        }) {
+        goToPark(context, { park }) {
             context.commit({
                 type: 'setCurrPark',
                 park
+            })
+        },
+        setFilter(context, { filterBy }) {
+            context.commit({
+                type: 'setFilterBy',
+                filterBy
             })
         }
 

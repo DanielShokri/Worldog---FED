@@ -28,6 +28,7 @@ export default {
     
   },
   created() {
+    this.$store.dispatch({ type: "loggedInUser" });
     socket.on("friend req sent", user => {
       console.log("Listen to emit");
       this.$toast.open({
@@ -46,13 +47,19 @@ export default {
       });
     });
 
+//  socket.on("you got notification", user => {
+//        this.$store.dispatch({ type: "loggedInUser" });
+//     });
+
+
     socket.on("you got liked", user => {
       this.$toast.open({
         message: `You have got liked by ${user}`,
         type: "is-success"
       });
+       this.$store.dispatch({ type: "loadDogs" });
     });
-    this.$store.dispatch({ type: "loggedInUser" });
+    
   },
   computed: {
     isChatOpen() {

@@ -7,7 +7,6 @@
         @click="goHome"
         src="https://i.imgur.com/d7kCfoE.png"
         width="170"
-        height="100"
       />
       <!-- https://i.ibb.co/n8DtFs5/logo.png -->
       <a
@@ -33,29 +32,28 @@
         <div class="navbar-item">
           <div class="buttons" style="justify-content: center;">
         <router-link class="navbar-item home" to="/">Home</router-link>
-        <router-link class="navbar-item" to="/user">Users</router-link>
+        <router-link class="navbar-item" to="/user">Friends</router-link>
             <router-link  class="navbar-item " to="/signup">Sign Up</router-link>
             <button class="navbar-item login" @click="cardModal()">Log In</button>
           </div>
         </div>
       </div>
       <div v-if="getUser !== null" class="navbar-menu" v-bind:class="{ 'is-active': isActive}">
+        <router-link class="navbar-item home" to="/">Home</router-link>
+        <router-link class="navbar-item" to="/user">Users</router-link>
+            <p class="navbar-item"><b> {{getUser.owner.fullName}}</b></p>
           <b-dropdown position="is-bottom-left" aria-role="menu">
             <a class="navbar-item" slot="trigger" role="button">
               <v-badge left>
                 <template v-slot:badge>
-                  <span v-if="getNotfications">{{getNotfications.length}}</span>
+                  <span v-if="getNotfications">{{getNotfications.length}} </span>
                 </template>
               </v-badge>
-              <span>Menu</span>
+              <span> Menu</span>
               <b-icon icon="menu-down"></b-icon>
             </a>
-            <b-dropdown-item custom aria-role="menuitem">
-              Logged as
-              <b>{{getUser.owner.fullName}}</b>
-            </b-dropdown-item>
             <b-dropdown-item @click="goToMyNotfication" aria-role="menuitem">
-              <b-icon icon="bell"></b-icon>Notification's
+              <b-icon icon="bell"></b-icon>Notification's <span v-if="getNotfications">({{getNotfications.length}}) </span>
             </b-dropdown-item>
             <b-dropdown-item @click="goToMyProfile" value="settings">
               <b-icon icon="settings"></b-icon>Profile
@@ -65,9 +63,9 @@
               <b-icon icon="logout"></b-icon>Logout
             </b-dropdown-item>
           </b-dropdown>
+          </div>
         </div>
         </div>
-      </div>
   </nav>
 </template>
 
@@ -137,6 +135,22 @@ export default {
 color: #5ec8aa;
 background-color: white;
 }
+.navbar-end a.navbar-item:focus-within{
+color:#4a4a4a;
+background-color: white;
+}
+.navbar-end a.home:focus-within{
+color:#5ec8aa;
+background-color: white;
+}
+p.navbar-item{
+  padding:0;
+  margin: 0;
+}
+b{
+  padding-left: 10.5px;
+  padding-right: 30px;
+}
 .navbar{
   height: 50px;
   padding: 0 10px;
@@ -144,9 +158,14 @@ background-color: white;
 .login{
 border: 1px solid rgb(48, 47, 47);
 border-radius: 3px;
+padding: 4px 6px;
+margin-left: 10.5px;
 }
 .login:hover{
   background-color: #5ec8aa
+}
+.logo img{
+  height: 70px;
 }
 .logo:hover {
   cursor: pointer;
@@ -155,5 +174,9 @@ border-radius: 3px;
   justify-content: center;
   align-items: baseline;
 }
-
-</style>
+ @media screen and (max-width: 1024px){
+b{
+  padding:0
+ }
+ }
+ </style>

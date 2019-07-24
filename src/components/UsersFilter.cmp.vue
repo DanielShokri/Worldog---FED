@@ -10,7 +10,7 @@
       class="users-search input"
       placeholder="Search your Dogfriends"
     />
-    <a @click.enter="searchUser" class="button is-dark search-btn">
+    <a @click.enter="searchUser" class="button search-btn">
       <b-icon icon="magnify"></b-icon>
     </a>
   </div>
@@ -29,7 +29,6 @@ export default {
   methods: {
     searchUser() {
       this.$emit("setFilter", this.filterBy);
-      this.$router.push("/user");
     }
   }
 };
@@ -45,6 +44,13 @@ export default {
   max-width: 462px;
   margin: 0 auto;
 }
+
+.search-btn{
+  background-color: #ffaa11;
+  border:  1px solid #ffaa11;
+
+}
+
 @media (max-width: 950px) {
   .users-search {
     width: 240px;
