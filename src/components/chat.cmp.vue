@@ -12,7 +12,9 @@
       <div class="messages">
         <div class="messages-content">
           <ul v-for="(message,idx) in messagess" :key="idx">
-            <li>{{message.from}} : {{message.txt}}</li>
+      
+            <li :class="{ 'message-from': message.from === user.owner.fullName }"
+            >{{message.from}} : {{message.txt}} </li>
           </ul>
           <p>{{msgUserTyping}}</p>
           <!-- <div v-for="(message,idx) in messagess" :key="idx" class="message new">
@@ -46,20 +48,29 @@
 import eventBus from "../eventBus.js";
 import socket from "../services/socket.service.js";
 export default {
+  data() {
+    return {
+      user: null,
+      members: null,
+      txt: "",
+      messagess: [],
+      msgUserTyping: "",
+      chatClosed: true,
+    };
+  },
   created() {
     eventBus.$on("chatOpen", (dog, loggedUser) => {
       this.user = dog;
       const members = [dog, loggedUser];
       this.members = members;
       socket.emit("test users chat", members);
-      console.log("chatttttttt", this.user);
-      // console.log(loggedUser)
     });
     socket.on("test got msg", msg => {
       this.messagess.push(msg);
     });
     socket.on("chat history", msgs => {
       this.messagess = msgs;
+
     });
     var timeOut = false;
     socket.on("user isTyping", msg => {
@@ -69,16 +80,6 @@ export default {
         this.msgUserTyping = "";
       }, 2500);
     });
-  },
-  data() {
-    return {
-      user: null,
-      members: null,
-      txt: "",
-      messagess: [],
-      msgUserTyping: "",
-      chatClosed: true
-    };
   },
   destroyed() {
     socket.removeListener("chat newMsg");
@@ -120,6 +121,7 @@ export default {
 
 
 <style lang="scss" scoped>
+
 /*--------------------
 Mixins
 --------------------*/
@@ -168,6 +170,15 @@ body {
 
 li {
   text-align: left;
+}
+.message-from{
+ color: #6135a0;
+  text-align: right;
+  
+}
+
+ul{
+  padding-right: 24px;
 }
 .bg {
   width: 100%;
