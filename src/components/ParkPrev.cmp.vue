@@ -15,28 +15,10 @@
         <br />
         <p class="subtitle">There are {{distanceFromUsering}} dogs in park</p>
         <br />
-        <p class="rate">
+        <p class="rate" v-if="park.rating" >
           <b-icon class="b-icon" icon="star"></b-icon>
           {{park.rating}} (1k+)
         </p>
-
-        <!-- <p class="subtitle" v-if="park.distanceValueFromUser">
-        {{park.rating}}
-        <b-icon v-if="numOfStars>=1" class="b-icon" icon="star-outline"></b-icon>
-        <b-icon v-if="numOfStars>=2" class="b-icon" icon="star-outline"></b-icon>
-        <b-icon v-if="numOfStars>=3" class="b-icon" icon="star-outline"></b-icon>
-        <b-icon v-if="numOfStars>=4" class="b-icon" icon="star-outline"></b-icon>
-        <b-icon v-if="numOfStars===5" class="b-icon" icon="star-outline"></b-icon>
-        &nbsp; &bull; &nbsp; 
-      </p>
-      <p class="subtitle" v-else>
-        {{numOfStars}}
-        <b-icon v-if="numOfStars>=1" class="b-icon" icon="star-outline"></b-icon>
-        <b-icon v-if="numOfStars>=2" class="b-icon" icon="star-outline"></b-icon>
-        <b-icon v-if="numOfStars>=3" class="b-icon" icon="star-outline"></b-icon>
-        <b-icon v-if="numOfStars>=4" class="b-icon" icon="star-outline"></b-icon>
-        <b-icon v-if="numOfStars===5" class="b-icon" icon="star-outline"></b-icon>&nbsp; &bull; &nbsp;1.4 km
-        </p>-->
 
       </section>
     </div>
