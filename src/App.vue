@@ -5,6 +5,13 @@
       <chat v-if="isChatOpen"></chat>
       <router-view />
     </v-content>
+    <footer>
+      <div class="content has-text-centered">
+        MEET
+        <strong>HAV</strong>
+        <br />by Daniel Shokri, Idan Elbaz and Chen Mordechai
+      </div>
+    </footer>
   </v-app>
 </template>
 
@@ -12,7 +19,7 @@
 import AppHeader from "./components/AppHeader.vue";
 import socket from "./services/socket.service.js";
 import chat from "./components/chat.cmp.vue";
-import eventBus from "./eventBus.js"
+import eventBus from "./eventBus.js";
 
 export default {
   components: {
@@ -25,9 +32,7 @@ export default {
       userChatWith: null
     };
   },
-  methods: {
-    
-  },
+  methods: {},
   created() {
     this.$store.dispatch({ type: "loggedInUser" });
     socket.on("friend req sent", user => {
@@ -48,10 +53,9 @@ export default {
       });
     });
 
-//  socket.on("you got notification", user => {
-//        this.$store.dispatch({ type: "loggedInUser" });
-//     });
-
+    //  socket.on("you got notification", user => {
+    //        this.$store.dispatch({ type: "loggedInUser" });
+    //     });
 
     socket.on("friend like sent", user => {
       this.$toast.open({
@@ -60,19 +64,18 @@ export default {
       });
     });
 
-    eventBus.$on('userLogin', ()=> { 
+    eventBus.$on("userLogin", () => {
       this.$store.dispatch({ type: "loggedInUser" });
-    })
+    });
 
-    eventBus.$on('userLoggedOut', ()=> {
-       this.$store.dispatch({ type: "loggedInUser" });
-    })
-    
+    eventBus.$on("userLoggedOut", () => {
+      this.$store.dispatch({ type: "loggedInUser" });
+    });
   },
   computed: {
     isChatOpen() {
       return this.$store.getters.isChatOpen;
-    },
+    }
   }
 };
 </script>
@@ -94,6 +97,10 @@ export default {
     &.router-link-exact-active {
       color: #42b983;
     }
+  }
+
+  footer {
+    padding: 30px 10px;
   }
 }
 </style>

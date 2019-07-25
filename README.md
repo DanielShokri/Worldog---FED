@@ -1,4 +1,4 @@
-# world-dog
+# MeetHav
 
 ## Project setup
 ```

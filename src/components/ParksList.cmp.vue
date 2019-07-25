@@ -1,5 +1,5 @@
 <template>
-  <section class="parksList" v-if="userLoc && gardens.length>0">
+  <section class="parksList" v-if="userLoc && gardens">
     <v-layout row wrap style="justify-content: space-between; padding:25px;">
       <div
         class="onlyDesk"
@@ -7,11 +7,11 @@
         :key="nearestGarden.id"
         
       >
-        <parkPrev style="margin-bottom: 20px;" :park="nearestGarden"></parkPrev>
+        <parkPrev style="margin-bottom: 20px;" v-if="nearestGarden" :park="nearestGarden"></parkPrev>
     </div>
 
       <div class="onlyCell">
-        <parkPrev @nextPark="plusDivs" style="margin: 0 auto;;" :park="parkToShow"></parkPrev>
+        <parkPrev v-if="parkToShow" @nextPark="plusDivs" style="margin: 0 auto;;" :park="parkToShow"></parkPrev>
       </div>
     </v-layout>
   </section>

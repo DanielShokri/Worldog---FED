@@ -48,14 +48,7 @@
         </div>
       </section>
     </div>
-    <footer>
-      <div class="content has-text-centered">
-        MEET
-        <strong>HAV</strong>
-        <br>
-         by Daniel Shokri, Idan Elbaz and Chen Mordechai
-      </div>
-    </footer>
+    
   </section>
 </template>
 
@@ -226,7 +219,7 @@ h1 {
     font-size: 30px;
   }
 }
-h1:hover {
+.see-more:hover {
   cursor: pointer;
 }
 .hero-body {
