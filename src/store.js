@@ -29,6 +29,9 @@ export default new Vuex.Store({
             state.isChatOpen = !state.isChatOpen
             state.currUserChatWith = dog
         },
+        openChat(state) {
+            state.isChatOpen = true;
+        },
         updateCompInProfile(state, {
             comp
         }) {
@@ -300,6 +303,12 @@ export default new Vuex.Store({
             context.commit({
                 type: 'setIsOpenChat',
                 dog
+            })
+        },
+
+        openChat(context) {
+            context.commit({
+                type: 'openChat',
             })
         },
 
