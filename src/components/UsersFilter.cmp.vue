@@ -34,30 +34,49 @@ export default {
 };
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .users-search {
-  max-width: 269px;
-  margin: 14px 4px 0px 4px;
+  max-width: 350px;
+  height: 48px;
+  /* margin-top: 14px; */
+  font-size: 19px;
+
 }
 
 .wrapper {
-  max-width: 462px;
-  margin: 0 auto;
+  /* max-width: 462px; */
+  /* margin: 0 auto; */
+  margin-left: 29px;
 }
 
-.search-btn{
+.search-btn {
   background-color: #ffaa11;
-  border:  1px solid #ffaa11;
-
+  border: 1px solid #ffaa11;
+  height: 48px;
+  width: 48px;
+    .mdi-24px.mdi:before {
+    font-size: 34px;
+  }
 }
 
 @media (max-width: 950px) {
   .users-search {
-    width: 240px;
+       max-width: 247px;
+    height: 38px;
+    /* margin-top: 14px; */
+    font-size: 16px;
   }
-}
+
 
 .search-btn {
-  margin-top: 14px;
+  /* margin-top: 14px; */
+  height: 38px;
+    width: 38px;
 }
+.wrapper {
+    margin-left: -15px;
+
+}
+}
+
 </style>

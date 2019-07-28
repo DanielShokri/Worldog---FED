@@ -12,7 +12,6 @@
       <div class="messages">
         <div class="messages-content">
           <ul v-for="(message,idx) in messagess" :key="idx">
-      
             <li :class="{ 'message-from': message.from === user.owner.fullName }"
             >{{message.from}} : {{message.txt}} </li>
           </ul>

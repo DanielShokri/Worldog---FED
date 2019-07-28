@@ -175,7 +175,8 @@ export default {
   position: relative;
   left: 2%;
   bottom: 86%;
-  max-width: 29rem;
+  // max-width: 29rem;
+      max-width: 31rem;
 }
 
 .statment {
