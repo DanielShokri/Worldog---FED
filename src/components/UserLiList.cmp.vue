@@ -86,7 +86,7 @@ export default {
             Math.cos(lat2);
         var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
         var distance = R * c;
-        if (distance <= 1) dogsInPark.push(this.dogs[i]);
+        if (distance < 0.7) dogsInPark.push(this.dogs[i]);
         function toRad(Value) {
           return (Value * Math.PI) / 180;
         }

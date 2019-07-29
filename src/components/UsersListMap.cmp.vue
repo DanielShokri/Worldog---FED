@@ -141,7 +141,7 @@ export default {
       this.infoWindowPos = marker.position;
       if (!marker.infoText) marker.infoText = this.currPark.name;
       this.infoOptions.content = marker.infoText;
-
+3
       //check if its the same marker that was selected if yes toggle
       if (this.currentMidx == idx) {
         this.infoWinOpen = !this.infoWinOpen;
@@ -175,8 +175,8 @@ export default {
           return dog
         })
         dogsService.getPosition().then(pos => {
-          if (this.currUser ==! null)
-            var toShow = `<p>${this.currUser.owner.fullName}</p>`;
+          if (this.currUser !== null)
+            var toShow = `<p style="margin:0 auto">${this.currUser.owner.fullName}</p>`;
           else var toShow = `<p>Guest</p>`;
           this.userLoc = {
             position: {
@@ -193,6 +193,10 @@ export default {
 </script>
 
 <style scoped>
+/* p{
+  color: red;
+
+} */
 .mapTo {
   max-width: 500px !important;
 }
