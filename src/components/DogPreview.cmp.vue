@@ -12,17 +12,13 @@
         <button class="minus onlyCell" @click="plusDivs(1)">&#10095;</button>
         <h3>{{dog.owner.fullName}} and {{dog.preference.name}}</h3>
         <span class="ago">{{dog.preference.name}} is {{dog.preference.type}}</span>
-        <p>{{distanceFromCurrUser}} km from you</p> 
-        <!-- <p>
-          {{dog.preference.name}} is a {{dog.preference.gender}},
-          {{gender}} likes to<span v-for="hobby in dog.preference.hobbies" :key="hobby._id">{{hobby}} ,</span> and more...
-        </p> -->
+        <p>{{distanceFromCurrUser}} km from you</p>
       </span>
       <div class="card__footer">
         <div class="card__footer__meta">
           <span class="meta" tooltip="Like">
             <button @click="addLike(dog._id)">
-              <b-icon icon="thumb-up"></b-icon>
+              <b-icon class="color" icon="thumb-up"></b-icon>
             </button>
           </span>
           <span class="meta more" tooltip="Likes">
@@ -31,7 +27,7 @@
           </span>
           <span class="meta" tooltip="Friendog">
             <button @click="addFriend(dog._id)">
-              <b-icon icon="account-plus"></b-icon>
+              <b-icon class="color" icon="account-plus"></b-icon>
             </button>
           </span>
           <span class="meta more" tooltip="Friends">
@@ -40,10 +36,9 @@
           </span>
           <span class="meta" tooltip="chat">
             <button @click.prevent="openChat(dog)">
-              <b-icon icon="chat-processing"></b-icon>
+              <b-icon class="color" icon="chat-processing"></b-icon>
             </button>
           </span>
-
         </div>
       </div>
     </div>
@@ -51,28 +46,27 @@
 </template>
 
 <script>
-import socket from '../services/socket.service.js'
+import socket from "../services/socket.service.js";
 
 export default {
-  props: ["dog", "loggedinUser","userLoc"],
+  props: ["dog", "loggedinUser", "userLoc"],
   data() {
     return {};
   },
 
   methods: {
-    
     openChat(dog) {
-      if(this.loggedinUser === null) { 
-          this.$toast.open({
+      if (this.loggedinUser === null) {
+        this.$toast.open({
           message: "You need to login",
           type: "is-danger",
           duration: 2000
         });
-        return
+        return;
       }
-      this.$emit('openChat', dog)
+      this.$emit("openChat", dog);
     },
-    
+
     plusDivs(diff) {
       this.$emit("nextDog", diff);
     },
@@ -167,31 +161,31 @@ export default {
   },
   computed: {
     distanceFromCurrUser() {
-        var lat1 = this.dog.location.lat;
-        var lon1 = this.dog.location.lng;
-        var lat2 = this.userLoc.position.lat;
-        var lon2 = this.userLoc.position.lng;
-        var R = 6371; // km
-        var dLat = toRad(lat2 - lat1);
-        var dLon = toRad(lon2 - lon1);
-        lat1 = toRad(lat1);
-        lat2 = toRad(lat2);
+      var lat1 = this.dog.location.lat;
+      var lon1 = this.dog.location.lng;
+      var lat2 = this.userLoc.position.lat;
+      var lon2 = this.userLoc.position.lng;
+      var R = 6371; // km
+      var dLat = toRad(lat2 - lat1);
+      var dLon = toRad(lon2 - lon1);
+      lat1 = toRad(lat1);
+      lat2 = toRad(lat2);
 
-        var a =
-          Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+      var a =
+        Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+        Math.sin(dLon / 2) *
           Math.sin(dLon / 2) *
-            Math.sin(dLon / 2) *
-            Math.cos(lat1) *
-            Math.cos(lat2);
-        var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-        var distance = R * c;
-        function toRad(Value) {
-          return (Value * Math.PI) / 180;
-        }
-        var shortDistance = distance.toString().substring(0, 4);
-        return shortDistance
-      },
-  
+          Math.cos(lat1) *
+          Math.cos(lat2);
+      var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+      var distance = R * c;
+      function toRad(Value) {
+        return (Value * Math.PI) / 180;
+      }
+      var shortDistance = distance.toString().substring(0, 4);
+      return shortDistance;
+    },
+
     gender() {
       if (this.dog.preference.gender === "female") return "she";
       else return "he";
@@ -241,7 +235,8 @@ export default {
 }
 .card {
   // background-color: white;
-  box-shadow: 0 0.5px 0.5px rgba(10, 10, 10, 0.1), 0 0 0 1px rgba(10, 10, 10, 0.1);
+  box-shadow: 0 0.5px 0.5px rgba(10, 10, 10, 0.1),
+    0 0 0 1px rgba(10, 10, 10, 0.1);
   // color: #4a4a4a;
   // max-width: 100%;
   // position: relative;
@@ -345,7 +340,7 @@ export default {
       padding: 0px 15px;
       box-sizing: border-box;
       padding-top: 10px;
-      
+
       .meta {
         cursor: pointer;
         display: block;
@@ -362,12 +357,15 @@ export default {
         &:hover {
           color: #778d99;
         }
+        .color {
+          color:#02626e70;
+        }
       }
       .more {
         background-color: transparent;
         line-height: 26px;
         font-size: 16px;
-        color: #b2c0c8;
+        color:#02626e70;
         margin-bottom: 6px;
       }
       .stats {
