@@ -165,6 +165,7 @@ export default {
       var lon1 = this.dog.location.lng;
       var lat2 = this.userLoc.position.lat;
       var lon2 = this.userLoc.position.lng;
+      console.log(lat2, lon2)
       var R = 6371; // km
       var dLat = toRad(lat2 - lat1);
       var dLon = toRad(lon2 - lon1);

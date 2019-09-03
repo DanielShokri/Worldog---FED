@@ -30,7 +30,7 @@ Vue.config.productionTip = false
 
 Vue.use(VueGoogleMaps, {
     load: {
-        key: 'AIzaSyDg8EFZZ2HBS2X6aqRzwRwfEbPO9SJLPfc',
+        key: '',
         libraries: 'places'
     }
 });
@@ -40,3 +40,5 @@ new Vue({
     store,
     render: h => h(App)
 }).$mount('#app')
+
+//AIzaSyDg8EFZZ2HBS2X6aqRzwRwfEbPO9SJLPfc

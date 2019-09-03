@@ -50,8 +50,9 @@ export default {
           this.photos.push(this.gardens[i].photos[0].photo_reference);
           this.gardens[
             i
-          ].img = `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=${this.gardens[i].photos[0].photo_reference}&key=AIzaSyDg8EFZZ2HBS2X6aqRzwRwfEbPO9SJLPfc`;
+          ].img = `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=${this.gardens[i].photos[0].photo_reference}&key=`;
         }
+        // AIzaSyDg8EFZZ2HBS2X6aqRzwRwfEbPO9SJLPfc
         var parking = JSON.parse(JSON.stringify(this.gardens));
         this.$store
           .dispatch({ type: "loadParks", gardens: parking })
@@ -117,3 +118,4 @@ export default {
   }
 }
 </style>
+

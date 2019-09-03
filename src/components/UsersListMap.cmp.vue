@@ -178,6 +178,7 @@ export default {
           if (this.currUser !== null)
             var toShow = `<p style="margin:0 auto">${this.currUser.owner.fullName}</p>`;
           else var toShow = `<p>Guest</p>`;
+          console.log(this.userLoc)
           this.userLoc = {
             position: {
               lat: pos.coords.latitude,
